@@ -7,7 +7,7 @@ var placeholder = document.createElement("li");
 var ALLOWED_EFFECT_MOVE = 'move';
 placeholder.className = "placeholder";
 
-var RankingElement = React.createClass({
+var DraggableList = React.createClass({
   getInitialState: function() {
     return {data:this.props.data}
   },
@@ -72,4 +72,4 @@ var RankingElement = React.createClass({
   }
 });
 
-export default withRouter(RankingElement);
+export default withRouter(DraggableList);

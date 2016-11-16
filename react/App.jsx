@@ -2,9 +2,9 @@ import React from 'react';
 import moment from 'moment';
 import { withRouter } from 'react-router';
 import { Component } from 'react';
-import RankingElement from './Elements/RankingElement.jsx';
+import DraggableList from './Elements/DraggableList.jsx';
 
-var colors = ["Red","Green","Blue","Yellow","Black","White","Orange"];
+var items = ["Red","Green","Blue","Yellow","Black","White","Orange"];
 
 class App extends Component {
     constructor(props){
@@ -13,7 +13,7 @@ class App extends Component {
     render(){
         return (
             <div>
-              <RankingElement data = {colors} />
+              <DraggableList data = {items} />
             </div>
         );
     }
