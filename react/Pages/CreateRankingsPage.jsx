@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { DragDropContext } from 'react-dnd';
 import HTML5Backend from 'react-dnd-html5-backend';
-import DraggableList from './Elements/DraggableList.jsx';
-import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
+import DraggableList from '../Elements/DraggableList.jsx';
+import { DragDropContext } from 'react-dnd';
 
-class App extends Component {
 
-	render() {
+class CreateRankingsPage extends Component {
+  render() {
 		const style = {
 			display: "flex",
 			justifyContent: "space-around",
@@ -25,8 +24,13 @@ class App extends Component {
 			{ id: 6, text: "Item 6" }
 		];
 
-		return ( <CreateRankingsPage />);
+		return (
+			<div style={style}>
+				<DraggableList id={1} list={listOne} />
+				<DraggableList id={2} list={listTwo} />
+			</div>
+		);
 	}
 }
 
-export default DragDropContext(HTML5Backend)(App);
+export default DragDropContext(HTML5Backend)(CreateRankingsPage);

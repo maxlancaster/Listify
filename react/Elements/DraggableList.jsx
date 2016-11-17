@@ -45,13 +45,13 @@ class DraggableList extends Component {
 		const { cards } = this.state;
 		const { canDrop, isOver, connectDropTarget } = this.props;
 		const isActive = canDrop && isOver;
+    const backgroundColor = isActive ? 'lightgreen' : '#FFF';
 		const style = {
 			width: "200px",
 			height: "404px",
-			border: '1px dashed gray'
+			border: '1px dashed gray',
+      backgroundColor: backgroundColor
 		};
-
-		const backgroundColor = isActive ? 'lightgreen' : '#FFF';
 
 		return connectDropTarget(
 			<div style={style}>
