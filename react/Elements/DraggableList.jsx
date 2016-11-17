@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import update from 'react/lib/update';
 import ItemCard from './ItemCard.jsx';
 import { DropTarget } from 'react-dnd';
+import { findDOMNode } from 'react-dom';
 
 class DraggableList extends Component {
   constructor(props) {
@@ -31,7 +32,7 @@ class DraggableList extends Component {
 
 	render() {
 		const { items } = this.state;
-		const { canDrop, isOver, connectDropTarget } = this.props;
+		const { canDrop, isOver, connectDropTarget} = this.props;
 		const isActive = canDrop && isOver;
     const backgroundColor = isActive ? 'lightgreen' : '#FFF';
 		const style = {
@@ -59,18 +60,51 @@ class DraggableList extends Component {
   }
 }
 
-const cardTarget = {
+const CardTarget = {
 	drop(props, monitor, component ) {
     const cardTargetList = props;
 		const sourceObj = monitor.getItem();
-		if ( cardTargetList.id !== sourceObj.listId ) {
+		if (cardTargetList.id !== sourceObj.listId ) {
       component.addItem(sourceObj.item);
     }
 		return {listId: cardTargetList.id};
+	},
+
+  hover(props, monitor, component) {
+		const dragIndex = monitor.getItem().index;
+		const hoverIndex = props.index;
+		const sourceListId = monitor.getItem().listId;
+		// Don't replace items with themselves
+		if (dragIndex === hoverIndex) {
+			return;
+		}
+
+		// Determine rectangle on screen
+		const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+		// Get vertical middle
+		const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+		// Determine mouse position
+		const clientOffset = monitor.getClientOffset();
+		// Get pixels to the top
+		const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+			return;
+		}
+
+		// Dragging upwards
+		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+			return;
+		}
+		if (component.props.id !== sourceListId ) {
+
+			component.moveItem(dragIndex, hoverIndex);
+      console.log(dragIndex);
+			monitor.getItem().index = hoverIndex;
+		}
 	}
 }
 
-export default DropTarget("CARD", cardTarget, (connect, monitor) => ({
+export default DropTarget("CARD", CardTarget, (connect, monitor) => ({
 	connectDropTarget: connect.dropTarget(),
 	isOver: monitor.isOver(),
 	canDrop: monitor.canDrop()
