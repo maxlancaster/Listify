@@ -3,20 +3,20 @@ import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash/flow';
 
-const style = {
-	border: '1px dashed blue',
-	padding: '0.5rem 1rem',
-	margin: '.5rem',
-	backgroundColor: 'white',
-	cursor: 'move'
-};
-
 class ItemCard extends Component {
   render() {
-    const card = this.props.card;
-    const connectDragSource = this.props.connectDragSource;
-    const connectDropTarget = this.props.connectDropTarget;
-    return connectDragSource(connectDropTarget( <div style={style}>{card.text}</div>));
+		const { item, isDragging, connectDragSource, connectDropTarget } = this.props;
+		const opacity = isDragging ? 0 : 1;
+		const style = {
+			border: '1px dashed blue',
+			padding: '0.5rem 1rem',
+			margin: '.5rem',
+			backgroundColor: 'white',
+			opacity: opacity
+		};
+
+		return connectDragSource(connectDropTarget(<div style={style}>{item.title}</div>
+		));
   }
 }
 
@@ -25,14 +25,14 @@ const CardSource = {
 		return {
 			index: props.index,
 			listId: props.listId,
-			card: props.card
+			item: props.item
 		};
 	},
 	endDrag(props, monitor) {
 		const itemCard = monitor.getItem();
-		const dropResult = monitor.getDropResult(); //THIS IS NULL!
+		const dropResult = monitor.getDropResult();
 		if (dropResult && dropResult.listId !== itemCard.listId ) {
-			props.removeCard(itemCard.index);
+			props.removeItem(itemCard.index);
 		}
 	}
 };
@@ -55,12 +55,6 @@ const CardTarget = {
 		const clientOffset = monitor.getClientOffset();
 		// Get pixels to the top
 		const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-
-		// // Only perform the move when the mouse has crossed half of the items height
-		// // When dragging downwards, only move when the cursor is below 50%
-		// // When dragging upwards, only move when the cursor is above 50%
-    //
-		// Don't move if the
 		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
 			return;
 		}
@@ -71,7 +65,7 @@ const CardTarget = {
 		}
 
 		if (props.listId === sourceListId ) {
-			props.moveCard(dragIndex, hoverIndex);
+			props.moveItem(dragIndex, hoverIndex);
 			monitor.getItem().index = hoverIndex;
 		}
 	}
