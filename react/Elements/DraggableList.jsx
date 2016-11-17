@@ -1,75 +1,89 @@
-import React from 'react';
-import moment from 'moment';
-import { withRouter } from 'react-router';
-import { Component } from 'react';
+import React, { Component } from 'react';
+import update from 'react/lib/update';
+import ItemCard from './ItemCard.jsx';
+import { DropTarget } from 'react-dnd';
 
-var placeholder = document.createElement("li");
-var ALLOWED_EFFECT_MOVE = 'move';
-placeholder.className = "placeholder";
+class DraggableList extends Component {
+  constructor(props) {
+		super(props);
+		this.state = { cards: props.list };
+	}
 
-var DraggableList = React.createClass({
-  getInitialState: function() {
-    return {data:this.props.data}
-  },
+	pushCard(card) {
+		this.setState(update(this.state, {
+			cards: {
+				$push: [ card ]
+			}
+		}));
+	}
 
-  dragStart: function(dragEvent) {
-    this.dragged = dragEvent.currentTarget;
-    dragEvent.dataTransfer.effectAllowed = "move";
-    dragEvent.dataTransfer.setData("text/html", dragEvent.currentTarget);
-  },
-  dragEnd: function(dragEvent) {
-    this.dragged.style.display = "block";
-    this.dragged.parentNode.removeChild(placeholder);
-    var data = this.state.data;
+	removeCard(index) {
+		this.setState(update(this.state, {
+			cards: {
+				$splice: [
+					[index, 1]
+				]
+			}
+		}));
+	}
 
-    var from = Number(this.dragged.dataset.id);
-    var to = Number(this.over.dataset.id);
-    if (from < to){
-      to--;
-    }
-    if (this.nodePlacement === "after") {
-      to++;
-    }
-    data.splice(to,0,data.splice(from,1)[0]);
-    this.setState({data:data});
-  },
-  dragOver: function(dragEvent) {
-    dragEvent.preventDefault();
-    this.dragged.style.display = "none";
-    if (dragEvent.target.className === "placeholder") {
-      return;
-    }
-    this.over = dragEvent.target;
-    // Inside the dragOver method
-    var relY = dragEvent.clientY - this.over.offsetTop;
-    var height = this.over.offsetHeight / 2;
-    var parent = dragEvent.target.parentNode;
+	moveCard(dragIndex, hoverIndex) {
+		const { cards } = this.state;
+		const dragCard = cards[dragIndex];
 
-    if(relY > height) {
-      this.nodePlacement = "after";
-      parent.insertBefore(placeholder, dragEvent.target.nextElementSibling);
-    }
-    else if(relY < height) {
-      this.nodePlacement = "before"
-      parent.insertBefore(placeholder, dragEvent.target);
-    }
-  },
-  render: function() {
-    return <ul onDragOver = {this.dragOver}>
-      {this.state.data.map(function(item,i) {
-        return (
-          <li
-            data-id = {i}
-            key={i}
-            draggable="true"
-            onDragEnd={this.dragEnd}
-            onDragStart={this.dragStart}
-          >{item}</li>
+		this.setState(update(this.state, {
+			cards: {
+				$splice: [
+					[dragIndex, 1],
+					[hoverIndex, 0, dragCard]
+				]
+			}
+		}));
+	}
 
-        )
-      }, this)}
-    </ul>
+	render() {
+		const { cards } = this.state;
+		const { canDrop, isOver, connectDropTarget } = this.props;
+		const isActive = canDrop && isOver;
+		const style = {
+			width: "200px",
+			height: "404px",
+			border: '1px dashed gray'
+		};
+
+		const backgroundColor = isActive ? 'lightgreen' : '#FFF';
+
+		return connectDropTarget(
+			<div style={style}>
+				{cards.map((card, i) => {
+					return (
+						<ItemCard
+							key={card.id}
+							index={i}
+							listId={this.props.id}
+							card={card}
+							removeCard={this.removeCard.bind(this)}
+							moveCard={this.moveCard.bind(this)} />
+					);
+				})}
+			</div>
+		);
   }
-});
+}
 
-export default withRouter(DraggableList);
+const cardTarget = {
+	drop(props, monitor, component ) {
+		const { id } = props;
+		const sourceObj = monitor.getItem();
+		if ( id !== sourceObj.listId ) component.pushCard(sourceObj.card);
+		return {
+			listId: id
+		};
+	}
+}
+
+export default DropTarget("CARD", cardTarget, (connect, monitor) => ({
+	connectDropTarget: connect.dropTarget(),
+	isOver: monitor.isOver(),
+	canDrop: monitor.canDrop()
+}))(DraggableList);
