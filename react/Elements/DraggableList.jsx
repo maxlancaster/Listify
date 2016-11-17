@@ -61,14 +61,12 @@ class DraggableList extends Component {
 
 const cardTarget = {
 	drop(props, monitor, component ) {
-		const { id } = props;
+    const cardTargetList = props;
 		const sourceObj = monitor.getItem();
-		if ( id !== sourceObj.listId ) {
+		if ( cardTargetList.id !== sourceObj.listId ) {
       component.addItem(sourceObj.item);
     }
-		return {
-			listId: id
-		};
+		return {listId: cardTargetList.id};
 	}
 }
 

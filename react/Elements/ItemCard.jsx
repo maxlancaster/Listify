@@ -15,8 +15,7 @@ class ItemCard extends Component {
 			opacity: opacity
 		};
 
-		return connectDragSource(connectDropTarget(<div style={style}>{item.title}</div>
-		));
+		return connectDragSource(connectDropTarget(<div style={style}>{item.title}</div>));
   }
 }
 
