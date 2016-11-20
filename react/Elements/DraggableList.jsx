@@ -22,10 +22,10 @@ class DraggableList extends Component {
     this.setState({items:items});
 	}
 
-	moveItem(dragIndex, hoverIndex) {
+	moveItem(originalIndex, hoverIndex) {
     var items = this.state.items;
-		const draggedItem = items[dragIndex];
-    items.splice(dragIndex,1);
+		const draggedItem = items[originalIndex];
+    items.splice(originalIndex,1);
     items.splice(hoverIndex,0, draggedItem);
     this.setState({items:items});
 	}
@@ -41,7 +41,6 @@ class DraggableList extends Component {
 			border: '1px dashed gray',
       backgroundColor: backgroundColor
 		};
-
 		return connectDropTarget(
 			<div style={style}>
 				{items.map((item, index) => {
@@ -70,38 +69,28 @@ const CardTarget = {
 		return {listId: cardTargetList.id};
 	},
 
-  hover(props, monitor, component) {
-		const dragIndex = monitor.getItem().index;
-		const hoverIndex = props.index;
-		const sourceListId = monitor.getItem().listId;
-		// Don't replace items with themselves
-		if (dragIndex === hoverIndex) {
-			return;
-		}
-
-		// Determine rectangle on screen
-		const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
-		// Get vertical middle
-		const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-		// Determine mouse position
-		const clientOffset = monitor.getClientOffset();
-		// Get pixels to the top
-		const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-			return;
-		}
-
-		// Dragging upwards
-		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-			return;
-		}
-		if (component.props.id !== sourceListId ) {
-
-			component.moveItem(dragIndex, hoverIndex);
-      console.log(dragIndex);
-			monitor.getItem().index = hoverIndex;
-		}
-	}
+  // hover(props, monitor, component) {
+  //   //props = information about list you're hovering over
+  //   //monitor.getItem() gets teh item you dragged
+	// 	const dragIndex = monitor.getItem().index;
+	// 	const hoverIndex = props.index;
+	// 	const sourceListId = monitor.getItem().listId;
+	// 	if (component.props.id !== sourceListId) {
+  //
+  //     const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
+  //
+  //     // Get vertical middle
+  //     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+  //
+  //     // Determine mouse position
+  //     const clientOffset = monitor.getClientOffset();
+  //
+  //     // Get pixels to the top
+  //     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+	// 		component.moveItem(dragIndex, hoverIndex);
+	// 		monitor.getItem().index = hoverIndex;
+	// 	}
+	// }
 }
 
 export default DropTarget("CARD", CardTarget, (connect, monitor) => ({

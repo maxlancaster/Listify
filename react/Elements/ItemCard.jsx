@@ -38,40 +38,22 @@ const CardSource = {
 
 const CardTarget = {
 	hover(props, monitor, component) {
-		const dragIndex = monitor.getItem().index;
-		const hoverIndex = props.index;
+		const originalIndex = monitor.getItem().index;
+		const hoverIndex = props.index; //index your mouse is hovering over
 		const sourceListId = monitor.getItem().listId;
-		// Don't replace items with themselves
-		if (dragIndex === hoverIndex) {
+		// Optimization: No need to replace originIndex if we're just hovering over it
+		if (originalIndex === hoverIndex) {
 			return;
 		}
-
-		// Determine rectangle on screen
-		const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
-		// Get vertical middle
-		const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-		// Determine mouse position
-		const clientOffset = monitor.getClientOffset();
-		// Get pixels to the top
-		const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-		if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-			return;
-		}
-
-		// Dragging upwards
-		if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-			return;
-		}
-
 		if (props.listId === sourceListId ) {
-			props.moveItem(dragIndex, hoverIndex);
+			props.moveItem(originalIndex, hoverIndex);
 			monitor.getItem().index = hoverIndex;
 		}
 	}
 };
 
 export default flow(
-	DropTarget("CARD", CardTarget, connect => ({
+	DropTarget("CARD", CardTarget, (connect, monitor) => ({
 		connectDropTarget: connect.dropTarget()
 	})),
 	DragSource("CARD", CardSource, (connect, monitor) => ({
