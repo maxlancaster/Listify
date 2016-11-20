@@ -4,6 +4,7 @@ import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash/flow';
 
 class ItemCard extends Component {
+
   render() {
 		const { item, isDragging, connectDragSource, connectDropTarget } = this.props;
 		const opacity = isDragging ? 0 : 1;
@@ -15,7 +16,13 @@ class ItemCard extends Component {
 			opacity: opacity
 		};
 
-		return connectDragSource(connectDropTarget(<div style={style}>{item.title}</div>));
+		return connectDragSource(connectDropTarget(
+        <div style={style}>
+          <p>{item.title}</p>
+          <button onClick={this.props.deleteItem.bind(null, item)}>x</button>
+        </div>
+
+    ));
   }
 }
 

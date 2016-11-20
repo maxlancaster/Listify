@@ -16,6 +16,15 @@ class DraggableList extends Component {
     this.setState({items:items});
 	}
 
+  deleteItem(item) {
+    var items = this.state.items;
+    var index = items.indexOf(item);
+    if (index > -1) {
+      items.splice(index,1);
+    }
+    this.setState({items:items});
+  }
+
 	removeItem(index) {
     var items = this.state.items;
     items.splice(index,1);
@@ -29,6 +38,8 @@ class DraggableList extends Component {
     items.splice(hoverIndex,0, draggedItem);
     this.setState({items:items});
 	}
+
+  
 
 	render() {
 		const { items } = this.state;
@@ -51,7 +62,8 @@ class DraggableList extends Component {
 							listId={this.props.id}
 							item={item}
 							removeItem={this.removeItem.bind(this)}
-							moveItem={this.moveItem.bind(this)} />
+							moveItem={this.moveItem.bind(this)}
+              deleteItem={this.deleteItem.bind(this)} />
 					);
 				})}
 			</div>
