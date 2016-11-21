@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import DraggableList from '../Elements/DraggableList.jsx';
-import RankingList from '../Elements/RankingList.jsx'; 
+import RankingList from '../Elements/RankingList.jsx';
+import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import { DragDropContext } from 'react-dnd';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import Item from '../../models/Item.js';
-// import Ranking from '../../models/Ranking.js';
-// import Consensus from '../../models/Ranking.js';
-
 
 class EditRankingsPage extends Component {
   constructor(props) {
@@ -30,7 +27,7 @@ class EditRankingsPage extends Component {
       <div>
   			<div style={style}>
           <RankingList id={1} list = {this.state.order} />
-  				<DraggableList id={2} list={this.state.ranking.items} canEdit = {false} showRankingNumber = {false}/>
+          <OptionsList id={2} list={this.state.ranking.items} canEdit = {false} />
   			</div>
         <BottomRightButton onClick = {this.finishEdittingRanking.bind(this)}/>
       </div>

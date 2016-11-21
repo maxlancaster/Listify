@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import DraggableList from '../Elements/DraggableList.jsx';
+import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import RankingTitleForm from '../Elements/RankingTitleForm.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import Item from '../../models/Item.js';
-// import Ranking from '../../models/Ranking.js';
-// import Consensus from '../../models/Ranking.js';
 import { DragDropContext } from 'react-dnd';
 
 
@@ -42,13 +40,11 @@ class CreateRankingsPage extends Component {
     const items = this.state.items;
 
 		return (
-      <div>
+      <div style={style}>
         <RankingTitleForm placehodler={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
-  			<div style={style}>
-  				<DraggableList id={1} list={items} canEdit = {true} showRankingNumber = {false}/>
-  			</div>
-        <BottomRightButton createRanking = {this.createRanking.bind(this)}/>
+        <OptionsList id={1} list={items} canEdit = {true} />
+        <BottomRightButton onClick = {this.createRanking.bind(this)}/>
       </div>
 		);
 	}
