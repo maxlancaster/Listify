@@ -41,6 +41,22 @@ var userModel = mongoose.model('User', userSchema);
 var Users = (function(userModel) {
     var that = {};
 
+
+    that.getAllRankings = function (username, callback) {
+        userModel.findOne({ username: username }, function(err, user) {
+            if (err) callback({ msg: err });
+            if (user != null) {
+
+
+                var rankings = user.rankings.slice()
+
+
+            } else {
+                callback({ msg: 'The user does not exist!'});
+            }
+        });
+    };
+
     that.getFollowingList = function (username, callback) {
         userModel.findOne({ username: username }, function(err, user) {
             if (err) callback({ msg: err });
