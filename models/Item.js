@@ -14,6 +14,6 @@ const uuid = require('uuid');
    that.photo = photo;
    Object.freeze(that);
    return that;
- }
+ };
 
 module.exports = Item;

@@ -24,7 +24,7 @@ var consensusSchema = mongoose.Schema({
         ref: 'Ranking'
     }],
 
-    completed: Boolean,
+    completed: {type: Boolean, default: false},
 
     public: Boolean
 });
@@ -32,9 +32,21 @@ var consensusSchema = mongoose.Schema({
 var consensusModel = mongoose.model('Consensus', consensusSchema);
 
 var consensusRanking = (function(consensusModel) {
+
     var that = {};
 
-    //TODO functions
+    //lock a consensus by its ID
+    that.lockConsensus = function (consensusId, callback) {
+        consensusModel.findById(consensusId, function (err, consensus) {
+            if (err) callback({ msg: err });
+            if (consensus != null) {
+                consensus.completed = true;
+                consensus.save();
+            } else {
+                callback({ msg: 'The consensus does not exist!'});
+            }
+        });
+    };
 
 
     Object.freeze(that);
