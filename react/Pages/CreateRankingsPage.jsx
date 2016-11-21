@@ -40,10 +40,10 @@ class CreateRankingsPage extends Component {
     const items = this.state.items;
 
 		return (
-      <div style={style}>
-        <RankingTitleForm placehodler={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
+      <div>
+        <RankingTitleForm placeholder={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
-        <OptionsList id={1} list={items} canEdit = {true} />
+        <OptionsList id={1} list={items} canEdit = {true} style={style}/>
         <BottomRightButton onClick = {this.createRanking.bind(this)}/>
       </div>
 		);
