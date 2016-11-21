@@ -1,3 +1,4 @@
+const uuid = require('uuid');
 /**
  * Created by phillipou on 11/20/16.
  */
@@ -5,25 +6,14 @@
 /*
  * Model representing an Item
  */
+ var Item = function(title, description, photo) {
+   var that = Object.create(Item.prototype);
+   that.id = uuid.v1();
+   that.title = title;
+   that.description = description;
+   that.photo = photo;
+   Object.freeze(that);
+   return that;
+ }
 
-var mongoose = require('mongoose');
-// var User = require('/models/Users');
-// var Ranking = require('/models/Consensus');
-
-var itemSchema = mongoose.Schema({
-
-    title: String,
-    description: String,
-    photo: String
-});
-
-var itemSchema = mongoose.model('Item', consensusSchema);
-
-var itemModel = (function(itemSchema) {
-    var that = {};
-    Object.freeze(that);
-    return that;
-
-})(itemModel);
-
-module.exports = itemModel;
+module.exports = Item;

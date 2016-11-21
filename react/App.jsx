@@ -6,7 +6,7 @@ import { withRouter } from 'react-router';
 class App extends Component {
 
 	render() {
-		return ( <CreateRankingsPage />);
+		return ( <EditRankingsPage />);
 	}
 }
 

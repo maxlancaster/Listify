@@ -39,7 +39,7 @@ class DraggableList extends Component {
     this.setState({items:items});
 	}
 
-  
+
 
 	render() {
 		const { items } = this.state;
@@ -53,20 +53,26 @@ class DraggableList extends Component {
       backgroundColor: backgroundColor
 		};
 		return connectDropTarget(
-			<div style={style}>
-				{items.map((item, index) => {
-					return (
-						<ItemCard
-							key={item.id}
-							index={index}
-							listId={this.props.id}
-							item={item}
-							removeItem={this.removeItem.bind(this)}
-							moveItem={this.moveItem.bind(this)}
-              deleteItem={this.deleteItem.bind(this)} />
-					);
-				})}
-			</div>
+        <div style={style}>
+          {items.map((item, index) => {
+            return (
+              <div>
+                {this.props.showRankingNumber &&
+                  <div key = {index} className = "ranking-number">{index+1}</div>
+                }
+                <ItemCard
+                  key={item.id}
+                  index={index}
+                  listId={this.props.id}
+                  item={item}
+                  removeItem={this.removeItem.bind(this)}
+                  moveItem={this.moveItem.bind(this)}
+                  deleteItem={this.deleteItem.bind(this)}
+                  canEdit = {this.props.canEdit}/>
+              </div>
+            );
+          })}
+      </div>
 		);
   }
 }
