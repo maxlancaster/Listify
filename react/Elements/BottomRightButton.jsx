@@ -9,7 +9,7 @@ class BottomRightButton extends Component {
   render() {
     const style = { position: 'fixed', bottom: 10, right: 10 }
     return (
-      <button style = {style} onClick={this.props.createRanking.bind(null)}>OK</button>
+      <button style = {style} onClick={this.props.onClick.bind(null)}>OK</button>
     );
   }
 }

@@ -45,7 +45,7 @@ class DraggableList extends Component {
 		const { items } = this.state;
 		const { canDrop, isOver, connectDropTarget} = this.props;
 		const isActive = canDrop && isOver;
-    const backgroundColor = isActive ? 'lightgreen' : '#FFF';
+    const backgroundColor = isActive ? 'gray' : '#FFF';
 		const style = {
 			width: "200px",
 			height: "404px",
@@ -58,7 +58,7 @@ class DraggableList extends Component {
             return (
               <div>
                 {this.props.showRankingNumber &&
-                  <div key = {index} className = "ranking-number">{index+1}</div>
+                  <div key={index} className = "ranking-number">{index+1}</div>
                 }
                 <ItemCard
                   key={item.id}
