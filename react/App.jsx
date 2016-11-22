@@ -4,17 +4,51 @@ import EditRankingsPage from './Pages/EditRankingsPage.jsx';
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import Navbar from './Elements/Navbar.jsx';
 import { withRouter } from 'react-router';
+import userServices from '../services/userServices.js';
 
 class App extends Component {
+	constructor(props){
+        super(props);
+    }
 
-	render() {
-		return (
-			<div className = "App">
-				<Navbar />
-				<CreateRankingsPage />
-			</div>
-	);
-	}
-}
+    componentWillMount(){
+        userServices.getCurrentUser()
+            .then((res) => {
+                if (res.content.loggedIn) {
+                    this.setState((prevState) => {
+                        prevState.user = res.content.user;
+                        return prevState;
+                    })
+                }
+            });
+    }
+
+	render(){
+        return (
+			// <div className = "App">
+			// 	<CreateRankingsPage />
+			// </div>
+            <LoginPage>
+                <NavBar
+                    currentUser={this.state.user}
+                    logout={this.logout}
+                    userServices ={userServices}
+                    />
+                <div id='page-content'>
+                    {React.cloneElement(this.props.children, {
+                        userServices : userServices,
+                        user : this.state.user,
+                        loginUser : this.loginUser,
+                        registerUser : this.registerUser,
+                    })}
+                </div>
+            </LoginPage>
+        );
+    }
+};
+
+App.propTypes = {
+    children : React.PropTypes.any.isRequired
+};
 
 export default withRouter(App);

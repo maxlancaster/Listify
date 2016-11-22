@@ -16,16 +16,16 @@ var itemSchema = mongoose.Schema({
 
 });
 
-var itemModel = mongoose.model('Items', itemSchema);
+// var itemModel = mongoose.model('Items', itemSchema);
 
-var Items = (function(itemModel) {
-    var that = {};
+// var Items = (function(itemModel) {
+//     var that = {};
 
 
 
-    Object.freeze(that);
-    return that;
+//     Object.freeze(that);
+//     return that;
 
-})(itemModel);
+// })(itemModel);
 
-module.exports = Items;
+// module.exports = Items;
