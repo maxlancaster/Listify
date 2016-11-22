@@ -40,7 +40,7 @@ class EditRankingsPage extends Component {
           <div className = "EditRankingRankingList" >
             <h1 className = "RankingTitle">{this.state.ranking.title}</h1>
             <h2 className = "RankingAuthor">{"created by "+this.state.ranking.author}</h2>
-            <RankingList id={1} list = {this.state.order} />
+            <RankingList id={1} list = {this.state.order} canEdit = {false} />
           </div>
           <div className = "EditRankingOptionsList" >
             <h1 className = "OptionsListTitle"> Options</h1>

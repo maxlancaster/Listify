@@ -14,7 +14,9 @@ class ItemCard extends Component {
 
 		return connectDragSource(connectDropTarget(
         <div className = "ItemCard" style={style}>
-          <button className = "ItemCardEditButton" onClick={this.props.deleteItem.bind(null, item)}>x</button>
+          {this.props.canEdit &&
+            <button className = "ItemCardEditButton" onClick={this.props.deleteItem.bind(null, item)}>x</button>
+          }
           {this.props.showRankingNumber && <p className = "ItemCardRanking">{this.props.index+1 + "."}</p>}
           <p className = "ItemCardTitle">{item.title}</p>
 

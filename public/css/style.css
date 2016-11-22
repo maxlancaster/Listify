@@ -140,7 +140,7 @@ textarea:focus, input:focus{
   -webkit-border-radius: 5px;
   background:white;
   display: inline-block;
-  padding: 30px 0px;
+  padding: 20px 0px;
 }
 
 .ItemCard .ItemCardRanking {
