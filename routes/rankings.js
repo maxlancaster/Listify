@@ -60,10 +60,49 @@ var requireContent = function(req, res, next) {
 router.all('*', requireAuthentication);
 router.post('*', requireContent);
 
-
+/**
+ * Get all rankings created by the currently logged in user.
+ */
 router.get('/', function(req, res){
+    Users.getAllRankings(req.currentUser.username, function(err, rankings){
+        if(err){
+            utils.sendSuccessResponse(res, { rankings : [] });
+        } else {
+            utils.sendSuccessResponse(res, { rankings : rankings});
+        }
+    })
+};
 
-}
+
+/**
+ * Returns
+ */
+router.get('/:rankingId', function(req, res) {
+    Rankings.getConsensusByRankingId(req.params.rankingId, function(err, ranking) {
+        if (err) {
+            Rankings.getRankingByID(req.params.rankingID, function(err, ranking){
+                if(err){
+                    utils.sendErrorResponse(res, 404, 'No such ranking.');
+                } else{
+                    utils.sendSuccessResponse(res, { ranking : ranking });
+                }
+            });
+        } else {
+
+            Users.getAllConsensusRankings(req.currentUser.username, function(err, consensus){
+                if(err){
+                    utils.sendErrorResponse(res, 404, 'No such consensus.');
+                } else {
+
+                    utils.sendSuccessResponse(res, { ranking : ranking });
+                }
+            })
+
+        }
+    });
+});
+
+
 
 
 

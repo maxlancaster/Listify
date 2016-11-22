@@ -54,6 +54,18 @@ var Users = (function(userModel) {
         });
     };
 
+    that.getAllConsensusRankings = function (username, callback) {
+        userModel.findOne({ username: username }, function(err, user) {
+            if (err) callback({ msg: err });
+            if (user != null) {
+                var consensusRankings = user.consensusRankings.slice();
+                callback(null, consensusRankings);
+            } else {
+                callback({ msg: 'The user does not exist!'});
+            }
+        });
+    };
+
     that.getFollowingList = function (username, callback) {
         userModel.findOne({ username: username }, function(err, user) {
             if (err) callback({ msg: err });
