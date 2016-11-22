@@ -215,6 +215,10 @@ var Users = (function(userModel) {
      * @param callback
      */
     that.createUser = function(username, password, callback) {
+        // debugging purposes. delete this later
+        userModel.find({}).exec(function(error, users) {
+            console.log("calling createUser function... these are the existing users: " + JSON.stringify(users, null, '\t'))
+        });
         userModel.findOne({ username: username}, function(err, result) {
             if (err) callback({ msg: err});
             if (result !== null) {

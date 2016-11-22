@@ -1,7 +1,8 @@
 import App from './App.jsx';
+import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
 // import services from '../services';
 import LoginPage from './Pages/LoginPage.jsx';
-import services from '../services/userServices.js';
+import userServices from '../services/userServices.js';
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
@@ -12,7 +13,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 //ToDo
 
 // const authCheck = (nextState, replace, callback) => {
-//     services.user.getCurrentUser().then((response) => {
+//     userServices.getCurrentUser().then((response) => {
 //         if (!response.content.loggedIn){
 //             replace('/signin');
 //         }
@@ -25,9 +26,8 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 export default (
     <Router history={browserHistory} >
-        <Route path='/' component={App}  >
-            <Route path="signin"
-                   component={LoginPage} />
+        <Route path='/' component={LoginPage}  >
+        <Route path="ranking" component={CreateRankingsPage} />
         </Route>
     </Router>
 );

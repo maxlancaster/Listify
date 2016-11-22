@@ -48,6 +48,7 @@ var invalidLogin = function(req, res) {
 */
 router.post('/', function(req, res) {
   Users.createUser(req.body.username, req.body.password, function(err) {
+    console.log("creating user with username " + req.body.username + " and password " + req.body.password);
     if (err) {
       if (err.taken) {
         utils.sendErrorResponse(res, 400, 'That username is already taken!');
@@ -79,6 +80,7 @@ router.post('/login', function(req, res) {
   Users.checkPassword(req.body.username, req.body.password, function(err, match) {
     if (match) {
       req.session.username = req.body.username;
+      console.log("login success by " + req.body.username);
       utils.sendSuccessResponse(res, { user: req.body.username });
     } else {
       utils.sendErrorResponse(res, 403, 'Invalid username or password.');
