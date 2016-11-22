@@ -4,6 +4,7 @@ import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import RankingTitleForm from '../Elements/RankingTitleForm.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
+import ConfirmAlertView from '../Elements/ConfirmAlertView.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import { DragDropContext } from 'react-dnd';
 
@@ -22,7 +23,7 @@ var Item = function(title, description, photo) {
 class CreateRankingsPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {items: [], i:0, rankingTitle:''};
+    this.state = {items: [], i:0, rankingTitle:'', showCreateRankingConfirm: false};
   }
   addItem(itemTitle) {
     var items = this.state.items;
@@ -33,6 +34,14 @@ class CreateRankingsPage extends Component {
 
   didChangeRankingTitle(rankingTitle) {
     this.setState({rankingTitle:rankingTitle});
+  }
+
+  showCreateRankingConfirm() {
+    this.setState({showCreateRankingConfirm: true})
+  }
+
+  closeCreateRankingConfirm() {
+    this.setState({showCreateRankingConfirm: false})
   }
 
   createRanking() {
@@ -51,6 +60,12 @@ class CreateRankingsPage extends Component {
 		return (
       <div>
         <Navbar />
+          {
+            this.state.showCreateRankingConfirm &&
+            <ConfirmAlertView
+              showModal = {this.state.showCreateRankingConfirm}
+              onClose = {this.closeCreateRankingConfirm.bind(this)}  />
+        }
         <RankingTitleForm placeholder={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <div className = "AddItemForm">
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
@@ -58,7 +73,7 @@ class CreateRankingsPage extends Component {
         <div className = "CreateRankingsOptionsList">
           <OptionsList style = {style}  id={1} list={items} canEdit = {true} style={style}/>
         </div>
-        <BottomRightButton onClick = {this.createRanking.bind(this)}/>
+        <BottomRightButton onClick = {this.showCreateRankingConfirm.bind(this)}/>
       </div>
 		);
 	}
