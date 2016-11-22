@@ -6,28 +6,57 @@
  */
 
 var mongoose = require('mongoose');
-var Item = require('/models/Item');
 // var User = require('/models/Users');
 // var Consensus = require('/models/Consensus');
 
+var itemSchema = mongoose.Schema({
+    title: String,
+    ranking: Number
+});
+
+
 var rankingSchema = mongoose.Schema({
 
-    //how do i put in the rank
-    items: [Item],
+    items: [itemSchema],
 
     user: String,
 
     consensusRanking: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Consensus'
-    },
-
+    }
 });
+
 
 var rankingModel = mongoose.model('Ranking', rankingSchema);
 
 var Rankings = (function(rankingModel) {
+
     var that = {};
+
+    //add an item to a ranking, item parameter should be passed in as {title: string, ranking: number}
+    that.addItemToRanking = function (item, rankingId, callback) {
+
+        rankingModel.findOne({ _id: rankingId }, function(err, ranking) {
+            if (err) callback({ msg: err });
+            if (ranking != null) {
+
+                ranking.items.push({
+                        title: item.title,
+                        ranking: item.ranking
+                });
+
+                ranking.save(function(err) {
+                    if (err) callback({msg: err});
+                    callback(null);
+                });
+
+            } else {
+                callback({ msg: 'The ranking does not exist!'});
+            }
+
+        });
+    };
 
     //expect in the same form as schema above
     that.addRanking = function (ranking, callback) {

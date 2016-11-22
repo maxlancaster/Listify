@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ViewableList from '../Elements/ViewableList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
+import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import { withRouter } from 'react-router';
 
 const uuid = require('uuid');
@@ -26,6 +27,15 @@ class ViewConsensusRankingPage extends Component {
     this.state = {title:rankingTitle, author: rankingAuthor, order: order};
   }
 
+  currentUserIsCreatorOfConsensus() {
+    return true;
+  }
+
+  //lock consensus
+  lockConsensus() {
+    console.log("lock!")
+  }
+
   render() {
     const order = this.state.order;
 		return (
@@ -37,6 +47,9 @@ class ViewConsensusRankingPage extends Component {
             <ViewableList id={1} list = {order} showRankingNumber = {true}/>
           </div>
       </div>
+      {this.currentUserIsCreatorOfConsensus() &&
+        <BottomRightButton title = {"Lock"} onClick = {this.lockConsensus.bind(this)}/>
+      }
     </div>
 		);
 	}

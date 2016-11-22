@@ -1,6 +1,8 @@
 import App from './App.jsx';
+import EditRankingsPage from './Pages/EditRankingsPage.jsx';
 import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
+import ViewCompletedRankingsPage from './Pages/ViewCompletedRankingsPage.jsx';
 // import services from '../services';
 import LoginPage from './Pages/LoginPage.jsx';
 import userServices from '../services/userServices.js';
@@ -29,5 +31,8 @@ export default (
     <Router history={browserHistory} >
         <Route path='/' component={LoginPage} />
         <Route path="ranking" component={CreateRankingsPage} />
+        <Route path="editRanking" component={EditRankingsPage} />
+        <Route path="consensus" component={ViewConsensusRankingPage} />
+        <Route path="rankings" component={ViewCompletedRankingsPage} />
     </Router>
 );

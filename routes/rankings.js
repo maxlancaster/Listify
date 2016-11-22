@@ -3,7 +3,6 @@ var router = express.Router();
 var utils = require('../utils/utils');
 
 var Rankings = require('../models/Ranking');
-var Items = require('../models/Item');
 var Consensus = require('../models/Consensus');
 var Users = require('../models/Users');
 

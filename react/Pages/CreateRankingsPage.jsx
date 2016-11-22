@@ -4,7 +4,6 @@ import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import RankingTitleForm from '../Elements/RankingTitleForm.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
-import ConfirmAlertView from '../Elements/ConfirmAlertView.jsx';
 import { DragDropContext } from 'react-dnd';
 
 const uuid = require('uuid');
@@ -22,7 +21,7 @@ var Item = function(title, description, photo) {
 class CreateRankingsPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {items: [], i:0, rankingTitle:'', showCreateRankingConfirm: false};
+    this.state = {items: [], i:0, rankingTitle:''};
   }
   addItem(itemTitle) {
     var items = this.state.items;
@@ -35,18 +34,15 @@ class CreateRankingsPage extends Component {
     this.setState({rankingTitle:rankingTitle});
   }
 
-  showShareDialog() {
-    this.setState({showCreateRankingConfirm: true})
-  }
-
-  closeShareDialog() {
-    this.setState({showCreateRankingConfirm: false})
-  }
-
   createRanking() {
     const rankingTitle = this.state.rankingTitle;
     const items = this.state.items;
     //TODO: Create Ranking and Consensus Ranking here
+  }
+
+  //TODO: NAVIGATE TO EDITRANKINGPAGE
+  navigateToEditRanking() {
+
   }
 
   render() {
@@ -58,15 +54,6 @@ class CreateRankingsPage extends Component {
 
 		return (
       <div>
-          {
-            this.state.showCreateRankingConfirm &&
-            <ConfirmAlertView
-              showModal = {this.state.showCreateRankingConfirm}
-              onClose = {this.closeShareDialog.bind(this)}
-              title = {"Share this ranking"}
-              link = {"https://listify.com/list/fdjp493q8jf9e8jffJ98905OJFDSFFfdsjkldsj409j34o34"}
-            />
-        }
         <RankingTitleForm placeholder={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <div className = "AddItemForm">
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
@@ -74,7 +61,7 @@ class CreateRankingsPage extends Component {
         <div className = "CreateRankingsOptionsList">
           <OptionsList style = {style}  id={1} list={items} canEdit = {true} style={style}/>
         </div>
-        <BottomRightButton onClick = {this.showShareDialog.bind(this)}/>
+        <BottomRightButton onClick = {this.navigateToEditRanking.bind(this)}/>
       </div>
 		);
 	}
