@@ -20,6 +20,8 @@ var consensusSchema = mongoose.Schema({
 
     title: String,
 
+    description: String,
+
     rankings: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Ranking'
