@@ -4,6 +4,7 @@ import RankingList from '../Elements/RankingList.jsx';
 import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import { DragDropContext } from 'react-dnd';
+import ConfirmAlertView from '../Elements/ConfirmAlertView.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 
 const uuid = require('uuid');
@@ -26,22 +27,31 @@ class EditRankingsPage extends Component {
     var rankingAuthor = "Phillip Ou";
     var items = [Item('Lebron'),Item('Kobe'), Item('Carmelo')];
     var ranking = {order:{}, items:items, title:rankingTitle, author:rankingAuthor}; //props.ranking;
-    this.state = {ranking: ranking, order: [], showAlertDialog: false};
+    this.state = {ranking: ranking, order: [], showCreateRankingConfirm: false};
   }
 
-  showAlertDialog() {
-    this.setState({showAlertDialog: true})
-  }
 
-  closeAlertDialog() {
-    this.setState({showAlertDialog: false})
-  }
+    showShareDialog() {
+      this.setState({showCreateRankingConfirm: true})
+    }
+
+    closeShareDialog() {
+      this.setState({showCreateRankingConfirm: false})
+    }
 
   render() {
-    console.log(this.state.showAlertDialog);
     const options = this.state.options;
 		return (
       <div>
+        {
+          this.state.showCreateRankingConfirm &&
+          <ConfirmAlertView
+            showModal = {this.state.showCreateRankingConfirm}
+            onClose = {this.closeShareDialog.bind(this)}
+            title = {"Share this ranking"}
+            link = {"https://listify.com/list/fdjp493q8jf9e8jffJ98905OJFDSFFfdsjkldsj409j34o34"}
+          />
+      }
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <h1 className = "RankingTitle">{this.state.ranking.title}</h1>
@@ -53,7 +63,7 @@ class EditRankingsPage extends Component {
             <OptionsList  id={2} list={this.state.ranking.items} canEdit = {false} defaultBackGroundColor = {"FAF9F9"} />
           </div>
   			</div>
-        <BottomRightButton onClick = {this.finishEdittingRanking.bind(this)}/>
+        <BottomRightButton onClick = {this.showShareDialog.bind(this)}/>
       </div>
 		);
 	}
