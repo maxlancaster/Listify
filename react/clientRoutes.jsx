@@ -29,8 +29,8 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 export default (
     <Router history={browserHistory} >
         <Route path='/' component={LoginPage} />
-        <Route path="ranking" component={CreateRankingsPage} />
-        <Route path="editRanking" component={EditRankingsPage} />
+        <Route path="rankings" component={CreateRankingsPage} />
+        <Route path="rankings/edit/$:state" component={EditRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} />
     </Router>
 );

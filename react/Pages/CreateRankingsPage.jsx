@@ -5,6 +5,8 @@ import AddItemForm from '../Elements/AddItemForm.jsx';
 import RankingTitleForm from '../Elements/RankingTitleForm.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import { DragDropContext } from 'react-dnd';
+import { withRouter } from 'react-router';
+import EditRankingsPage from './EditRankingsPage.jsx';
 
 const uuid = require('uuid');
 
@@ -18,6 +20,7 @@ var Item = function(title, description, photo) {
    Object.freeze(that);
    return that;
 };
+
 class CreateRankingsPage extends Component {
   constructor(props) {
     super(props);
@@ -41,7 +44,10 @@ class CreateRankingsPage extends Component {
   }
 
   navigateToEditRanking() {
-
+    if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
+      return  <EditRankingsPage data={this.state} />;
+      // this.props.router.push('/rankings/edit/${this.state}');
+    }
   }
 
   render() {
@@ -66,4 +72,4 @@ class CreateRankingsPage extends Component {
 	}
 }
 
-export default DragDropContext(HTML5Backend)(CreateRankingsPage);
+export default withRouter(DragDropContext(HTML5Backend)(CreateRankingsPage));
