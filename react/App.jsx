@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
 import EditRankingsPage from './Pages/EditRankingsPage.jsx';
+import LoginPage from './Pages/LoginPage.jsx'
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import { withRouter } from 'react-router';
 import userServices from '../services/userServices.js';
@@ -24,30 +25,15 @@ class App extends Component {
 
 	render(){
         return (
-			// <div className = "App">
-			// 	<CreateRankingsPage />
-			// </div>
-            <LoginPage>
-                <NavBar
-                    currentUser={this.state.user}
-                    logout={this.logout}
-                    userServices ={userServices}
-                    />
-                <div id='page-content'>
-                    {React.cloneElement(this.props.children, {
-                        userServices : userServices,
-                        user : this.state.user,
-                        loginUser : this.loginUser,
-                        registerUser : this.registerUser,
-                    })}
-                </div>
-            </LoginPage>
+			<div className = "App">
+				<ViewConsensusRankingPage />
+			</div>
         );
     }
 };
 
-App.propTypes = {
-    children : React.PropTypes.any.isRequired
-};
+// App.propTypes = {
+//     children : React.PropTypes.any.isRequired
+// };
 
 export default withRouter(App);
