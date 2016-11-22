@@ -31,6 +31,24 @@ a, a:visited {
   margin-left: 20px;
 }
 
+/**BottomRightButton **/
+
+.BottomRightButton {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  border-radius: 50%;
+  width:70px;
+  height:70px;
+  background: #66B110;
+  color:white;
+  border: none;
+}
+
+.BottomRightButton:active {
+    background: #538F0E;
+}
+
 /**RankingTitleForm **/
 
 .RankingTitleForm {
@@ -85,6 +103,7 @@ textarea:focus, input:focus{
   font-weight: 400;
   font-size:15px;
   -webkit-border-radius: 5px;
+  padding-left:10px;
 }
 
 .AddItemForm input[type=submit] {

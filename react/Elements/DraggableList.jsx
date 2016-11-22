@@ -45,8 +45,7 @@ class DraggableList extends Component {
 		const { items } = this.state;
 		const { canDrop, isOver, connectDropTarget} = this.props;
 		const isActive = canDrop && isOver;
-    console.log(this.props.showRankingNumber);
-    const defaultBackGroundColor = this.props.showRankingNumber ? "white" : '#FAF9F9';
+    const defaultBackGroundColor = this.props.defaultBackGroundColor ? white : this.props.defaultBackGroundColor;
     const backgroundColor = isActive ? '#9B9B9B' : defaultBackGroundColor;
     const style = {
       backgroundColor: backgroundColor,

@@ -42,11 +42,9 @@ class CreateRankingsPage extends Component {
   }
 
   render() {
-		const style = {
-			display: "flex",
-			justifyContent: "space-around",
-			paddingTop: "20px"
-		}
+    const style = {
+      backgroundColor: "white"
+    };
 
     const items = this.state.items;
 
@@ -58,7 +56,7 @@ class CreateRankingsPage extends Component {
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
         </div>
         <div className = "CreateRankingsOptionsList">
-          <OptionsList  id={1} list={items} canEdit = {true} style={style}/>
+          <OptionsList style = {style}  id={1} list={items} canEdit = {true} style={style}/>
         </div>
         <BottomRightButton onClick = {this.createRanking.bind(this)}/>
       </div>

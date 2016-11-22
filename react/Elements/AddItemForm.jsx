@@ -16,8 +16,10 @@ class AddItemForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const title = this.state.value;
-    this.props.addItem(title);
-    this.setState({value: ''});
+    if (title.length > 0){
+      this.props.addItem(title);
+      this.setState({value: ''});
+    }
   }
 
   render() {
