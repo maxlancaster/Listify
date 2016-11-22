@@ -40,7 +40,7 @@ var Rankings = (function(rankingModel) {
 
         ranking.save(function (err, newRanking) {
             if (err) callback({ msg: err});
-            callback(null, newTweet);
+            callback(null, newRanking);
 
         })
     };
