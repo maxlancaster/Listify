@@ -1,13 +1,210 @@
-li.placeholder { background: rgb(255,240,120);}
-li.placeholder:before {
-  content: "Drop here"; color: rgb(225,210,90);
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+
+html, body {
+  font-family: 'Lato', sans-serif;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 }
-ul {
-  list-style: none;
-  margin:0;
-  padding:0
+
+/** Navbar **/
+.Navbar {
+  margin-top:-20px;
+  height:50px;
+  background-color:#FAF9F9;
+
+  /*shadow */
+  -webkit-box-shadow:0px 1px 1px rgb(130,130,130);
+  -moz-box-shadow:0px 1px 1px rgb(130,130,130);
+  box-shadow:0px 1px 1px rgb(130,130,130);
+
 }
-li {
-  padding: 5px;
-  background:#eee
+
+a, a:visited {
+  text-decoration: none;
+}
+
+#listify-title {
+  font-size:36px;
+  font-weight: 900;
+  color: #E52F4F;
+  margin-left: 20px;
+}
+
+/**BottomRightButton **/
+
+.BottomRightButton {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  border-radius: 50%;
+  width:70px;
+  height:70px;
+  background: #66B110;
+  color:white;
+  border: none;
+}
+
+.BottomRightButton:active {
+    background: #538F0E;
+}
+
+/**RankingTitleForm **/
+
+.RankingTitleForm {
+  margin-left: auto;
+  margin-right:auto;
+  display: block;
+  margin-top:20px;
+  width:750px;
+}
+
+.RankingTitleForm input {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    width: 500px;
+    height: 50px;
+    color: #4A4A4A;
+    font-weight: 600;
+    font-size:30px;
+
+}
+
+textarea:focus, input:focus{
+    border: none;
+}
+
+::-webkit-input-placeholder {
+   color: #C4BFBF;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #C4BFBF;
+}
+
+:-ms-input-placeholder {
+   color: #C4BFBF;
+}
+
+/**AddItemForm**/
+
+.AddItemForm{
+  margin-left: auto;
+  margin-right:auto;
+  display: block;
+  margin-top: 20px;
+  width: 750px;
+}
+
+.AddItemForm input[type=text] {
+  width: 500px;
+  height: 40px;
+  font-weight: 400;
+  font-size:15px;
+  -webkit-border-radius: 5px;
+  padding-left:10px;
+}
+
+.AddItemForm input[type=submit] {
+    margin-left: 20px;
+    height: 40px;
+    width: 100px;
+    background:#E52F4F;
+    border:0 none;
+    cursor:pointer;
+    color:white;
+    font-size:15px;
+
+    -webkit-border-radius: 5px;
+}
+
+/** CreateRankings OptionsList**/
+.CreateRankingsOptionsList {
+    margin-top:25px;
+    width: 750px;
+    border: 0 none;
+    margin-left: auto;
+    margin-right:auto;
+    display: block;
+}
+
+/** ItemCard **/
+
+.ItemCard {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #C4BFBF;
+  width: 500px;
+  margin-top: 25px;
+  -webkit-border-radius: 5px;
+  background:white;
+  display: inline-block;
+  padding: 20px 0px;
+}
+
+.ItemCard .ItemCardRanking {
+  color:#9B9B9B;
+  font-size:25px;
+}
+
+.ItemCard p{
+  display:inline;
+  margin-left: 10px;
+}
+
+
+.ItemCardTitle {
+  font-size: 20px;
+  font-weight:400;
+}
+
+.ItemCardEditButton {
+  float:right;
+}
+
+/**EditRanking **/
+
+.RankingTitle {
+  margin-bottom:0px;
+  margin-left:10px;
+}
+
+.RankingAuthor {
+  margin-top:5px;
+  font-size:20px;
+  font-weight:300;
+  color:#C4BFBF;
+  margin-left:10px;
+}
+
+
+.EditRankingRankingList {
+  width:50%;
+  float:left;
+  margin-left:30px;
+  height:100vh;
+}
+
+.EditRankingRankingList .ItemCard {
+  margin-left:10px;
+  width:90%;
+}
+
+.EditRankingOptionsList {
+  background:#FAF9F9;
+  width:35%;
+  float:right;
+  height:100vh;
+  margin-top:5px;
+}
+
+.EditRankingOptionsList h1 {
+  margin-left:10px;
+  margin-bottom:40px;
+}
+
+.EditRankingOptionsList .ItemCard {
+  margin-left:10px;
+  width:90%;
 }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
 import EditRankingsPage from './Pages/EditRankingsPage.jsx';
+import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import { withRouter } from 'react-router';
 import userServices from '../services/userServices.js';
 
@@ -23,6 +24,9 @@ class App extends Component {
 
 	render(){
         return (
+			// <div className = "App">
+			// 	<CreateRankingsPage />
+			// </div>
             <LoginPage>
                 <NavBar
                     currentUser={this.state.user}
