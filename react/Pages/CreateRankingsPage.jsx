@@ -64,7 +64,10 @@ class CreateRankingsPage extends Component {
             this.state.showCreateRankingConfirm &&
             <ConfirmAlertView
               showModal = {this.state.showCreateRankingConfirm}
-              onClose = {this.closeCreateRankingConfirm.bind(this)}  />
+              onClose = {this.closeCreateRankingConfirm.bind(this)}
+              title = {"Would you like to publish this ranking?"}
+              link = {"https://listify.com/list/fdjp493q8jf9e8jffJ98905OJFDSFFfdsjkldsj409j34o34"}
+            />
         }
         <RankingTitleForm placeholder={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <div className = "AddItemForm">
