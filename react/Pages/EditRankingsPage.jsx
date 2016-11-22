@@ -4,7 +4,6 @@ import RankingList from '../Elements/RankingList.jsx';
 import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import { DragDropContext } from 'react-dnd';
-import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 
 const uuid = require('uuid');
@@ -35,7 +34,6 @@ class EditRankingsPage extends Component {
     const options = this.state.options;
 		return (
       <div>
-        <Navbar />
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <h1 className = "RankingTitle">{this.state.ranking.title}</h1>

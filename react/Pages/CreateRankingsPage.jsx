@@ -4,7 +4,6 @@ import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import RankingTitleForm from '../Elements/RankingTitleForm.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
-import Navbar from '../Elements/Navbar.jsx';
 import { DragDropContext } from 'react-dnd';
 
 const uuid = require('uuid');
@@ -50,7 +49,6 @@ class CreateRankingsPage extends Component {
 
 		return (
       <div>
-        <Navbar />
         <RankingTitleForm placeholder={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <div className = "AddItemForm">
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
