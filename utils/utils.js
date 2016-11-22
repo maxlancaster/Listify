@@ -4,7 +4,6 @@
 // of creating server responses with some content
 // (error code, message, etc.).
 //
-// Used verbatim from the notes app. Many thanks and appreciates.
 var utils = (function() {
 
   var _utils = {};

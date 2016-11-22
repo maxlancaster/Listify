@@ -63,7 +63,7 @@ app.use(function(req, res, next) {
 // Set up our routes.
 app.use('/users', users);
 
-app.listen((process.env.PORT || 3001), function() {
+app.listen((process.env.PORT || 3000), function() {
   console.log("Listening for port");
 });
 
