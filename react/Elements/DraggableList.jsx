@@ -52,9 +52,6 @@ class DraggableList extends Component {
         <div>
           {items.map((item, index) => {
             return (
-              <div>
-                {this.props.showRankingNumber && <p>{index+1}</p>}
-
               <ItemCard
                 key={item.id}
                 index={index}
@@ -63,8 +60,8 @@ class DraggableList extends Component {
                 removeItem={this.removeItem.bind(this)}
                 moveItem={this.moveItem.bind(this)}
                 deleteItem={this.deleteItem.bind(this)}
-                canEdit = {this.props.canEdit}/>
-              </div>
+                canEdit = {this.props.canEdit}
+                showRankingNumber = {this.props.showRankingNumber}/>
             );
           })}
       </div>
