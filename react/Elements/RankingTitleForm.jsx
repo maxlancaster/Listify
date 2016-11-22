@@ -21,9 +21,11 @@ class RankingTitleForm extends Component {
   render() {
     var placeholder = this.props.placeholder;
     return (
-      <form className = "RankingTitleForm" onSubmit={this.handleSubmit}>
+      <div className = "RankingTitleForm">
+      <form onSubmit={this.handleSubmit}>
         <input type="text" placeholder = {placeholder} value={this.state.value} onChange={this.handleChange} />
       </form>
+       </div>
     );
   }
 }

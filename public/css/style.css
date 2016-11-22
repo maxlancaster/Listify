@@ -33,6 +33,13 @@ a, a:visited {
 
 /**RankingTitleForm **/
 
+.RankingTitleForm {
+  margin-left: auto;
+  margin-right:auto;
+  display: block;
+  width:750px;
+}
+
 .RankingTitleForm input {
     border: 0;
     outline: 0;
@@ -43,9 +50,6 @@ a, a:visited {
     color: #4A4A4A;
     font-weight: 600;
     font-size:30px;
-    margin-left: auto;
-    margin-right:auto;
-    display: block;
 
 }
 
@@ -80,7 +84,6 @@ textarea:focus, input:focus{
   height: 40px;
   font-weight: 400;
   font-size:15px;
-  margin-left:75px;
   -webkit-border-radius: 5px;
 }
 
@@ -100,7 +103,7 @@ textarea:focus, input:focus{
 /** CreateRankings OptionsList**/
 .CreateRankingsOptionsList {
     margin-top:25px;
-    width: 500px;
+    width: 750px;
     border: 0 none;
     margin-left: auto;
     margin-right:auto;
