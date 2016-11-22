@@ -45,11 +45,16 @@ class DraggableList extends Component {
 		const { items } = this.state;
 		const { canDrop, isOver, connectDropTarget} = this.props;
 		const isActive = canDrop && isOver;
-    const backgroundColor = isActive ? 'lightgreen' : '#FFF';
+    console.log(this.props.showRankingNumber);
+    const defaultBackGroundColor = this.props.showRankingNumber ? "white" : '#FAF9F9';
+    const backgroundColor = isActive ? '#9B9B9B' : defaultBackGroundColor;
+    const style = {
+      backgroundColor: backgroundColor,
+      height:"100%"
+    }
 
-    // TODO: Fix weird animation when you return more than just <ItemCard /> in map
 		return connectDropTarget(
-        <div>
+        <div style = {style}>
           {items.map((item, index) => {
             return (
               <ItemCard

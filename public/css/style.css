@@ -113,7 +113,7 @@ textarea:focus, input:focus{
 /** ItemCard **/
 
 .ItemCard {
-  border-style: solid;;
+  border-style: solid;
   border-width: 1px;
   border-color: #C4BFBF;
   width: 500px;
@@ -121,11 +121,21 @@ textarea:focus, input:focus{
   -webkit-border-radius: 5px;
   background:white;
   display: inline-block;
-  /*margin-left: 385px;*/
+  padding: 30px 0px;
 }
 
+.ItemCard .ItemCardRanking {
+  color:#9B9B9B;
+  font-size:25px;
+}
+
+.ItemCard p{
+  display:inline;
+  margin-left: 10px;
+}
+
+
 .ItemCardTitle {
-  float:left;
   font-size: 20px;
   font-weight:400;
 }
@@ -138,6 +148,7 @@ textarea:focus, input:focus{
 
 .RankingTitle {
   margin-bottom:0px;
+  margin-left:10px;
 }
 
 .RankingAuthor {
@@ -145,8 +156,36 @@ textarea:focus, input:focus{
   font-size:20px;
   font-weight:300;
   color:#C4BFBF;
+  margin-left:10px;
+}
+
+
+.EditRankingRankingList {
+  width:50%;
+  float:left;
+  margin-left:30px;
+  height:100vh;
+}
+
+.EditRankingRankingList .ItemCard {
+  margin-left:10px;
+  width:90%;
 }
 
 .EditRankingOptionsList {
   background:#FAF9F9;
+  width:35%;
+  float:right;
+  height:100vh;
+  margin-top:5px;
+}
+
+.EditRankingOptionsList h1 {
+  margin-left:10px;
+  margin-bottom:40px;
+}
+
+.EditRankingOptionsList .ItemCard {
+  margin-left:10px;
+  width:90%;
 }

@@ -22,29 +22,28 @@ var Item = function(title, description, photo) {
 class EditRankingsPage extends Component {
   constructor(props) {
     super(props);
-    var ranking = {order:{}, items:[Item('Lebron'),Item('Kobe'), Item('Carmelo')], title:"Test Title", author:"Phillip Ou"}; //props.ranking;
-    this.state = {ranking: ranking, order: [Item('Lebron'),Item('Kobe'), Item('Carmelo')]};
+    //TODO: TEMP, REMOVE LATER
+    var rankingTitle = "Test Title"
+    var rankingAuthor = "Phillip Ou";
+    var items = [Item('Lebron'),Item('Kobe'), Item('Carmelo')];
+    var ranking = {order:{}, items:items, title:rankingTitle, author:rankingAuthor}; //props.ranking;
+    this.state = {ranking: ranking, order: []};
   }
 
   render() {
-		const style = {
-			display: "flex",
-			justifyContent: "space-around",
-			paddingTop: "20px"
-		}
 
     const options = this.state.options;
-    var authorLabelText = "Created by "+this.state.ranking.author;
-
 		return (
       <div>
         <Navbar />
-        <h1 className = "RankingTitle">{this.state.ranking.title}</h1>
-        <h2 className = "RankingAuthor">{authorLabelText}</h2>
-  			<div style={style}>
-          <RankingList  id={1} list = {this.state.order} />
+  			<div className = "EditRankingsPage">
+          <div className = "EditRankingRankingList" >
+            <h1 className = "RankingTitle">{this.state.ranking.title}</h1>
+            <h2 className = "RankingAuthor">{"created by "+this.state.ranking.author}</h2>
+            <RankingList id={1} list = {this.state.order} />
+          </div>
           <div className = "EditRankingOptionsList" >
-            <h2> Options</h2>
+            <h1 className = "OptionsListTitle"> Options</h1>
             <OptionsList  id={2} list={this.state.ranking.items} canEdit = {false} />
           </div>
   			</div>
