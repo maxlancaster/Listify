@@ -12,12 +12,7 @@ var Item = require('/models/Item');
 
 var rankingSchema = mongoose.Schema({
 
-    //don't need title because the consensus that it refers to should hold the title
-    //i.e rankings will have the same title as the consensus they refer to
-    // title : String,
-
-    //items are listed in their order of preference. So the first item in the list was
-    // ranked first etc. Makes it so that we dont need to have an order dictionary that also holds objects
+    //how do i put in the rank
     items: [Item],
 
     user: String,
