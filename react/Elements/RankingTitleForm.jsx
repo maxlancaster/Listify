@@ -20,10 +20,15 @@ class RankingTitleForm extends Component {
 
   render() {
     var placeholder = this.props.placeholder;
+    var borderBottom = this.state.value.length > 0 ? 0 : "2px solid #C4BFBF";
+    var style = {
+      borderBottom: borderBottom
+    }
+
     return (
       <div className = "RankingTitleForm">
         <form onSubmit={this.handleSubmit}>
-          <input type="text" placeholder = {placeholder} value={this.state.value} onChange={this.handleChange} />
+          <input style = {style} type="text" placeholder = {placeholder} value={this.state.value} onChange={this.handleChange} />
         </form>
       </div>
     );
