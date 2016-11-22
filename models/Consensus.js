@@ -11,7 +11,6 @@
 var mongoose = require('mongoose');
 // var User = require('/models/Users');
 // var Ranking = require('/models/Consensus');
-var Item = require('/models/Item');
 
 
 var consensusSchema = mongoose.Schema({
