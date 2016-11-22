@@ -26,11 +26,19 @@ class EditRankingsPage extends Component {
     var rankingAuthor = "Phillip Ou";
     var items = [Item('Lebron'),Item('Kobe'), Item('Carmelo')];
     var ranking = {order:{}, items:items, title:rankingTitle, author:rankingAuthor}; //props.ranking;
-    this.state = {ranking: ranking, order: []};
+    this.state = {ranking: ranking, order: [], showAlertDialog: false};
+  }
+
+  showAlertDialog() {
+    this.setState({showAlertDialog: true})
+  }
+
+  closeAlertDialog() {
+    this.setState({showAlertDialog: false})
   }
 
   render() {
-
+    console.log(this.state.showAlertDialog);
     const options = this.state.options;
 		return (
       <div>
