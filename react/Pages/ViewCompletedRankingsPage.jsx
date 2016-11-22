@@ -2,12 +2,15 @@ import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ViewableList from '../Elements/ViewableList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
+import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import { withRouter } from 'react-router';
 
 const uuid = require('uuid');
+
+
 //TODO: remove later
-var Item = function(title, description, photo) {
-   var that = Object.create(Item.prototype);
+var Card = function(title, description, photo) {
+   var that = Object.create(Card.prototype);
    that.id = uuid.v1();
    that.title = title;
    that.description = description;
@@ -16,27 +19,34 @@ var Item = function(title, description, photo) {
    return that;
 };
 
+
+//TODO: GET ALL CONSENSUES THE USER HAS CONTRIBUTED TO AND LOAD THEM
 class ViewCompletedRankingsPage extends Component {
   constructor(props) {
     super(props);
-    //TODO: TEMP, REMOVE LATER
-    var rankingTitle = "Test Title"
-    var rankingAuthor = "Phillip Ou";
-    var order = [Item('Lebron'),Item('Kobe'), Item('Carmelo')];
-    this.state = {title:rankingTitle, author: rankingAuthor, order: order};
+    var rankingTitle = "Test Title";
+    var rankingDescription = "created by Phillip Ou";
+    //LOAD COMPLETED CONSENSUSES ONTO COMPLETED RANKINGS
+    var completedRankings = [Card('Lebron',rankingDescription),Card('Kobe',rankingDescription), Card('Carmelo',rankingDescription)];
+    this.state = {completedRankings:completedRankings};
   }
 
+  //navigate to create rankings page
+  navigateToCreateRankingsPage() {
+      console.log("NAVIGATE!");
+    }
+
   render() {
-    const order = this.state.order;
+    const completedRankings = this.state.completedRankings;
 		return (
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
-            <h1 className = "RankingTitle">{this.state.title}</h1>
-            <h2 className = "RankingAuthor">{"created by "+this.state.author}</h2>
-            <ViewableList id={1} list = {order} showRankingNumber = {true}/>
+            <h1>Rankings You've Contributed To</h1>
+            <ViewableList id={1} list = {completedRankings} showRankingNumber = {true}/>
           </div>
       </div>
+      <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
     </div>
 		);
 	}
