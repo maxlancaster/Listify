@@ -16,8 +16,10 @@ class AddItemForm extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const title = this.state.value;
-    this.props.addItem(title);
-    this.setState({value: ''});
+    if (title.length > 0){
+      this.props.addItem(title);
+      this.setState({value: ''});
+    }
   }
 
   render() {
@@ -25,7 +27,7 @@ class AddItemForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <input type="text" placeholder = {placeholder} value={this.state.value} onChange={this.handleChange} />
-        <input type="submit" value="Add" />
+        <input id = "AddButton" type="submit" value="Add" />
       </form>
     );
   }

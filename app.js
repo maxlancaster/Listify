@@ -47,6 +47,7 @@ app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
 // Same as example notes app. Many thanks and appreciates.
 app.use(function(req, res, next) {
   if (req.session.username) {
+    console.log("session! " + req.session.username);
     Users.findUser(req.session.username, function(err, user) {
       if (user) {
         req.currentUser = user;
@@ -56,6 +57,7 @@ app.use(function(req, res, next) {
       next();
     });
   } else {
+    console.log("no sessions :( ");
     next();
   }
 });
