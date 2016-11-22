@@ -46,11 +46,8 @@ var Users = (function(userModel) {
         userModel.findOne({ username: username }, function(err, user) {
             if (err) callback({ msg: err });
             if (user != null) {
-
-
-                var rankings = user.rankings.slice()
-
-
+                var rankings = user.rankings.slice();
+                callback(null, rankings);
             } else {
                 callback({ msg: 'The user does not exist!'});
             }
@@ -223,7 +220,7 @@ var Users = (function(userModel) {
             if (result !== null) {
                 callback({ taken: true});
             } else if (username.length > 15) {
-                callback({ msg: 'Usernames can be at most 15 characters!' });
+                callback({ msg: 'Usernames should be at most 15 characters!' });
             } else {
                 var user = new userModel({ username: username,
                     password: password  });
@@ -233,8 +230,7 @@ var Users = (function(userModel) {
                 });
             }
         });
-    };
-
+    }
 
     Object.freeze(that);
     return that;

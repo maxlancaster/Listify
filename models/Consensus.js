@@ -38,6 +38,14 @@ var consensusRanking = (function(consensusModel) {
 
     var that = {};
 
+    // that.createConsensus = function(consensus, callback) {
+    //
+    //
+    //
+    //
+    //
+    // }
+
     //lock a consensus by its ID
     that.lockConsensus = function (consensusId, callback) {
         consensusModel.findById(consensusId, function (err, consensus) {
