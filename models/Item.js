@@ -1,19 +1,31 @@
-const uuid = require('uuid');
-/**
- * Created by phillipou on 11/20/16.
- */
+
 
 /*
- * Model representing an Item
+ * Model representing a Item.
+ * key: value pairs are key = title of the ranking and value =
+ * the object representing the item.
  */
- var Item = function(title, description, photo) {
-   var that = Object.create(Item.prototype);
-   that.id = uuid.v1();
-   that.title = title;
-   that.description = description;
-   that.photo = photo;
-   Object.freeze(that);
-   return that;
- };
 
-module.exports = Item;
+var mongoose = require('mongoose');
+// var User = require('/models/Users');
+// var Consensus = require('/models/Consensus');
+
+var itemSchema = mongoose.Schema({
+
+    title: String
+
+});
+
+var itemModel = mongoose.model('Items', itemSchema);
+
+var Items = (function(itemModel) {
+    var that = {};
+
+
+
+    Object.freeze(that);
+    return that;
+
+})(itemModel);
+
+module.exports = Items;
