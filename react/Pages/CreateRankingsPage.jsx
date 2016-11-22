@@ -4,10 +4,21 @@ import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import RankingTitleForm from '../Elements/RankingTitleForm.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
-import Item from '../../models/Item.js';
+import Navbar from '../Elements/Navbar.jsx';
 import { DragDropContext } from 'react-dnd';
 
+const uuid = require('uuid');
 
+//TEMPORARY
+var Item = function(title, description, photo) {
+   var that = Object.create(Item.prototype);
+   that.id = uuid.v1();
+   that.title = title;
+   that.description = description;
+   that.photo = photo;
+   Object.freeze(that);
+   return that;
+};
 class CreateRankingsPage extends Component {
   constructor(props) {
     super(props);
@@ -41,9 +52,14 @@ class CreateRankingsPage extends Component {
 
 		return (
       <div>
+        <Navbar />
         <RankingTitleForm placeholder={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
-        <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
-        <OptionsList id={1} list={items} canEdit = {true} style={style}/>
+        <div className = "AddItemForm">
+          <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
+        </div>
+        <div className = "CreateRankingsOptionsList">
+          <OptionsList  id={1} list={items} canEdit = {true} style={style}/>
+        </div>
         <BottomRightButton onClick = {this.createRanking.bind(this)}/>
       </div>
 		);

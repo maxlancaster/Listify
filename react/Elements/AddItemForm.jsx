@@ -25,7 +25,7 @@ class AddItemForm extends Component {
     return (
       <form onSubmit={this.handleSubmit}>
         <input type="text" placeholder = {placeholder} value={this.state.value} onChange={this.handleChange} />
-        <input type="submit" value="Add" />
+        <input id = "AddButton" type="submit" value="Add" />
       </form>
     );
   }

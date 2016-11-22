@@ -9,17 +9,13 @@ class ItemCard extends Component {
 		const { item, isDragging, connectDragSource, connectDropTarget } = this.props;
 		const opacity = isDragging ? 0 : 1;
 		const style = {
-			border: '1px dashed blue',
-			padding: '0.5rem 1rem',
-			margin: '.5rem',
-			backgroundColor: 'white',
 			opacity: opacity
 		};
 
 		return connectDragSource(connectDropTarget(
-        <div style={style}>
-          <p>{item.title}</p>
-          <button onClick={this.props.deleteItem.bind(null, item)}>x</button>
+        <div className = "ItemCard" style={style}>
+          <p className = "ItemCardTitle">{item.title}</p>
+          <button className = "ItemCardEditButton" onClick={this.props.deleteItem.bind(null, item)}>x</button>
         </div>
 
     ));
