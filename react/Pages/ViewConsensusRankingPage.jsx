@@ -30,7 +30,6 @@ class ViewConsensusRankingPage extends Component {
     const order = this.state.order;
 		return (
       <div>
-        <Navbar />
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <h1 className = "RankingTitle">{this.state.title}</h1>

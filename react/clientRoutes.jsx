@@ -1,5 +1,6 @@
 import App from './App.jsx';
 import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
+import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 // import services from '../services';
 import LoginPage from './Pages/LoginPage.jsx';
 import userServices from '../services/userServices.js';
@@ -26,8 +27,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 export default (
     <Router history={browserHistory} >
-        <Route path='/' component={LoginPage}  >
+        <Route path='/' component={LoginPage} />
         <Route path="ranking" component={CreateRankingsPage} />
-        </Route>
     </Router>
 );

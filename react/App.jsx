@@ -3,6 +3,7 @@ import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
 import EditRankingsPage from './Pages/EditRankingsPage.jsx';
 import LoginPage from './Pages/LoginPage.jsx'
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
+import Navbar from './Elements/Navbar.jsx';
 import { withRouter } from 'react-router';
 import userServices from '../services/userServices.js';
 

@@ -4,7 +4,6 @@ import RankingList from '../Elements/RankingList.jsx';
 import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import { DragDropContext } from 'react-dnd';
-import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 
 const uuid = require('uuid');
@@ -27,15 +26,22 @@ class EditRankingsPage extends Component {
     var rankingAuthor = "Phillip Ou";
     var items = [Item('Lebron'),Item('Kobe'), Item('Carmelo')];
     var ranking = {order:{}, items:items, title:rankingTitle, author:rankingAuthor}; //props.ranking;
-    this.state = {ranking: ranking, order: []};
+    this.state = {ranking: ranking, order: [], showAlertDialog: false};
+  }
+
+  showAlertDialog() {
+    this.setState({showAlertDialog: true})
+  }
+
+  closeAlertDialog() {
+    this.setState({showAlertDialog: false})
   }
 
   render() {
-
+    console.log(this.state.showAlertDialog);
     const options = this.state.options;
 		return (
       <div>
-        <Navbar />
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <h1 className = "RankingTitle">{this.state.ranking.title}</h1>
