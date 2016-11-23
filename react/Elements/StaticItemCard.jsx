@@ -12,11 +12,13 @@ class StaticItemCard extends Component {
 		};
 
 		return (
+      <a href="#">
         <div className = "ItemCard" style={style}>
           {this.props.showRankingNumber && <p className = "ItemCardRanking">{this.props.index+1 + "."}</p>}
           <p className = "ItemCardTitle">{item.title}</p>
 
         </div>
+      </a>
     );
   }
 }

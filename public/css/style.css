@@ -22,7 +22,9 @@ html, body {
 
 a, a:visited {
   text-decoration: none;
+  color: #4A4A4A;
 }
+
 
 #listify-title {
   font-size:36px;

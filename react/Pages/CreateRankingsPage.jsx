@@ -40,6 +40,7 @@ class CreateRankingsPage extends Component {
     //TODO: Create Ranking and Consensus Ranking here
   }
 
+  //TODO: NAVIGATE TO EDITRANKINGPAGE
   navigateToEditRanking() {
 
   }

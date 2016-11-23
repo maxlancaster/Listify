@@ -7,6 +7,7 @@ class BottomRightButton extends Component {
   }
 
   render() {
+    const title = this.props.title ? this.props.title : "OK";
     const style = { position: 'fixed',
                     bottom: 25,
                     right: 25,
@@ -17,7 +18,7 @@ class BottomRightButton extends Component {
                     color:"white",
                     border: "none"}
     return (
-      <button className="BottomRightButton" onClick={this.props.onClick.bind(null)}>OK</button>
+      <button className="BottomRightButton" onClick={this.props.onClick.bind(null)}>{title}</button>
     );
   }
 }
