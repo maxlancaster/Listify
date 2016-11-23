@@ -33,6 +33,18 @@ var Rankings = (function(rankingModel) {
 
     var that = {};
 
+    that.getAllRankingsForSingleConsensus = function (consensusId, callback) {
+        rankingModel.find({ consensusRanking: consensusId })
+            .exec(function (err, rankings) {
+                if (err) callback({ msg: err });
+                if (rankings != null) {
+                    callback(null, rankings);
+                } else {
+                    callback({ msg: 'No rankings for this consensus!'})
+                }
+            })
+    };
+
     //add an item to a ranking, item parameter should be passed in as {title: string, ranking: number}
     that.addItemToRanking = function (item, rankingId, callback) {
 
