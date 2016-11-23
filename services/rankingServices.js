@@ -19,7 +19,7 @@ export default {
 			metho : 'GET',
 			json : true,
 			body : {
-
+				// To DO
 			}
 		});
 	}
