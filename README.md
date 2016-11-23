@@ -18,4 +18,10 @@ For some reason,
 ## Routes
 http://localhost:3000/login for the login page. Note that we haven't yet implemented middleware to detect whether the user is authenticated. 
 
-http://localhost:3000/
+http://localhost:3000/rankings for creating an empty ranking
+
+http://localhost:3000/rankings/edit for editing an empty ranking
+
+http://localhost:3000/edit/:consensus_id for submitting a ranking to an open ranking
+
+http://localhost:3000/consensus to view your rankings which have reached consensus
