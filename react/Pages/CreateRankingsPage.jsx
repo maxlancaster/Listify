@@ -4,6 +4,7 @@ import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import RankingTitleForm from '../Elements/RankingTitleForm.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
+import Navbar from '../Elements/Navbar.jsx';
 import { DragDropContext } from 'react-dnd';
 import { withRouter } from 'react-router';
 import EditRankingsPage from './EditRankingsPage.jsx';

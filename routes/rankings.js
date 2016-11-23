@@ -12,6 +12,7 @@ var Users = require('../models/Users');
  * Requires authentication on all access to logged-in Listify features.
  */
 var requireAuthentication = function(req, res, next) {
+    console.log("AUTHENTICATION REQUIRED!");
     if (!req.currentUser){
         utils.sendErrorResponse(res, 403, 'Please log in to use this feature.');
     } else {
@@ -57,14 +58,16 @@ var requireContent = function(req, res, next) {
 
 
 // Register the middleware handlers above.
-router.all('*', requireAuthentication);
+router.get('/', requireAuthentication);
+router.get('/:consensusID', requireAuthentication);
+router.post('/lock/:consensusID', requireAuthentication);
 router.post('*', requireContent);
 
 /**
  * Get all rankings created by the currently logged in user.
  */
 router.get('/', function(req, res){
-    Users.getAllRankings(req.currentUser.username, function(err, rankings){
+    Consensus.getUserPrivateConsensuses(req.currentUser.username, function(err, consensuses){
         if(err){
             utils.sendSuccessResponse(res, { rankings : [] });
         } else {
@@ -77,29 +80,28 @@ router.get('/', function(req, res){
 /**
  * Returns
  */
-router.get('/:rankingId', function(req, res) {
-    Rankings.getConsensusByRankingId(req.params.rankingId, function(err, ranking) {
-        if (err) {
-            Rankings.getRankingByID(req.params.rankingID, function(err, ranking){
-                if(err){
-                    utils.sendErrorResponse(res, 404, 'No such ranking.');
-                } else{
-                    utils.sendSuccessResponse(res, { ranking : ranking });
-                }
-            });
-        } else {
 
-            Users.getAllConsensusRankings(req.currentUser.username, function(err, consensus){
-                if(err){
-                    utils.sendErrorResponse(res, 404, 'No such consensus.');
-                } else {
-
-                    utils.sendSuccessResponse(res, { ranking : ranking });
-                }
-            })
-
+router.get('/:consensusID', function(req, res){
+    Consensus.getConsensusById(req.params.consensusID, function(err, consensus){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such consensus.');
+        } else{
+            utils.sendSuccessResponse(res, { consensus : consensus});
         }
-    });
+    })
+});
+
+/**
+ * Locks the consensus.
+ */
+router.post('/lock/:consensusID', function(req, res){
+    Consensus.getConsensusById(req.params.consensusID, function(err, consensus){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such consensus.');
+        } else{
+            utils.sendSuccessResponse(res, { consensus : consensus});
+        }
+    })
 });
 
 router.post('/edit', function(req, res) {
@@ -116,6 +118,21 @@ router.post('/edit', function(req, res) {
         }
     });
 
+});
+
+/**
+ * Gets the consensus to allow non-creator users to post responses to
+ */
+router.get('/edit/:consensusID', function(req, res){
+    Consensus.getConsensusById(req.params.consensusID, function(err, consensus){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such consensus.');
+        } else{
+            if(!req.body.currentUser.username === consensus.creator){
+                utils.sendSuccessResponse(res, { consensus : consensus});
+            }
+        }
+    })
 });
 
 module.exports = router;

@@ -44,39 +44,64 @@ var consensusRanking = (function(consensusModel) {
 
     var that = {};
 
-    // /**
-    //  * Updates the consensus overallRanking (called when a ranking is submitted)
-    //  * @param consensusId
-    //  * @param callback
-    //  */
-    // that.updateConsensus = function (consensusId, callback) {
-    //     consensusModel.findById(consensusId, function (err, consensus) {
-    //         if (err) callback({msg: err});
-    //         if (consensus != null) {
-    //
-    //             //copy the list and find the ranking list
-    //             consensus.rankings.slice().map(function(rankingId) {
-    //                 Ranking.getRankingByID(rankingId, function (err, ranking) {
-    //                     if (err) callback({msg: "ranking does not exist"});
-    //                     if (ranking != null) {
-    //
-    //                         rankingItemsLst = ranking.items.slice();
-    //
-    //
-    //
-    //
-    //
-    //
-    //                     } else {
-    //                         callback({msg: 'The ranking does not exist!'});
-    //                     }
-    //                 });
-    //             });
-    //         } else {
-    //             callback({msg: 'The consensus does not exist!'});
-    //         }
-    //     });
-    // };
+    /**
+     * Updates the consensus overallRanking (called when a ranking is submitted) according to the following algorithm:
+     *
+     * For a consensus, find the rankings assocaited with it, where each individual ranking is a list of items (first is the best, last is the worst).
+     * Each item occurs in every list at various indices.
+     * For each item, sum up the value of the indices where it is placed in each list.
+     * Rank all the items by this sum, where the lowest sum is ranked first.
+     * should be simple enough and will work well enough for the MVP. Thoughts?
+     * @param consensusId
+     * @param callback
+     */
+    that.updateConsensus = function (consensusId, callback) {
+
+        //search for all the rankings with a given consensusId
+        Ranking.getAllRankingsForSingleConsensus(consensusId, function (err, rankings) {
+            if (err) callback({ msg: err });
+            if (rankings != null) {
+
+                //keeps track of the sums for all items
+                var sums = {};
+
+                //find the sums
+                rankings.forEach(function (object) {
+                    var items = object.items;
+                    items.forEach(function (item) {
+                        if (!(item in sums)) {
+                            sums[item] = items.indexOf(item);
+                        } else {
+                            sums[item] += items.indexOf(item);
+                        }
+                    });
+                });
+
+                //create a list of the sums in increasing order
+                var new_ranking = Object.keys(sums).reduce(function(a, b){ return sums[a] < sums[b] ? a : b });
+
+                //make sure that the list is only object IDs so we can add it to the schema
+                var returnRanking = [];
+                new_ranking.forEach(function (item) {
+                    returnRanking.push(item._id)
+                });
+
+                //assign the new list to the overallRanking field
+                consensusModel.findById(consensusId, function (err, consensus) {
+                    if (err) callback({ msg: err });
+                    if (consensus != null) {
+                        consensus.overallRanking = returnRanking;
+                        callback(null, consensus);
+                    } else {
+                        callback({ msg: 'The consensus does not exist!'});
+                    }
+                });
+
+            } else {
+                callback({ msg: 'No rankings!'});
+            }
+        });
+    };
 
 
     //pass in consensus object with same fields and same types, make sure they are the same
