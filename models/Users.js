@@ -10,8 +10,8 @@
  */
 
 var mongoose = require('mongoose');
-// var Ranking = require('/models/Ranking');
-// var Consensus = require('/models/Consensus');
+var Ranking = require('/models/Ranking');
+var Consensus = require('/models/Consensus');
 
 var userSchema = mongoose.Schema({
     username: String,
@@ -34,7 +34,7 @@ var userSchema = mongoose.Schema({
 
 });
 
-var userModel = mongoose.model('User', userSchema);
+var userModel = mongoose.model('Users', userSchema);
 
 // TODO - add functions: getAllRankings, getRankingById, getConsensusRanking, getConsensusRankingById addRanking, addConsensusRanking,removeRankingbyId, removeConsensusRankingById
 
@@ -246,7 +246,7 @@ var Users = (function(userModel) {
                 });
             }
         });
-    }
+    };
 
     Object.freeze(that);
     return that;
