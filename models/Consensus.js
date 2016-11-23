@@ -32,16 +32,75 @@ var consensusSchema = mongoose.Schema({
     items: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Items'
+    }],
 
+    overallRanking: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Items'
     }]
-
 });
 
 var consensusModel = mongoose.model('Consensus', consensusSchema);
 
+
 var consensusRanking = (function(consensusModel) {
 
     var that = {};
+
+    // /**
+    //  * Updates the consensus overallRanking (called when a ranking is submitted)
+    //  * @param consensusId
+    //  * @param callback
+    //  */
+    // that.updateConsensus = function (consensusId, callback) {
+    //     consensusModel.findById(consensusId, function (err, consensus) {
+    //         if (err) callback({msg: err});
+    //         if (consensus != null) {
+    //
+    //             //copy the list and find the ranking list
+    //             consensus.rankings.slice().map(function(rankingId) {
+    //                 Ranking.getRankingByID(rankingId, function (err, ranking) {
+    //                     if (err) callback({msg: "ranking does not exist"});
+    //                     if (ranking != null) {
+    //
+    //                         rankingItemsLst = ranking.items.slice();
+    //
+    //
+    //
+    //
+    //
+    //
+    //                     } else {
+    //                         callback({msg: 'The ranking does not exist!'});
+    //                     }
+    //                 });
+    //             });
+    //         } else {
+    //             callback({msg: 'The consensus does not exist!'});
+    //         }
+    //     });
+    // };
+
+
+    //pass in consensus object with same fields and same types, make sure they are the same
+    //later I will add checks to make sure
+    that.createConsensus = function (consensusObject, callback) {
+
+        var newConsensus = new consensusModel({
+            creator: consensusObject.creator,
+            title: consensusObject.title,
+            description: consensusObject.description,
+            completed: false,
+            public: consensusObject.public,
+            items: consensusObject.items,
+            overallRanking: consensusObject.items
+        });
+
+        newConsensus.save(function(err) {
+            if (err) callback({ msg: err});
+            callback(null);
+        });
+    };
 
     //lock a consensus by its ID
     that.lockConsensus = function (consensusId, callback) {
@@ -49,7 +108,12 @@ var consensusRanking = (function(consensusModel) {
             if (err) callback({ msg: err });
             if (consensus != null) {
                 consensus.completed = true;
-                consensus.save();
+                consensus.save(function(err) {
+                    if (err) callback({ msg: err});
+                    callback(null);
+                });
+
+
             } else {
                 callback({ msg: 'The consensus does not exist!'});
             }
