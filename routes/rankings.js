@@ -3,7 +3,7 @@ var router = express.Router();
 var utils = require('../utils/utils');
 
 var Rankings = require('../models/Ranking');
-var Items = require('../models/Item');
+var Items = require('../models/Items');
 var Consensus = require('../models/Consensus');
 var Users = require('../models/Users');
 
@@ -71,7 +71,7 @@ router.get('/', function(req, res){
             utils.sendSuccessResponse(res, { rankings : rankings});
         }
     })
-};
+});
 
 
 /**
@@ -102,29 +102,20 @@ router.get('/:rankingId', function(req, res) {
     });
 });
 
+router.post('/edit', function(req, res) {
+    console.log(req.body.content);
+    var consensusObject = {
+        creator : req.session.username,
+        title : req.body.content.title,
+        items : req.body.content.items
+    };
+    Consensus.createConsensus(consensusObject, function(err) {
+        if (err) {
+            utils.sendErrorResponse(res, 500, err);
+        } else {
+        }
+    });
 
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+module.exports = router;

@@ -7,6 +7,7 @@ var webpackDevHelper = require('./hotReload.js');
 
 // Require routes.
 var users = require('./routes/users');
+var rankings = require('./routes/rankings');
 
 // Require Users model for authentication.
 var Users = require('./models/Users');
@@ -64,6 +65,7 @@ app.use(function(req, res, next) {
 
 // Set up our routes.
 app.use('/users', users);
+app.use('/rankings', rankings);
 
 app.listen((process.env.PORT || 3000), function() {
   console.log("Listening for port");

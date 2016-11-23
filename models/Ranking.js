@@ -13,10 +13,7 @@ var Consensus = require('../models/Consensus');
 var rankingSchema = mongoose.Schema({
 
     //order in ranking is the order that it is preferred
-    items: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Items'
-    }],
+    items: [{}],
 
     user: String,
 

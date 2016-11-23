@@ -6,6 +6,7 @@ import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import Navbar from './Elements/Navbar.jsx';
 import { withRouter } from 'react-router';
 import userServices from '../services/userServices.js';
+import rankingServices from '../services/rankingServices.js'
 
 class App extends Component {
 	constructor(props){
