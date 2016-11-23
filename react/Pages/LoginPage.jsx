@@ -49,7 +49,7 @@ class LoginPage extends Component {
                         prevState.user = res.content.user;
                         return prevState;
                     });
-                    this.props.router.push('/');
+                    this.props.router.push('rankings');
                 }
             }).catch((err) => {
                 this.setState({errorMessage:err.error.err});
