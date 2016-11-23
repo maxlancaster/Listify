@@ -43,6 +43,7 @@ class CreateRankingsPage extends Component {
     //TODO: Create Ranking and Consensus Ranking here
   }
 
+  //TODO: NAVIGATE TO EDITRANKINGPAGE
   navigateToEditRanking() {
     if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
       // return  <EditRankingsPage data={this.state} />;
