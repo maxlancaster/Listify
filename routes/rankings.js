@@ -125,7 +125,13 @@ router.post('/edit', function(req, res) {
                 if (err) {
                     utils.sendErrorResponse(res, 500, err);
                 } else {
-                    utils.sendSuccessResponse(res);
+                    Consensus.updateRankingsArray(consensus._id, ranking._id, function(err){
+                        if (err) {
+                            utils.sendErrorResponse(res, 500, err);
+                        } else {
+                            utils.sendSuccessResponse(res);
+                        }
+                    })
                 }
             });
         }
@@ -142,7 +148,18 @@ router.get('/edit/:consensusID', function(req, res){
             utils.sendErrorResponse(res, 404, 'No such consensus.');
         } else{
             if(!req.body.currentUser.username === consensus.creator){
-                utils.sendSuccessResponse(res, { consensus : consensus});
+                var rankingData = {
+                    items: req.body.content.submitted_items,
+                    user: req.session.username,
+                    consensusRanking: consensus._id
+                };
+                Rankings.addRanking(rankingData, function(err, ranking){
+                    if (err) {
+                        utils.sendErrorResponse(res, 500, err);
+                    } else {
+                        utils.sendSuccessResponse(res);
+                    }
+                });
             }
         }
     })

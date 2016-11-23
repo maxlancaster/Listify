@@ -31,10 +31,7 @@ var consensusSchema = mongoose.Schema({
 
     all_items: [{}],
 
-    // overallRanking: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Items'
-    // }]
+    overallRanking: [{}]
 });
 
 var consensusModel = mongoose.model('Consensus', consensusSchema);
@@ -171,15 +168,28 @@ var consensusRanking = (function(consensusModel) {
         });
     };
 
+    // add the id rankingId to the Consensus document with _id consensusId
+    that.updateRankingsArray = function (consensusId, rankingId, callback) {
+        consensusModel.findOneAndUpdate(
+            {_id : consensusId}, {$push: { rankings: rankingId} }, function(err) {
+                if (err) callback({msg: err})
+                else {
+                    consensusModel.find({_id : consensusId}).exec(function(error, consensus) {
+                        console.log("consensus updated! : " + JSON.stringify(consensus, null, '\t'));
+                    });
+                    callback(null);
+                }
+        });
+    };
 
     /**
      * Returns a consensus from its id.
      */
     that.getConsensusById = function (consensusID, callback) {
         consensusModel.findById(consensusID, function (err, consensus) {
-            if (err) callback({ msg: err });
+            if (err) callback({ msg: err }, null);
             if (consensus != null) {
-                callback(null, consensus.consensusRanking);
+                callback(null, consensus);
             } else {
                 callback({ msg: 'The consensus does not exist!'});
             }
