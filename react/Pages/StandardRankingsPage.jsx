@@ -23,6 +23,18 @@ class EditRankingsPage extends Component {
     this.state = {ranking: ranking, order: [], showCreateRankingConfirm: false, originalItems: copy_items};
   }
 
+    componentWillMount() {
+      // ToDO : populate the state for this page using data from the consensus
+
+      // rankingServices.populateStandardRankingPage().then((res) => {
+      //   if (res.success) {
+      //     console.log("success!");
+      //   } else {
+      //     console.log("Error on populateStandardRankingPage: ", res.err);
+      //   }
+      // });
+    }
+
     submitOriginalRanking() {
       rankingServices.submitOriginalRanking(
         {

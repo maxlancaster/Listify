@@ -11,6 +11,17 @@ export default {
 	        json : true,
 	        body : { content : content }
 	    });
+	},
+
+	populateStandardRankingPage : () => {
+		return request({
+			uri : BASE_URL + '/:consensus_id',
+			metho : 'GET',
+			json : true,
+			body : {
+
+			}
+		});
 	}
 	// ,
 	// getConsensusById : (consensus_id) => {

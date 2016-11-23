@@ -81,8 +81,8 @@ router.get('/', function(req, res){
  * Returns
  */
 
-router.get('/:consensusID', function(req, res){
-    Consensus.getConsensusById(req.params.consensusID, function(err, consensus){
+router.get('/:consensus_id', function(req, res){
+    Consensus.getConsensusById(req.params.consensus_id, function(err, consensus){
         if(err){
             utils.sendErrorResponse(res, 404, 'No such consensus.');
         } else{
