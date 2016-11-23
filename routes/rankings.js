@@ -11,6 +11,7 @@ var Users = require('../models/Users');
  * Requires authentication on all access to logged-in Listify features.
  */
 var requireAuthentication = function(req, res, next) {
+    console.log("AUTHENTICATION REQUIRED!");
     if (!req.currentUser){
         utils.sendErrorResponse(res, 403, 'Please log in to use this feature.');
     } else {
@@ -64,6 +65,7 @@ router.post('*', requireContent);
  * Get all ranking consensuses created by the currently logged in user.
  */
 router.get('/', function(req, res){
+    console.log("yooo!");
     Consensus.getUserPrivateConsensuses(req.currentUser.username, function(err, consensuses){
         if(err){
             utils.sendSuccessResponse(res, { consensuses : [] });
@@ -97,32 +99,3 @@ router.post('/lock/:consensusID', function(req, res){
         }
     })
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
