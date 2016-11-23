@@ -2,8 +2,11 @@
 
 ## Deploy
 git clone https://github.mit.edu/6170-fa16/final-proj-philmeup.git
+
 npm install
+
 sudo mongod
+
 npm start
 
 go to http://localhost:3000/ in the browser
