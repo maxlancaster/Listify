@@ -27,7 +27,8 @@ class EditRankingsPage extends Component {
       rankingServices.submitOriginalRanking(
         {
           title : this.state.ranking.title,
-          items : this.state.originalItems,
+          all_items : this.state.originalItems,
+          submitted_items : this.state.order
         }
       ).then((res) => {
         if (res.success){

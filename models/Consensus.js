@@ -116,11 +116,11 @@ var consensusRanking = (function(consensusModel) {
             // overallRanking: consensusObject.items
         });
 
-        newConsensus.save(function(err) {
-            if (err) callback({ msg: err});
-            callback(null);
-            consensusModel.find({}).exec(function(error, consensuses) {
-                console.log("consensuses in the database: " + JSON.stringify(consensuses, null, '\t'))
+        newConsensus.save(function(err, consensus) {
+            if (err) callback({ msg: err}, null);
+            callback(null, consensus);
+            consensusModel.find({creator:consensusObject.creator, title:consensusObject.title}).exec(function(error, consensus) {
+                console.log("consensus created! : " + JSON.stringify(consensus, null, '\t'));
             });
         });
     };

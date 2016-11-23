@@ -104,17 +104,30 @@ router.post('/lock/:consensusID', function(req, res){
     })
 });
 
+// initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/edit', function(req, res) {
     console.log(req.body.content);
     var consensusObject = {
         creator : req.session.username,
         title : req.body.content.title,
-        items : req.body.content.items
+        items : req.body.content.all_items
     };
-    Consensus.createConsensus(consensusObject, function(err) {
+    Consensus.createConsensus(consensusObject, function(err, consensus) {
         if (err) {
             utils.sendErrorResponse(res, 500, err);
         } else {
+            var rankingData = {
+                items: req.body.content.submitted_items,
+                user: req.session.username,
+                consensusRanking: consensus._id
+            };
+            Rankings.addRanking(rankingData, function(err, ranking){
+                if (err) {
+                    utils.sendErrorResponse(res, 500, err);
+                } else {
+                    utils.sendSuccessResponse(res);
+                }
+            });
         }
     });
 
