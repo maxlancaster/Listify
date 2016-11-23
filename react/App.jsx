@@ -25,10 +25,16 @@ class App extends Component {
             });
     }
 
+	logout() {
+		userServices.logout().then((response) => {
+			this.props.router.push('login');
+		});
+	}
+
 	render(){
         return (
 			<div id = "app">
-				<Navbar />
+				<Navbar logout = {this.logout.bind(this)}/>
 				<div className="content">
 					{this.props.children}
 				</div>
