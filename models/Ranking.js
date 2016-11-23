@@ -6,8 +6,8 @@
  */
 
 var mongoose = require('mongoose');
-var Items = require('/models/Items');
-var Consensus = require('/models/Consensus');
+var Items = require('../models/Items');
+var Consensus = require('../models/Consensus');
 
 
 var rankingSchema = mongoose.Schema({

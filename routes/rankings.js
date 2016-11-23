@@ -59,47 +59,46 @@ var requireContent = function(req, res, next) {
 router.all('*', requireAuthentication);
 router.post('*', requireContent);
 
+
 /**
- * Get all rankings created by the currently logged in user.
+ * Get all ranking consensuses created by the currently logged in user.
  */
 router.get('/', function(req, res){
-    Users.getAllRankings(req.currentUser.username, function(err, rankings){
+    Consensus.getUserPrivateConsensuses(req.currentUser.username, function(err, consensuses){
         if(err){
-            utils.sendSuccessResponse(res, { rankings : [] });
+            utils.sendSuccessResponse(res, { consensuses : [] });
         } else {
-            utils.sendSuccessResponse(res, { rankings : rankings});
+            utils.sendSuccessResponse(res, { consensuses : consensuses});
         }
     })
 };
 
 
 /**
- * Returns
+ * Get a specific consensus by its id.
  */
-router.get('/:rankingId', function(req, res) {
-    Rankings.getConsensusByRankingId(req.params.rankingId, function(err, ranking) {
-        if (err) {
-            Rankings.getRankingByID(req.params.rankingID, function(err, ranking){
-                if(err){
-                    utils.sendErrorResponse(res, 404, 'No such ranking.');
-                } else{
-                    utils.sendSuccessResponse(res, { ranking : ranking });
-                }
-            });
-        } else {
-
-            Users.getAllConsensusRankings(req.currentUser.username, function(err, consensus){
-                if(err){
-                    utils.sendErrorResponse(res, 404, 'No such consensus.');
-                } else {
-
-                    utils.sendSuccessResponse(res, { ranking : ranking });
-                }
-            })
-
+router.get('/:consensusID', function(req, res){
+    Consensus.getConsensusById(req.parama.consensusID, function(err, consensus){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such consensus.');
+        } else{
+            utils.sendSuccessResponse(res, { consensuses : consensuses});
         }
-    });
+    })
 });
+
+
+router.post('/lock/:consensusID', function(req, res){
+    Consensus.getConsensusById(req.parama.consensusID, function(err, consensus){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such consensus.');
+        } else{
+            utils.sendSuccessResponse(res, { consensuses : consensuses});
+        }
+    })
+});
+
+
 
 
 
