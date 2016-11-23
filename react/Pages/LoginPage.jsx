@@ -59,12 +59,13 @@ class LoginPage extends Component {
 
     render(){
         return (
-            <div className='container'>
-                <div className='col-md-4 col-md-push-1'>
+          <div className = "LoginPage">
+            <div className='UserAuthContainer'>
+                <div className='SignInForm'>
                     <h1>Sign In</h1>
                     <div className='form'>
                         <div className='form-group'>
-                            <input className='form-control'
+                            <input className='username'
                                    name='loginUser'
                                    placeholder='Username'
                                    value={this.state.loginUser}
@@ -72,7 +73,7 @@ class LoginPage extends Component {
                                 />
                         </div>
                         <div className='form-group'>
-                            <input className='form-control'
+                            <input className='password'
                                    type='password'
                                    name='loginPass'
                                    placeholder='Password'
@@ -80,14 +81,14 @@ class LoginPage extends Component {
                                    onChange={this.updateFormVal}
                                 />
                         </div>
-                        <button className='btn btn-default' onClick={this.loginUser}>Sign In</button>
+                        <button className='login-button' onClick={this.loginUser}>Sign In</button>
                     </div>
                 </div>
-                <div className='col-md-4 col-md-push-2'>
+                <div className='RegisterForm'>
                     <h1>Register</h1>
                     <div className='form'>
                         <div className='form-group'>
-                            <input className='form-control'
+                            <input className='username'
                                    name='registerUser'
                                    placeholder='Username'
                                    value={this.state.registerUser}
@@ -95,7 +96,7 @@ class LoginPage extends Component {
                                 />
                         </div>
                         <div className='form-group'>
-                            <input className='form-control'
+                            <input className='password'
                                    type='password'
                                    name='registerPass'
                                    placeholder='Password'
@@ -103,13 +104,14 @@ class LoginPage extends Component {
                                    onChange={this.updateFormVal}
                                 />
                         </div>
-                        <button className='btn btn-default' onClick={this.registerUser}>Register</button>
+                        <button className='signup-button' onClick={this.registerUser}>Register</button>
                           {this.state.errorMessage &&
                             <p style = {{color:"red"}}>{this.state.errorMessage}</p>
                           }
                     </div>
                 </div>
             </div>
+          </div>
         )
     }
 }
