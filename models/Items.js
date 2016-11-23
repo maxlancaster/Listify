@@ -15,8 +15,16 @@ var Items = (function(itemsModel) {
     var that = {};
 
     that.createItem = function (item, callback) {
-        //TODO
-    }
+        var newItem = {
+            title: item.title,
+            rank: item.rank
+        };
+
+        newItem.save(function (err, itemReturned) {
+            if (err) callback({ msg: err});
+            callback(null, itemReturned);
+        })
+    };
 
 
     Object.freeze(that);
