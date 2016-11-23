@@ -20,6 +20,10 @@ html, body {
 
 }
 
+.Navbar .LogoutButton {
+  float: right;
+}
+
 a, a:visited {
   text-decoration: none;
   color: #4A4A4A;
