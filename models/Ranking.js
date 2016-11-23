@@ -6,18 +6,16 @@
  */
 
 var mongoose = require('mongoose');
-// var User = require('/models/Users');
-// var Consensus = require('/models/Consensus');
-
-var itemSchema = mongoose.Schema({
-    title: String,
-    ranking: Number
-});
+var Items = require('/models/Items');
+var Consensus = require('/models/Consensus');
 
 
 var rankingSchema = mongoose.Schema({
 
-    items: [itemSchema],
+    items: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Items'
+    }],
 
     user: String,
 
@@ -41,15 +39,7 @@ var Rankings = (function(rankingModel) {
             if (err) callback({ msg: err });
             if (ranking != null) {
 
-                ranking.items.push({
-                        title: item.title,
-                        ranking: item.ranking
-                });
-
-                ranking.save(function(err) {
-                    if (err) callback({msg: err});
-                    callback(null);
-                });
+                //TODO create item, add to ranking's item list
 
             } else {
                 callback({ msg: 'The ranking does not exist!'});

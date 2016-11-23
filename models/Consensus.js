@@ -9,9 +9,8 @@
  */
 
 var mongoose = require('mongoose');
-// var User = require('/models/Users');
-// var Ranking = require('/models/Consensus');
-
+var Ranking = require('/models/Consensus');
+var Items = require('/models/Items');
 
 var consensusSchema = mongoose.Schema({
 
@@ -30,7 +29,12 @@ var consensusSchema = mongoose.Schema({
 
     public: Boolean,
 
-    items: [Item]
+    items: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Items'
+
+    }]
+
 });
 
 var consensusModel = mongoose.model('Consensus', consensusSchema);
@@ -38,14 +42,6 @@ var consensusModel = mongoose.model('Consensus', consensusSchema);
 var consensusRanking = (function(consensusModel) {
 
     var that = {};
-
-    // that.createConsensus = function(consensus, callback) {
-    //
-    //
-    //
-    //
-    //
-    // }
 
     //lock a consensus by its ID
     that.lockConsensus = function (consensusId, callback) {
