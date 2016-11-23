@@ -10,8 +10,8 @@
  */
 
 var mongoose = require('mongoose');
-var Ranking = require('/models/Ranking');
-var Consensus = require('/models/Consensus');
+var Ranking = require('../models/Ranking');
+var Consensus = require('../models/Consensus');
 
 var userSchema = mongoose.Schema({
     username: String,

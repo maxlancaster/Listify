@@ -9,8 +9,8 @@
  */
 
 var mongoose = require('mongoose');
-var Ranking = require('/models/Consensus');
-var Items = require('/models/Items');
+var Ranking = require('../models/Consensus');
+var Items = require('../models/Items');
 
 var consensusSchema = mongoose.Schema({
 

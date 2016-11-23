@@ -88,6 +88,17 @@ router.get('/:consensusID', function(req, res){
 });
 
 
+router.post('/lock/:consensusID', function(req, res){
+    Consensus.getConsensusById(req.parama.consensusID, function(err, consensus){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such consensus.');
+        } else{
+            utils.sendSuccessResponse(res, { consensuses : consensuses});
+        }
+    })
+});
+
+
 
 
 
