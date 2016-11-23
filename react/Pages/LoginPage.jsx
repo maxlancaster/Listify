@@ -47,7 +47,7 @@ class LoginPage extends Component {
                         prevState.user = res.content.user;
                         return prevState;
                     });
-                    this.props.router.push('/rankings');
+                    this.props.router.push('/');
                 }
             }).catch((err) => {
                 console.log("Login err: ", err.error.err);
