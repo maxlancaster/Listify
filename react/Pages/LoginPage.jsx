@@ -10,7 +10,8 @@ class LoginPage extends Component {
             loginUser : '',
             loginPass : '',
             registerUser : '',
-            registerPass : ''
+            registerPass : '',
+            errorMessage: ''
         };
         this.updateFormVal = this.updateFormVal.bind(this);
         this.loginUser = this.loginUser.bind(this);
@@ -34,6 +35,7 @@ class LoginPage extends Component {
                 this.state.loginPass = this.state.registerPass;
                 this.loginUser();
             } else {
+                this.setState({errorMessage:res.err});
                 console.log("Error on register user: ",res.err)
             }
         });
@@ -50,6 +52,7 @@ class LoginPage extends Component {
                     this.props.router.push('/');
                 }
             }).catch((err) => {
+                this.setState({errorMessage:err.error.err});
                 console.log("Login err: ", err.error.err);
             });
     }
@@ -101,6 +104,9 @@ class LoginPage extends Component {
                                 />
                         </div>
                         <button className='btn btn-default' onClick={this.registerUser}>Register</button>
+                          {this.state.errorMessage &&
+                            <p style = {{color:"red"}}>{this.state.errorMessage}</p>
+                          }
                     </div>
                 </div>
             </div>
