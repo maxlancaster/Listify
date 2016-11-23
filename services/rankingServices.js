@@ -9,7 +9,7 @@ export default {
 	        uri : BASE_URL + '/edit',
 	        method: 'POST',
 	        json : true,
-	        body : { content }
+	        body : { content : content }
 	    });
 	}
 	// ,
