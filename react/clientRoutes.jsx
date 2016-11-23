@@ -3,6 +3,7 @@ import EditRankingsPage from './Pages/EditRankingsPage.jsx';
 import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import ViewCompletedRankingsPage from './Pages/ViewCompletedRankingsPage.jsx';
+import NotFound from './Pages/NotFound.jsx';
 // import services from '../services';
 import LoginPage from './Pages/LoginPage.jsx';
 import userServices from '../services/userServices.js';
@@ -35,6 +36,7 @@ export default (
         <Route path="rankings" component={CreateRankingsPage} />
         <Route path="rankings/edit" component={EditRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} />
+        <Route path="*" component={NotFound} />
       </Route>
     </Router>
 );
