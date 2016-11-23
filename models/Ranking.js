@@ -48,17 +48,14 @@ var Rankings = (function(rankingModel) {
     //add an item to a ranking, item parameter should be passed in as {title: string, ranking: number}
     that.addItemToRanking = function (item, rankingId, callback) {
 
-        rankingModel.findOne({ _id: rankingId }, function(err, ranking) {
-            if (err) callback({ msg: err });
-            if (ranking != null) {
-
-                //TODO create item, add to ranking's item list
-
-            } else {
-                callback({ msg: 'The ranking does not exist!'});
+        rankingModel.findByIdAndUpdate(
+            rankingId,
+            {$push: {"items": {title: item.title, rank: item.rank}}},
+            function (err, ranking) {
+                if (err) callback({ msg: err });
+                callback(null, ranking);
             }
-
-        });
+        )
     };
 
     //expect in the same form as schema above
