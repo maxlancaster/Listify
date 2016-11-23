@@ -31,7 +31,7 @@ export default (
     <Router history={browserHistory} >
         <Route path='/' component={LoginPage} />
         <Route path="rankings" component={CreateRankingsPage} />
-        <Route path="rankings/edit/$:state" component={EditRankingsPage} />
+        <Route path="rankings/edit" component={EditRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} />
         <Route path="rankings" component={ViewCompletedRankingsPage} />
     </Router>

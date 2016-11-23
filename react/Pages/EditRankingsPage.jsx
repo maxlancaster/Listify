@@ -8,24 +8,15 @@ import ConfirmAlertView from '../Elements/ConfirmAlertView.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 
 const uuid = require('uuid');
-//TODO: remove later
-var Item = function(title, description, photo) {
-   var that = Object.create(Item.prototype);
-   that.id = uuid.v1();
-   that.title = title;
-   that.description = description;
-   that.photo = photo;
-   Object.freeze(that);
-   return that;
-};
 
 class EditRankingsPage extends Component {
   constructor(props) {
     super(props);
     //TODO: TEMP, REMOVE LATER
-    var rankingTitle = "Test Title"
+    var data = props.location.state;
+    var rankingTitle = data.rankingTitle;
     var rankingAuthor = "Phillip Ou";
-    var items = [Item('Lebron'),Item('Kobe'), Item('Carmelo')];
+    var items = data.items;
     var ranking = {order:{}, items:items, title:rankingTitle, author:rankingAuthor}; //props.ranking;
     this.state = {ranking: ranking, order: [], showCreateRankingConfirm: false};
   }

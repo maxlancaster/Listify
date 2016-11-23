@@ -45,8 +45,12 @@ class CreateRankingsPage extends Component {
 
   navigateToEditRanking() {
     if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
-      return  <EditRankingsPage data={this.state} />;
-      // this.props.router.push('/rankings/edit/${this.state}');
+      // return  <EditRankingsPage data={this.state} />;
+      var this_state = this.state;
+      this.props.router.push({
+        pathname : '/rankings/edit',
+        state : this_state
+      });
     }
   }
 
