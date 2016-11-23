@@ -33,8 +33,8 @@ class ViewCompletedRankingsPage extends Component {
 
   //navigate to create rankings page
   navigateToCreateRankingsPage() {
-      console.log("NAVIGATE!");
-    }
+    this.props.router.push("rankings");
+  }
 
   render() {
     const completedRankings = this.state.completedRankings;
