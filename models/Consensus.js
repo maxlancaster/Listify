@@ -27,17 +27,14 @@ var consensusSchema = mongoose.Schema({
 
     completed: {type: Boolean, default: false},
 
-    public: Boolean,
+    public: {type: Boolean, default: false},
 
-    items: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Items'
-    }],
+    all_items: [{}],
 
-    overallRanking: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Items'
-    }]
+    // overallRanking: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Items'
+    // }]
 });
 
 var consensusModel = mongoose.model('Consensus', consensusSchema);
@@ -110,20 +107,21 @@ var consensusRanking = (function(consensusModel) {
     //pass in consensus object with same fields and same types, make sure they are the same
     //later I will add checks to make sure
     that.createConsensus = function (consensusObject, callback) {
-
+        console.log(consensusObject);
         var newConsensus = new consensusModel({
             creator: consensusObject.creator,
             title: consensusObject.title,
-            description: consensusObject.description,
-            completed: false,
-            public: consensusObject.public,
-            items: consensusObject.items,
-            overallRanking: consensusObject.items
+            description: '',
+            all_items: consensusObject.items,
+            // overallRanking: consensusObject.items
         });
 
         newConsensus.save(function(err) {
             if (err) callback({ msg: err});
             callback(null);
+            consensusModel.find({}).exec(function(error, consensuses) {
+                console.log("consensuses in the database: " + JSON.stringify(consensuses, null, '\t'))
+            });
         });
     };
 

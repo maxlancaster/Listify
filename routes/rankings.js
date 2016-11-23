@@ -3,6 +3,7 @@ var router = express.Router();
 var utils = require('../utils/utils');
 
 var Rankings = require('../models/Ranking');
+var Items = require('../models/Items');
 var Consensus = require('../models/Consensus');
 var Users = require('../models/Users');
 
@@ -62,26 +63,24 @@ router.get('/:consensusID', requireAuthentication);
 router.post('/lock/:consensusID', requireAuthentication);
 router.post('*', requireContent);
 
-
-
 /**
- * Get all ranking consensuses created by the currently logged in user.
+ * Get all rankings created by the currently logged in user.
  */
 router.get('/', function(req, res){
-    console.log("yooo!");
     Consensus.getUserPrivateConsensuses(req.currentUser.username, function(err, consensuses){
         if(err){
-            utils.sendSuccessResponse(res, { consensuses : [] });
+            utils.sendSuccessResponse(res, { rankings : [] });
         } else {
-            utils.sendSuccessResponse(res, { consensuses : consensuses});
+            utils.sendSuccessResponse(res, { rankings : rankings});
         }
     })
 });
 
 
 /**
- * Get a specific consensus by its id.
+ * Returns
  */
+
 router.get('/:consensusID', function(req, res){
     Consensus.getConsensusById(req.params.consensusID, function(err, consensus){
         if(err){
@@ -105,6 +104,22 @@ router.post('/lock/:consensusID', function(req, res){
     })
 });
 
+router.post('/edit', function(req, res) {
+    console.log(req.body.content);
+    var consensusObject = {
+        creator : req.session.username,
+        title : req.body.content.title,
+        items : req.body.content.items
+    };
+    Consensus.createConsensus(consensusObject, function(err) {
+        if (err) {
+            utils.sendErrorResponse(res, 500, err);
+        } else {
+        }
+    });
+
+});
+
 /**
  * Gets the consensus to allow non-creator users to post responses to
  */
@@ -119,3 +134,5 @@ router.get('/edit/:consensusID', function(req, res){
         }
     })
 });
+
+module.exports = router;

@@ -6,6 +6,7 @@ import AddItemForm from '../Elements/AddItemForm.jsx';
 import { DragDropContext } from 'react-dnd';
 import ConfirmAlertView from '../Elements/ConfirmAlertView.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
+import rankingServices from '../../services/rankingServices.js';
 
 const uuid = require('uuid');
 
@@ -17,10 +18,26 @@ class EditRankingsPage extends Component {
     var rankingTitle = data.rankingTitle;
     var rankingAuthor = "Phillip Ou";
     var items = data.items;
+    var copy_items = items.slice(0);
     var ranking = {order:{}, items:items, title:rankingTitle, author:rankingAuthor}; //props.ranking;
-    this.state = {ranking: ranking, order: [], showCreateRankingConfirm: false};
+    this.state = {ranking: ranking, order: [], showCreateRankingConfirm: false, originalItems: copy_items};
   }
 
+    submitOriginalRanking() {
+      rankingServices.submitOriginalRanking(
+        {
+          title : this.state.ranking.title,
+          items : this.state.originalItems,
+        }
+      ).then((res) => {
+        if (res.success){
+                console.log("success!");
+            } else {
+                console.log("Error on submitOriginalRanking: ",res.err)
+        }
+        this.showShareDialog();
+      });
+    }
 
     showShareDialog() {
       this.setState({showCreateRankingConfirm: true})
@@ -54,7 +71,7 @@ class EditRankingsPage extends Component {
             <OptionsList  id={2} list={this.state.ranking.items} canEdit = {false} defaultBackGroundColor = {"FAF9F9"} />
           </div>
   			</div>
-        <BottomRightButton onClick = {this.showShareDialog.bind(this)}/>
+        <BottomRightButton onClick = {this.submitOriginalRanking.bind(this)}/>
       </div>
 		);
 	}
