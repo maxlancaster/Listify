@@ -32,8 +32,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 export default (
     <Router history={browserHistory} >
       <Route path='/' component={App}  >
-        <IndexRoute component={ViewCompletedRankingsPage} />
-        <Route path='login' component={LoginPage} />
+        <IndexRoute component={LoginPage} />
         <Route path="rankings" component={CreateRankingsPage} />
         <Route path="rankings/edit" component={EditRankingsPage} />
         <Route path="rankings/edit/*" component={StandardRankingsPage} />

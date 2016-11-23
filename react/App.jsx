@@ -27,7 +27,7 @@ class App extends Component {
 
 	logout() {
 		userServices.logout().then((response) => {
-			this.props.router.push('login');
+			this.props.router.push('/');
 		});
 	}
 
