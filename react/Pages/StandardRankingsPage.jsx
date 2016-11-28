@@ -24,6 +24,7 @@ class EditRankingsPage extends Component {
   }
 
     componentWillMount() {
+      rankingServices.getEditPage();
       // ToDO : populate the state for this page using data from the consensus
 
       // rankingServices.populateStandardRankingPage().then((res) => {

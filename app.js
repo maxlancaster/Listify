@@ -25,7 +25,6 @@ if (process.env.NODE_ENV !== 'production'){
   console.log("DEVELOPMENT: Turning on WebPack middleware...");
   app = webpackDevHelper.useWebpackMiddleware(app);
   app.use('/css', express.static(path.join(__dirname, 'public/css')));
-  app.use('/vendor', express.static(path.join(__dirname, 'public/vendor')));
 } else {
   console.log("PRODUCTION: Serving static files from /public...");
   app.use(express.static(path.join(__dirname, 'public')));
@@ -33,10 +32,7 @@ if (process.env.NODE_ENV !== 'production'){
 // Set up some middleware to use.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.get('*', function(req, res){
-  res.sendFile(path.join(__dirname, 'public/index.html'))
-});
-
+app.use(cookieParser());
 app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
 
 // Authentication middleware. This function
@@ -46,26 +42,30 @@ app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
 // in the session variable (accessed by the
 // encrypted cookied).
 // Same as example notes app. Many thanks and appreciates.
-app.use(function(req, res, next) {
-  if (req.session.username) {
-    console.log("session! " + req.session.username);
-    Users.findUser(req.session.username, function(err, user) {
-      if (user) {
-        req.currentUser = user;
-      } else {
-        req.session.destroy();
-      }
-      next();
-    });
-  } else {
-    console.log("no sessions :( ");
-    next();
-  }
-});
+// app.use(function(req, res, next) {
+//   if (req.session.username) {
+//     console.log("session! " + req.session.username);
+//     Users.findUser(req.session.username, function(err, user) {
+//       if (user) {
+//         req.currentUser = user;
+//       } else {
+//         req.session.destroy();
+//       }
+//       next();
+//     });
+//   } else {
+//     console.log("no sessions :( ");
+//     next();
+//   }
+// });
 
 // Set up our routes.
 app.use('/users', users);
 app.use('/rankings', rankings);
+app.get('*', function(req, res){
+  res.sendFile(path.join(__dirname, 'public/index.html'))
+});
+
 
 app.listen((process.env.PORT || 3000), function() {
   console.log("Listening for port");

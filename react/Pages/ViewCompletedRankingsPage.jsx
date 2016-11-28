@@ -27,7 +27,7 @@ class ViewCompletedRankingsPage extends Component {
     var rankingTitle = "Test Title";
     var rankingDescription = "created by Phillip Ou";
     //LOAD COMPLETED CONSENSUSES ONTO COMPLETED RANKINGS
-    var completedRankings = [Card('Lebron',rankingDescription),Card('Kobe',rankingDescription), Card('Carmelo',rankingDescription)];
+    var completedRankings = [Card('Ranking 1',rankingDescription),Card('Ranking 2',rankingDescription), Card('Ranking 3',rankingDescription)];
     this.state = {completedRankings:completedRankings};
   }
 

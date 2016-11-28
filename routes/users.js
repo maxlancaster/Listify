@@ -17,8 +17,8 @@ var requireAuthentication = function(req, res, next) {
 };
 
 router.post('/logout', requireAuthentication);
-router.put('/follow/:username', requireAuthentication);
-router.get('/following', requireAuthentication);
+// router.put('/follow/:username', requireAuthentication);
+// router.get('/following', requireAuthentication);
 
 /*
   For both login and create user, we want to send an error code if the user
@@ -95,12 +95,14 @@ router.post('/login', function(req, res) {
     - success.loggedIn: true if there is a user logged in; false otherwise
     - success.user: if success.loggedIn, the currently logged in user
 */
-router.get('/current', function(req, res) {
-  if (req.currentUser) {
-    utils.sendSuccessResponse(res, { loggedIn: true, user: req.currentUser.username });
-  } else {
-    utils.sendSuccessResponse(res, { loggedIn: false });
-  }
+router.get('/test', function(req, res) {
+  console.log("here!!");
+  res.send("blah");
+  // if (req.currentUser) {
+  //   utils.sendSuccessResponse(res, { loggedIn: true, user: req.currentUser.username });
+  // } else {
+  //   utils.sendSuccessResponse(res, { loggedIn: false });
+  // }
 });
 
 /*
@@ -124,25 +126,25 @@ router.put('/logout', function(req, res) {
     - success: true if the server succeeded in following the user
     - err: on failure, an error message
 */
-router.post('/follow/:username', function(req, res) {
-  if (req.body.following) {
-    Users.followUser(req.currentUser.username, req.params.username, function(err) {
-      if (err) {
-        utils.sendErrorResponse(res, 400, err.msg);
-      } else {
-        utils.sendSuccessResponse(res);
-      }
-    });
-  } else {
-    Users.unfollowUser(req.currentUser.username, req.params.username, function(err) {
-      if (err) {
-        utils.sendErrorResponse(res, 400, err.msg);
-      } else {
-        utils.sendSuccessResponse(res);
-      }
-    });
-  }
-});
+// router.post('/follow/:username', function(req, res) {
+//   if (req.body.following) {
+//     Users.followUser(req.currentUser.username, req.params.username, function(err) {
+//       if (err) {
+//         utils.sendErrorResponse(res, 400, err.msg);
+//       } else {
+//         utils.sendSuccessResponse(res);
+//       }
+//     });
+//   } else {
+//     Users.unfollowUser(req.currentUser.username, req.params.username, function(err) {
+//       if (err) {
+//         utils.sendErrorResponse(res, 400, err.msg);
+//       } else {
+//         utils.sendSuccessResponse(res);
+//       }
+//     });
+//   }
+// });
 
 /*
   GET /users/following
@@ -152,8 +154,8 @@ router.post('/follow/:username', function(req, res) {
                which is the users that the current user is following
     - err: on failure, an error message (handled by authentication middleware)
 */
-router.get('/following', function(req, res) {
-  utils.sendSuccessResponse(res, { following: req.currentUser.following });
-});
+// router.get('/following', function(req, res) {
+//   utils.sendSuccessResponse(res, { following: req.currentUser.following });
+// });
 
 module.exports = router;

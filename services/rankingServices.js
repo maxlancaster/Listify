@@ -4,7 +4,6 @@ var request = require('request-promise-native');
 
 export default {
 	submitOriginalRanking : (content) => {
-		console.log(content);
 	    return request({
 	        uri : BASE_URL + '/edit',
 	        method: 'POST',
@@ -16,7 +15,7 @@ export default {
 	populateStandardRankingPage : () => {
 		return request({
 			uri : BASE_URL + '/:consensus_id',
-			metho : 'GET',
+			method : 'GET',
 			json : true,
 			body : {
 				// To DO

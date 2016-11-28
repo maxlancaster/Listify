@@ -35,6 +35,17 @@ const BASE_URL = 'http://localhost:3000/users';
       });
     },
 
+    test : () => {
+      return request({
+        uri : BASE_URL + '/test',
+        method : 'GET',
+        json : true,
+        body : {
+
+        }
+      })
+    },
+
     logout : () => {
       return request({
         uri : BASE_URL + '/logout',
