@@ -48,7 +48,6 @@ var invalidLogin = function(req, res) {
 */
 router.post('/', function(req, res) {
   Users.createUser(req.body.username, req.body.password, function(err) {
-    console.log("creating user with username " + req.body.username + " and password " + req.body.password);
     if (err) {
       if (err.taken) {
         utils.sendErrorResponse(res, 400, 'That username is already taken!');
@@ -95,14 +94,12 @@ router.post('/login', function(req, res) {
     - success.loggedIn: true if there is a user logged in; false otherwise
     - success.user: if success.loggedIn, the currently logged in user
 */
-router.get('/test', function(req, res) {
-  console.log("here!!");
-  res.send("blah");
-  // if (req.currentUser) {
-  //   utils.sendSuccessResponse(res, { loggedIn: true, user: req.currentUser.username });
-  // } else {
-  //   utils.sendSuccessResponse(res, { loggedIn: false });
-  // }
+router.get('/current', function(req, res) {
+  if (req.currentUser) {
+    utils.sendSuccessResponse(res, { loggedIn: true, user: req.currentUser.username });
+  } else {
+    utils.sendSuccessResponse(res, { loggedIn: false });
+  }
 });
 
 /*

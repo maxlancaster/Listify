@@ -20,15 +20,15 @@ class App extends Component {
     }
 
     componentWillMount(){
-        // userServices.getCurrentUser()
-        //     .then((res) => {
-        //         // if (res.content.loggedIn) {
-        //         //     this.setState((prevState) => {
-        //         //         prevState.user = res.content.user;
-        //         //         return prevState;
-        //         //     })
-        //         // }
-        //     });
+        userServices.getCurrentUser()
+            .then((res) => {
+                if (res.content.loggedIn) {
+                    this.setState((prevState) => {
+                        prevState.user = res.content.user;
+                        return prevState;
+                    })
+                }
+            });
     }
 
     loginUser(username, password){
@@ -39,7 +39,7 @@ class App extends Component {
                         prevState.user = res.content.user;
                         return prevState;
                     });
-                    this.props.router.push('rankings');
+                    this.props.router.push('/');
                 }
             }).catch((err) => {
                 console.log("Login err: ", err.error.err);
@@ -53,7 +53,7 @@ class App extends Component {
                     prevState.user = 'Not Logged In';
                     return prevState;
                 });
-                this.props.router.push('/');
+                this.props.router.push('/signin');
             }
         });
 	}

@@ -11,7 +11,7 @@ var rankings = require('./routes/rankings');
 
 // Require Users model for authentication.
 var Users = require('./models/Users');
-
+var Ranking = require('./models/Ranking');
 /** Set up MongoDB **/
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mymongodb');
@@ -42,22 +42,22 @@ app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
 // in the session variable (accessed by the
 // encrypted cookied).
 // Same as example notes app. Many thanks and appreciates.
-// app.use(function(req, res, next) {
-//   if (req.session.username) {
-//     console.log("session! " + req.session.username);
-//     Users.findUser(req.session.username, function(err, user) {
-//       if (user) {
-//         req.currentUser = user;
-//       } else {
-//         req.session.destroy();
-//       }
-//       next();
-//     });
-//   } else {
-//     console.log("no sessions :( ");
-//     next();
-//   }
-// });
+app.use(function(req, res, next) {
+  if (req.session.username) {
+    Users.findUser(req.session.username, function(err, user) {
+      if (user) {
+        console.log("current user: " + user)
+        req.currentUser = user;
+      } else {
+        console.log("no current user");
+        req.session.destroy();
+      }
+      next();
+    });
+  } else {
+    next();
+  }
+});
 
 // Set up our routes.
 app.use('/users', users);
@@ -70,6 +70,22 @@ app.get('*', function(req, res){
 app.listen((process.env.PORT || 3000), function() {
   console.log("Listening for port");
 });
+
+// Uncomment to clear Users, Ranking and Consensus tables
+
+// mongoose.model('Users').remove({}, function(err) { 
+//    console.log('Users collection removed') 
+// });
+
+mongoose.model('Ranking').remove({}, function(err) { 
+   console.log('Rankings collection removed') 
+});
+
+mongoose.model('Consensus').remove({}, function(err) { 
+   console.log('Consensus collection removed') 
+});
+
+
 
 // Export our app (so that tests and bin can find it)
 module.exports = app;

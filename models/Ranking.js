@@ -68,9 +68,6 @@ var Rankings = (function(rankingModel) {
             if (err) callback({ msg: err});
             else {
                 callback(null, newRanking);
-                rankingModel.find({}).exec(function(error, ranks) {
-                    console.log("rankings : " + JSON.stringify(ranks, null, '\t'));
-                });
             }
         })
     };

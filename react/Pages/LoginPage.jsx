@@ -29,35 +29,10 @@ class LoginPage extends Component {
 
     registerUser(username, password){
         this.props.registerUser(this.state.registerUser, this.state.registerPass);
-        // userServices.test();
-        // userServices.register(this.state.registerUser, this.state.registerPass).then((res) => {
-        //     if (res.success){
-        //         console.log("user created! attempting to login user with info: " + this.state.registerUser + " , " + this.state.registerPass);
-        //         this.state.loginUser = this.state.registerUser;
-        //         this.state.loginPass = this.state.registerPass;
-        //         this.loginUser();
-        //     } else {
-        //         this.setState({errorMessage:res.err});
-        //         console.log("Error on register user: ",res.err)
-        //     }
-        // });
     }
 
     loginUser(){
         this.props.loginUser(this.state.loginUser, this.state.loginPass);
-        // userServices.login(this.state.loginUser, this.state.loginPass)
-        //     .then((res) => {
-        //         if (res.success){
-        //             this.setState((prevState) => {
-        //                 prevState.user = res.content.user;
-        //                 return prevState;
-        //             });
-        //             this.props.router.push('rankings');
-        //         }
-        //     }).catch((err) => {
-        //         this.setState({errorMessage:err.error.err});
-        //         console.log("Login err: ", err.error.err);
-        //     });
     }
 
     render(){

@@ -12,7 +12,6 @@ var Users = require('../models/Users');
  * Requires authentication on all access to logged-in Listify features.
  */
 var requireAuthentication = function(req, res, next) {
-    console.log("AUTHENTICATION REQUIRED!");
     if (!req.currentUser){
         utils.sendErrorResponse(res, 403, 'Please log in to use this feature.');
     } else {
@@ -106,7 +105,6 @@ router.post('/lock/:consensusID', function(req, res){
 
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/edit', function(req, res) {
-    console.log(req.body.content);
     var consensusObject = {
         creator : req.session.username,
         title : req.body.content.title,

@@ -17,22 +17,23 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
 //ToDo
 
-// const authCheck = (nextState, replace, callback) => {
-//     userServices.getCurrentUser().then((response) => {
-//         if (!response.content.loggedIn){
-//             replace('/signin');
-//         }
-//         callback();
-//     }).catch((err) => {
-//         console.log("Err on getCurrentUser() : ", err);
-//         callback();
-//     });
-// };
+const authCheck = (nextState, replace, callback) => {
+    userServices.getCurrentUser().then((response) => {
+        if (!response.content.loggedIn){
+            replace('/signin');
+        }
+        callback();
+    }).catch((err) => {
+        console.log("Err on getCurrentUser() : ", err);
+        callback();
+    });
+};
 
 export default (
     <Router history={browserHistory} >
       <Route path='/' component={App}  >
-        <IndexRoute component={LoginPage} />
+        <IndexRoute component={ViewCompletedRankingsPage} onEnter={authCheck}/>
+        <Route path="signin" component={LoginPage} />
         <Route path="rankings" component={CreateRankingsPage} />
         <Route path="dashboard" component={ViewCompletedRankingsPage} />
         <Route path="rankings/edit" component={EditRankingsPage} />

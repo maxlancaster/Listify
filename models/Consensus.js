@@ -104,7 +104,6 @@ var consensusRanking = (function(consensusModel) {
     //pass in consensus object with same fields and same types, make sure they are the same
     //later I will add checks to make sure
     that.createConsensus = function (consensusObject, callback) {
-        console.log(consensusObject);
         var newConsensus = new consensusModel({
             creator: consensusObject.creator,
             title: consensusObject.title,
@@ -174,9 +173,6 @@ var consensusRanking = (function(consensusModel) {
             {_id : consensusId}, {$push: { rankings: rankingId} }, function(err) {
                 if (err) callback({msg: err})
                 else {
-                    consensusModel.find({_id : consensusId}).exec(function(error, consensus) {
-                        console.log("consensus updated! : " + JSON.stringify(consensus, null, '\t'));
-                    });
                     callback(null);
                 }
         });
