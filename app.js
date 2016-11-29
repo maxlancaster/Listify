@@ -46,7 +46,7 @@ app.use(function(req, res, next) {
   if (req.session.username) {
     Users.findUser(req.session.username, function(err, user) {
       if (user) {
-        console.log("current user: " + user)
+        console.log("current user: " + user.username)
         req.currentUser = user;
       } else {
         console.log("no current user");

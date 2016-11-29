@@ -65,15 +65,18 @@ router.post('*', requireContent);
 /**
  * Get all rankings created by the currently logged in user.
  */
-router.get('/', function(req, res){
-    Consensus.getUserPrivateConsensuses(req.currentUser.username, function(err, consensuses){
-        if(err){
-            utils.sendSuccessResponse(res, { rankings : [] });
-        } else {
-            utils.sendSuccessResponse(res, { rankings : rankings});
-        }
-    })
-});
+
+// /rankings should just load the createRankingsPage via clientRoutes.jsx
+
+// router.get('/', function(req, res){
+    // Consensus.getUserPrivateConsensuses(req.currentUser.username, function(err, consensuses){
+    //     if(err){
+    //         utils.sendSuccessResponse(res, { rankings : [] });
+    //     } else {
+    //         utils.sendSuccessResponse(res, { rankings : rankings});
+    //     }
+    // })
+// });
 
 
 /**

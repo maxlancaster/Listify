@@ -157,7 +157,7 @@ var consensusRanking = (function(consensusModel) {
      *  Returns a user's private consensuses.
      */
     that.getUserPrivateConsensuses = function(username, callback) {
-        consensusModel.find({}).find({ creator:username, public: true }).exec(function(err, result) {
+        consensusModel.find({ creator:username, public: true }).exec(function(err, result) {
             if (err) callback({ msg: err });
             if (result.length > 0) {
                 callback(null, result);
