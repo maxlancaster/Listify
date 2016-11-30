@@ -59,7 +59,6 @@ class App extends Component {
 	}
 
     registerUser(username, password){
-        userServices.test();
         userServices.register(username, password).then((res) => {
             if (res.success){
                 this.loginUser(username, password);
