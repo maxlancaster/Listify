@@ -8,6 +8,7 @@ import Navbar from '../Elements/Navbar.jsx';
 import { DragDropContext } from 'react-dnd';
 import { withRouter } from 'react-router';
 import EditRankingsPage from './EditRankingsPage.jsx';
+import SetListCapacityPopupView from '../Elements/PopupViews/SetListCapacityPopupView.jsx';
 
 const uuid = require('uuid');
 
@@ -25,7 +26,7 @@ var Item = function(title, description, photo) {
 class CreateListPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {items: [], i:0, rankingTitle:''};
+    this.state = {items: [], i:0, rankingTitle:'', showPopup:false};
   }
   addItem(itemTitle) {
     var items = this.state.items;
@@ -38,12 +39,13 @@ class CreateListPage extends Component {
     this.setState({rankingTitle:rankingTitle});
   }
 
-  createList() {
+  createListWithCapacity(capacity) {
     const listTitle = this.state.rankingTitle;
     const items = this.state.items;
-    //TODO: Create Ranking and Consensus Ranking here
-  }
 
+    //TODO: Create List Here and navigate to EditRankingsPage
+    console.log(capacity);
+  }
   navigateToEditRanking() {
     if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
       var this_state = this.state;
@@ -52,6 +54,16 @@ class CreateListPage extends Component {
         state : this_state
       });
     }
+
+  }
+
+
+  showCapacityPopup() {
+    this.setState({showPopup:true});
+  }
+
+  closePopup() {
+    this.setState({showPopup:false});
   }
 
   render() {
@@ -63,6 +75,17 @@ class CreateListPage extends Component {
 
 		return (
       <div>
+
+        {
+          this.state.showPopup &&
+          <SetListCapacityPopupView
+            onClose = {this.closePopup.bind(this)}
+            createListWithCapacity = {this.createListWithCapacity.bind(this)}
+          />
+      }
+
+
+
         <RankingTitleForm placeholder={"Name of List"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <div className = "AddItemForm">
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
@@ -70,7 +93,7 @@ class CreateListPage extends Component {
         <div className = "CreateRankingsOptionsList">
           <OptionsList style = {style}  id={1} items={items} canEdit = {true} style={style}/>
         </div>
-        <BottomRightButton onClick = {this.createList.bind(this)}/>
+        <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}/>
       </div>
 		);
 	}
