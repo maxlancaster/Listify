@@ -14,7 +14,7 @@ import Item from '../../Models/Item.js'
 class CreateListPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {items: [], i:0, rankingTitle:'', showPopup:false};
+    this.state = {items: [], i:0, rankingTitle:'', publicList: true, showPopup:false};
   }
   addItem(itemTitle) {
     var items = this.state.items;
@@ -54,33 +54,47 @@ class CreateListPage extends Component {
     this.setState({showPopup:false});
   }
 
+  changePrivacySetting() {
+    var isPublic = this.state.publicList;
+    this.setState({publicList:!isPublic});
+  }
+
   render() {
     const style = {
       backgroundColor: "white"
     };
 
     const items = this.state.items;
+    const publicPrivateIndicator = (
+        <div clasName = "PublicPrivateIndicator">
+          <button onClick = {this.changePrivacySetting.bind(this)}>
+              {this.state.publicList ? "UnlockImage" : "LockImage"}
+          </button>
+          <h3>{this.state.publicList ? "Public" : "Private"}</h3>
+        </div>
+    );
 
 		return (
       <div>
-
-        {
-          this.state.showPopup &&
-          <SetListCapacityPopupView
-            onClose = {this.closePopup.bind(this)}
-            createListWithCapacity = {this.createListWithCapacity.bind(this)}
-          />
-      }
-
-
-
+        {this.state.showPopup &&
+            <SetListCapacityPopupView
+              onClose = {this.closePopup.bind(this)}
+              createListWithCapacity = {this.createListWithCapacity.bind(this)}
+            />
+        }
         <RankingTitleForm placeholder={"Name of List"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
+        {publicPrivateIndicator}
         <div className = "AddItemForm">
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
         </div>
-        <div className = "CreateRankingsOptionsList">
+        <div className = "CreateListOptionsList">
           <OptionsList style = {style}  id={1} items={items} canEdit = {true} style={style}/>
         </div>
+        {!this.state.publicList &&
+          <div className = "InviteUsers" >
+            <h1 className = "OptionsListTitle"> Invite Users</h1>
+          </div>
+        }
         <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}/>
       </div>
 		);

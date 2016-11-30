@@ -81,8 +81,7 @@ a, a:visited {
 /**RankingTitleForm **/
 
 .RankingTitleForm {
-  margin-left: auto;
-  margin-right:auto;
+  margin-left: 50px;
   display: block;
   margin-top:20px;
   width:750px;
@@ -92,12 +91,11 @@ a, a:visited {
     border: 0;
     outline: 0;
     background: transparent;
-    width: 500px;
+    width: 400px;
     height: 50px;
     color: #4A4A4A;
     font-weight: 600;
     font-size:30px;
-
 }
 
 textarea:focus, input:focus{
@@ -119,8 +117,7 @@ textarea:focus, input:focus{
 /**AddItemForm**/
 
 .AddItemForm{
-  margin-left: auto;
-  margin-right:auto;
+  margin-left: 50px;
   display: block;
   margin-top: 20px;
   width: 750px;
@@ -149,12 +146,11 @@ textarea:focus, input:focus{
 }
 
 /** CreateRankings OptionsList**/
-.CreateRankingsOptionsList {
+.CreateListOptionsList {
     margin-top:25px;
     width: 750px;
     border: 0 none;
-    margin-left: auto;
-    margin-right:auto;
+    margin-left: 50px;
     display: block;
 }
 
