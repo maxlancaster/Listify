@@ -11,7 +11,7 @@
 
 var mongoose = require('mongoose');
 var Ranking = require('../models/Ranking');
-var Consensus = require('../models/Consensus');
+var List = require('../models/List');
 
 var userSchema = mongoose.Schema({
     username: String,
@@ -23,9 +23,9 @@ var userSchema = mongoose.Schema({
         ref: 'Ranking'
     }],
 
-    consensusRankings: [{
+    lists: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Consensus'
+        ref: 'List'
     }],
 
     following: [String],
@@ -36,11 +36,8 @@ var userSchema = mongoose.Schema({
 
 var userModel = mongoose.model('Users', userSchema);
 
-// TODO - add functions: getAllRankings, getRankingById, getConsensusRanking, getConsensusRankingById addRanking, addConsensusRanking,removeRankingbyId, removeConsensusRankingById
-
 var Users = (function(userModel) {
     var that = {};
-
 
     that.getAllRankings = function (username, callback) {
         userModel.findOne({ username: username }, function(err, user) {
@@ -54,12 +51,12 @@ var Users = (function(userModel) {
         });
     };
 
-    that.getAllConsensusRankings = function (username, callback) {
+    that.getAllLists = function (username, callback) {
         userModel.findOne({ username: username }, function(err, user) {
             if (err) callback({ msg: err });
             if (user != null) {
-                var consensusRankings = user.consensusRankings.slice();
-                callback(null, consensusRankings);
+                var lists = user.lists.slice();
+                callback(null, lists);
             } else {
                 callback({ msg: 'The user does not exist!'});
             }

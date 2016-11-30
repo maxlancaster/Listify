@@ -7,20 +7,22 @@
 
 var mongoose = require('mongoose');
 var Items = require('../models/Items');
-var Consensus = require('../models/Consensus');
+var List = require('../models/List');
 
 
 var rankingSchema = mongoose.Schema({
 
     //order in ranking is the order that it is preferred
-    items: [{}],
+    order: [{}],
 
     user: String,
 
-    consensusRanking: {
+    list: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Consensus'
-    }
+        ref: 'List'
+    },
+
+    comment: String
 });
 
 
@@ -30,14 +32,14 @@ var Rankings = (function(rankingModel) {
 
     var that = {};
 
-    that.getAllRankingsForSingleConsensus = function (consensusId, callback) {
-        rankingModel.find({ consensusRanking: consensusId })
+    that.getAllRankingsForSingleList = function (listId, callback) {
+        rankingModel.find({ list: listId })
             .exec(function (err, rankings) {
                 if (err) callback({ msg: err });
                 if (rankings != null) {
                     callback(null, rankings);
                 } else {
-                    callback({ msg: 'No rankings for this consensus!'})
+                    callback({ msg: 'No rankings for this list!'})
                 }
             })
     };
@@ -47,7 +49,7 @@ var Rankings = (function(rankingModel) {
 
         rankingModel.findByIdAndUpdate(
             rankingId,
-            {$push: {"items": {title: item.title, rank: item.rank}}},
+            {$push: {"order": {title: item.title, rank: item.rank}}},
             function (err, ranking) {
                 if (err) callback({ msg: err });
                 callback(null, ranking);
@@ -59,9 +61,9 @@ var Rankings = (function(rankingModel) {
     that.addRanking = function (ranking, callback) {
 
         var ranking = new rankingModel({
-            items: ranking.items,
+            order: ranking.order,
             user: ranking.user,
-            consensusRanking: ranking.consensusRanking
+            list: ranking.list
         });
 
         ranking.save(function (err, newRanking) {
@@ -74,11 +76,11 @@ var Rankings = (function(rankingModel) {
 
 
     //returns the id of the Consensus object that a given ranking refers to
-    that.getConsensusByRankingId = function (rankingId, callback) {
+    that.getListByRankingId = function (rankingId, callback) {
         rankingModel.findById(rankingId, function (err, ranking) {
             if (err) callback({ msg: err });
             if (ranking != null) {
-                callback(null, ranking.consensusRanking);
+                callback(null, ranking.list);
             } else {
                 callback({ msg: 'The ranking does not exist!'});
             }

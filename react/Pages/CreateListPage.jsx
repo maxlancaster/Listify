@@ -22,7 +22,7 @@ var Item = function(title, description, photo) {
    return that;
 };
 
-class CreateRankingsPage extends Component {
+class CreateListPage extends Component {
   constructor(props) {
     super(props);
     this.state = {items: [], i:0, rankingTitle:''};
@@ -38,8 +38,8 @@ class CreateRankingsPage extends Component {
     this.setState({rankingTitle:rankingTitle});
   }
 
-  createRanking() {
-    const rankingTitle = this.state.rankingTitle;
+  createList() {
+    const listTitle = this.state.rankingTitle;
     const items = this.state.items;
     //TODO: Create Ranking and Consensus Ranking here
   }
@@ -63,17 +63,17 @@ class CreateRankingsPage extends Component {
 
 		return (
       <div>
-        <RankingTitleForm placeholder={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
+        <RankingTitleForm placeholder={"Name of List"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <div className = "AddItemForm">
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
         </div>
         <div className = "CreateRankingsOptionsList">
-          <OptionsList style = {style}  id={1} list={items} canEdit = {true} style={style}/>
+          <OptionsList style = {style}  id={1} items={items} canEdit = {true} style={style}/>
         </div>
-        <BottomRightButton onClick = {this.navigateToEditRanking.bind(this)}/>
+        <BottomRightButton onClick = {this.createList.bind(this)}/>
       </div>
 		);
 	}
 }
 
-export default withRouter(DragDropContext(HTML5Backend)(CreateRankingsPage));
+export default withRouter(DragDropContext(HTML5Backend)(CreateListPage));

@@ -7,7 +7,7 @@ import { findDOMNode } from 'react-dom';
 class DraggableList extends Component {
   constructor(props) {
 		super(props);
-		this.state = { items: props.list };
+		this.state = { items: this.props.items };
 	}
 
 	addItem(item) {
@@ -42,7 +42,7 @@ class DraggableList extends Component {
 
 
 	render() {
-		const { items } = this.state;
+		var { items } = this.state;
 		const { canDrop, isOver, connectDropTarget} = this.props;
 		const isActive = canDrop && isOver;
     const defaultBackGroundColor = this.props.defaultBackGroundColor ? white : this.props.defaultBackGroundColor;

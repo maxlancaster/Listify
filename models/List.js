@@ -9,35 +9,41 @@
  */
 
 var mongoose = require('mongoose');
-var Ranking = require('../models/Consensus');
+var Ranking = require('../models/Ranking');
 var Items = require('../models/Items');
 
-var consensusSchema = mongoose.Schema({
-
-    creator: String,
+var listSchema = mongoose.Schema({
 
     title: String,
 
-    description: String,
+    creator: String,
+
+    items: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Items'
+    }],
 
     rankings: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Ranking'
     }],
 
-    completed: {type: Boolean, default: false},
+    isPublic: Boolean,
 
-    public: {type: Boolean, default: false},
+    upvotes: Number,
 
-    all_items: [{}],
+    locked: Boolean,
 
-    overallRanking: [{}]
+    maxLength: Number,
+
+    usersSharedWith: [String]
+
 });
 
-var consensusModel = mongoose.model('Consensus', consensusSchema);
+var listModel = mongoose.model('List', listSchema);
 
 
-var consensusRanking = (function(consensusModel) {
+var list = (function(listModel) {
 
     var that = {};
 
@@ -49,13 +55,13 @@ var consensusRanking = (function(consensusModel) {
      * For each item, sum up the value of the indices where it is placed in each list.
      * Rank all the items by this sum, where the lowest sum is ranked first.
      * should be simple enough and will work well enough for the MVP. Thoughts?
-     * @param consensusId
+     * @param listId
      * @param callback
      */
-    that.updateConsensus = function (consensusId, callback) {
+    that.updateList = function (listId, callback) {
 
         //search for all the rankings with a given consensusId
-        Ranking.getAllRankingsForSingleConsensus(consensusId, function (err, rankings) {
+        Ranking.getAllRankingsForSingleList(listId, function (err, rankings) {
             if (err) callback({ msg: err });
             if (rankings != null) {
 
@@ -64,7 +70,7 @@ var consensusRanking = (function(consensusModel) {
 
                 //find the sums
                 rankings.forEach(function (object) {
-                    var items = object.items;
+                    var items = object.order;
                     items.forEach(function (item) {
                         if (!(item in sums)) {
                             sums[item] = items.indexOf(item);
@@ -84,11 +90,11 @@ var consensusRanking = (function(consensusModel) {
                 });
 
                 //assign the new list to the overallRanking field
-                consensusModel.findById(consensusId, function (err, consensus) {
+                listModel.findById(listId, function (err, list) {
                     if (err) callback({ msg: err });
-                    if (consensus != null) {
-                        consensus.overallRanking = returnRanking;
-                        callback(null, consensus);
+                    if (list != null) {
+                        list.overallRanking = returnRanking;
+                        callback(null, list);
                     } else {
                         callback({ msg: 'The consensus does not exist!'});
                     }
@@ -103,38 +109,38 @@ var consensusRanking = (function(consensusModel) {
 
     //pass in consensus object with same fields and same types, make sure they are the same
     //later I will add checks to make sure
-    that.createConsensus = function (consensusObject, callback) {
-        var newConsensus = new consensusModel({
-            creator: consensusObject.creator,
-            title: consensusObject.title,
+    that.createList = function (listObject, callback) {
+        var newList = new listModel({
+            creator: listObject.creator,
+            title: listObject.title,
             description: '',
-            all_items: consensusObject.items,
+            all_items: listObject.order,
             // overallRanking: consensusObject.items
         });
 
-        newConsensus.save(function(err, consensus) {
+        newList.save(function(err, list) {
             if (err) callback({ msg: err}, null);
-            callback(null, consensus);
-            consensusModel.find({creator:consensusObject.creator, title:consensusObject.title}).exec(function(error, consensus) {
-                console.log("consensus created! : " + JSON.stringify(consensus, null, '\t'));
+            callback(null, list);
+            listModel.find({creator:listObject.creator, title:listObject.title}).exec(function(error, lis) {
+                console.log("list created! : " + JSON.stringify(lis, null, '\t'));
             });
         });
     };
 
     //lock a consensus by its ID
-    that.lockConsensus = function (consensusId, callback) {
-        consensusModel.findById(consensusId, function (err, consensus) {
+    that.lockList = function (listId, callback) {
+        listModel.findById(listId, function (err, list) {
             if (err) callback({ msg: err });
-            if (consensus != null) {
-                consensus.completed = true;
-                consensus.save(function(err) {
+            if (list != null) {
+                list.locked = true;
+                list.save(function(err) {
                     if (err) callback({ msg: err});
                     callback(null);
                 });
 
 
             } else {
-                callback({ msg: 'The consensus does not exist!'});
+                callback({ msg: 'The list does not exist!'});
             }
         });
     };
@@ -142,13 +148,13 @@ var consensusRanking = (function(consensusModel) {
     /**
      *  Returns a public feed of consensuses.
      */
-    that.getPublicConsensuses = function(callback) {
-        consensusModel.find({}).find({ public: true }).exec(function(err, result) {
+    that.getPublicLists = function(callback) {
+        listModel.find({}).find({ isPublic: true }).exec(function(err, result) {
             if (err) callback({ msg: err });
             if (result.length > 0) {
                 callback(null, result);
             } else {
-                callback({ msg: 'No public consensuses!'})
+                callback({ msg: 'No public lists!'})
             }
         });
     };
@@ -156,8 +162,8 @@ var consensusRanking = (function(consensusModel) {
     /**
      *  Returns a user's private consensuses.
      */
-    that.getUserPrivateConsensuses = function(username, callback) {
-        consensusModel.find({ creator:username, public: true }).exec(function(err, result) {
+    that.getUserPrivateLists = function(username, callback) {
+        listModel.find({ creator:username, isPublic: true }).exec(function(err, result) {
             if (err) callback({ msg: err });
             if (result.length > 0) {
                 callback(null, result);
@@ -168,10 +174,10 @@ var consensusRanking = (function(consensusModel) {
     };
 
     // add the id rankingId to the Consensus document with _id consensusId
-    that.updateRankingsArray = function (consensusId, rankingId, callback) {
-        consensusModel.findOneAndUpdate(
-            {_id : consensusId}, {$push: { rankings: rankingId} }, function(err) {
-                if (err) callback({msg: err})
+    that.updateRankingsArray = function (listId, rankingId, callback) {
+        listModel.findOneAndUpdate(
+            {_id : listId}, {$push: { rankings: rankingId} }, function(err) {
+                if (err) callback({msg: err});
                 else {
                     callback(null);
                 }
@@ -181,13 +187,13 @@ var consensusRanking = (function(consensusModel) {
     /**
      * Returns a consensus from its id.
      */
-    that.getConsensusById = function (consensusID, callback) {
-        consensusModel.findById(consensusID, function (err, consensus) {
+    that.getListById = function (listId, callback) {
+        listModel.findById(listId, function (err, list) {
             if (err) callback({ msg: err }, null);
-            if (consensus != null) {
-                callback(null, consensus);
+            if (list != null) {
+                callback(null, list);
             } else {
-                callback({ msg: 'The consensus does not exist!'});
+                callback({ msg: 'The list does not exist!'});
             }
         })
     };
@@ -196,6 +202,6 @@ var consensusRanking = (function(consensusModel) {
     Object.freeze(that);
     return that;
 
-})(consensusModel);
+})(listModel);
 
-module.exports = consensusRanking;
+module.exports = list;
