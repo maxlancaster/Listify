@@ -6,6 +6,7 @@ var Rankings = require('../models/Ranking');
 var Items = require('../models/Items');
 var Consensus = require('../models/Consensus');
 var Users = require('../models/Users');
+// var rankingServices = require('../services/rankingServices');
 
 
 /**
@@ -147,21 +148,43 @@ router.get('/edit/:consensusID', function(req, res){
     Consensus.getConsensusById(req.params.consensusID, function(err, consensus){
         if(err){
             utils.sendErrorResponse(res, 404, 'No such consensus.');
-        } else{
-            if(!req.body.currentUser.username === consensus.creator){
-                var rankingData = {
-                    items: req.body.content.submitted_items,
-                    user: req.session.username,
-                    consensusRanking: consensus._id
-                };
-                Rankings.addRanking(rankingData, function(err, ranking){
-                    if (err) {
-                        utils.sendErrorResponse(res, 500, err);
-                    } else {
-                        utils.sendSuccessResponse(res);
-                    }
-                });
-            }
+        } else {
+            // load the edit page
+            // rankingServices.loadEditPage(consensus);
+            utils.sendSuccessResponse(res, {list : consensus});
+
+            // Tweets.findTweetsByUser(req.params.username, function(err, tweets) {
+            //     if (err) {
+            //       Users.findUser(req.params.username, function(err, username) {
+            //         if (err) {
+            //           utils.sendErrorResponse(res, 404, err.msg);
+            //         } else {
+            //           utils.sendSuccessResponse(res, { tweets: [] });
+            //         }
+            //       });
+            //     } else {
+            //       utils.sendSuccessResponse(res, { tweets: tweets });
+            //     }
+            //   });
+
+
+            // if(!(req.currentUser.username === consensus.creator)){
+            //     var rankingData = {
+            //         items: req.body.content.submitted_items,
+            //         user: req.session.username,
+            //         consensusRanking: consensus._id
+            //     };
+            //     Rankings.addRanking(rankingData, function(err, ranking){
+            //         if (err) {
+            //             utils.sendErrorResponse(res, 500, err);
+            //         } else {
+            //             utils.sendSuccessResponse(res);
+            //         }
+            //     });
+            // } else {
+            //     console.log(req.currentUser.username);
+            //     console.log(consensus.creator);
+            // }
         }
     })
 });

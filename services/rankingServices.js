@@ -21,6 +21,14 @@ export default {
 				// To DO
 			}
 		});
+	},
+
+	loadEditPage : (consensus_id) => {
+		return request({
+			uri : BASE_URL + '/edit' + `/${consensus_id}`,
+			method : 'GET',
+			json : true
+		})
 	}
 	// ,
 	// getConsensusById : (consensus_id) => {

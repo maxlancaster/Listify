@@ -77,13 +77,13 @@ app.listen((process.env.PORT || 3000), function() {
 //    console.log('Users collection removed') 
 // });
 
-mongoose.model('Ranking').remove({}, function(err) { 
-   console.log('Rankings collection removed') 
-});
+// mongoose.model('Ranking').remove({}, function(err) { 
+//    console.log('Rankings collection removed') 
+// });
 
-mongoose.model('Consensus').remove({}, function(err) { 
-   console.log('Consensus collection removed') 
-});
+// mongoose.model('Consensus').remove({}, function(err) { 
+//    console.log('Consensus collection removed') 
+// });
 
 
 

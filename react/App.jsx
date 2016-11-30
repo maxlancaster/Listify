@@ -13,10 +13,22 @@ class App extends Component {
         super(props);
         this.state = {
             user : undefined,
+            test : "test data",
+            list : {
+                creator: '',
+                title: '',
+                description: '',
+                rankings: [],
+                completed: false,
+                public: false,
+                all_items: [],
+            }
         };
         this.loginUser = this.loginUser.bind(this);
         this.logout = this.logout.bind(this);
         this.registerUser = this.registerUser.bind(this);
+        this.loadEditPage = this.loadEditPage.bind(this);
+        this.updateEditPage = this.updateEditPage.bind(this);
     }
 
     componentWillMount(){
@@ -29,6 +41,17 @@ class App extends Component {
                     })
                 }
             });
+    }
+
+    updateEditPage(request){
+        request.then((response) => {
+            console.log("response: " + response);
+            console.log(response.content.list);
+            this.setState((prevState) => {
+                prevState.list = response.content.list;
+                return prevState
+            });
+        })
     }
 
     loginUser(username, password){
@@ -68,16 +91,28 @@ class App extends Component {
         });
     }
 
+    loadEditPage() {
+        rankingServices.loadEditPage().then((resp) => {
+            this.setState((prevState) => {
+                prevState.list = resp.content.list;
+                return prevState;
+            });
+        });
+    }
+
 	render(){
         return (
 			<div id = "app">
 				<Navbar logout = {this.logout.bind(this)}/>
-				<div className="content">
+				<div id="content">
 					{React.cloneElement(this.props.children, {
                         userServices : userServices,
+                        rankingServices : rankingServices,
                         user : this.state.user,
                         loginUser : this.loginUser,
                         registerUser : this.registerUser,
+                        loadEditPage : this.loadEditPage,
+                        updateEditPage : this.updateEditPage
                     })}
 				</div>
 			</div>
@@ -85,8 +120,8 @@ class App extends Component {
     }
 };
 
-// App.propTypes = {
-//     children : React.PropTypes.any.isRequired
-// };
+App.propTypes = {
+    children : React.PropTypes.any.isRequired
+};
 
 export default withRouter(App);
