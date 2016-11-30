@@ -82,7 +82,7 @@ class EditRankingsPage extends Component {
           </div>
           <div className = "EditRankingOptionsList" >
             <h1 className = "OptionsListTitle"> Options</h1>
-            <OptionsList  id={2} list={this.state.ranking.items} canEdit = {false} defaultBackGroundColor = {"FAF9F9"} />
+            <OptionsList id={2} list={this.state.ranking.order} canEdit = {false} defaultBackGroundColor = {"FAF9F9"} />
           </div>
   			</div>
         <BottomRightButton onClick = {this.submitOriginalRanking.bind(this)}/>

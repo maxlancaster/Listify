@@ -11,13 +11,13 @@ class DraggableList extends Component {
 	}
 
 	addItem(item) {
-    var items = this.state.items;
+    var items = this.state.order;
     items.push(item);
     this.setState({items:items});
 	}
 
   deleteItem(item) {
-    var items = this.state.items;
+    var items = this.state.order;
     var index = items.indexOf(item);
     if (index > -1) {
       items.splice(index,1);
@@ -26,13 +26,13 @@ class DraggableList extends Component {
   }
 
 	removeItem(index) {
-    var items = this.state.items;
+    var items = this.state.order;
     items.splice(index,1);
     this.setState({items:items});
 	}
 
 	moveItem(originalIndex, hoverIndex) {
-    var items = this.state.items;
+    var items = this.state.order;
 		const draggedItem = items[originalIndex];
     items.splice(originalIndex,1);
     items.splice(hoverIndex,0, draggedItem);

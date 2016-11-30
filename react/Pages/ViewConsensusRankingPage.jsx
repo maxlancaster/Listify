@@ -32,7 +32,7 @@ class ViewConsensusRankingPage extends Component {
   }
 
   //lock consensus
-  lockConsensus() {
+  lockList() {
     console.log("lock!")
   }
 
@@ -48,7 +48,7 @@ class ViewConsensusRankingPage extends Component {
           </div>
       </div>
       {this.currentUserIsCreatorOfConsensus() &&
-        <BottomRightButton title = {"Lock"} onClick = {this.lockConsensus.bind(this)}/>
+        <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
       }
     </div>
 		);

@@ -81,8 +81,8 @@ mongoose.model('Ranking').remove({}, function(err) {
    console.log('Rankings collection removed') 
 });
 
-mongoose.model('Consensus').remove({}, function(err) { 
-   console.log('Consensus collection removed') 
+mongoose.model('List').remove({}, function(err) {
+   console.log('List collection removed')
 });
 
 

@@ -23,7 +23,7 @@ export default {
 		});
 	}
 	// ,
-	// getConsensusById : (consensus_id) => {
+	// getListById : (consensus_id) => {
 	//     return request({
 	//         uri : BASE_URL + `/${consensus_id}`,
 	//         method: 'GET',

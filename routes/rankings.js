@@ -4,7 +4,7 @@ var utils = require('../utils/utils');
 
 var Rankings = require('../models/Ranking');
 var Items = require('../models/Items');
-var Consensus = require('../models/Consensus');
+var List = require('../models/List');
 var Users = require('../models/Users');
 
 
@@ -35,8 +35,8 @@ var requireRankingOwnership = function(req, res, next) {
 /**
 * Requires ownership whenever accessing a particular consensus.
 */
-var requireConsensusOwnership = function(req, res, next) {
-    if (!(req.currentUser.username === req.body.consensus.creator)) {
+var requireListOwnership = function(req, res, next) {
+    if (!(req.currentUser.username === req.body.list.creator)) {
         utils.sendErrorResponse(res, 400, 'Please make well-formed requests.');
     } else{
         next();
@@ -58,8 +58,8 @@ var requireContent = function(req, res, next) {
 
 // Register the middleware handlers above.
 router.get('/', requireAuthentication);
-router.get('/:consensusID', requireAuthentication);
-router.post('/lock/:consensusID', requireAuthentication);
+router.get('/:listId', requireAuthentication);
+router.post('/lock/:listId', requireAuthentication);
 router.post('*', requireContent);
 
 /**
@@ -69,7 +69,7 @@ router.post('*', requireContent);
 // /rankings should just load the createRankingsPage via clientRoutes.jsx
 
 // router.get('/', function(req, res){
-    // Consensus.getUserPrivateConsensuses(req.currentUser.username, function(err, consensuses){
+    // Consensus.getUserPrivateLists(req.currentUser.username, function(err, consensuses){
     //     if(err){
     //         utils.sendSuccessResponse(res, { rankings : [] });
     //     } else {
@@ -84,11 +84,11 @@ router.post('*', requireContent);
  */
 
 router.get('/:consensus_id', function(req, res){
-    Consensus.getConsensusById(req.params.consensus_id, function(err, consensus){
+    List.getListById(req.params.listId, function(err, list){
         if(err){
-            utils.sendErrorResponse(res, 404, 'No such consensus.');
+            utils.sendErrorResponse(res, 404, 'No such list.');
         } else{
-            utils.sendSuccessResponse(res, { consensus : consensus});
+            utils.sendSuccessResponse(res, { list : list});
         }
     })
 });
@@ -96,37 +96,37 @@ router.get('/:consensus_id', function(req, res){
 /**
  * Locks the consensus.
  */
-router.post('/lock/:consensusID', function(req, res){
-    Consensus.getConsensusById(req.params.consensusID, function(err, consensus){
+router.post('/lock/:listId', function(req, res){
+    List.getListById(req.params.listId, function(err, list){
         if(err){
-            utils.sendErrorResponse(res, 404, 'No such consensus.');
+            utils.sendErrorResponse(res, 404, 'No such list.');
         } else{
-            utils.sendSuccessResponse(res, { consensus : consensus});
+            utils.sendSuccessResponse(res, { list : list});
         }
     })
 });
 
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/edit', function(req, res) {
-    var consensusObject = {
+    var listObject = {
         creator : req.session.username,
         title : req.body.content.title,
-        items : req.body.content.all_items
+        order : req.body.content.all_items
     };
-    Consensus.createConsensus(consensusObject, function(err, consensus) {
+    List.createList(listObject, function(err, list) {
         if (err) {
             utils.sendErrorResponse(res, 500, err);
         } else {
             var rankingData = {
-                items: req.body.content.submitted_items,
+                order: req.body.content.submitted_items,
                 user: req.session.username,
-                consensusRanking: consensus._id
+                list: list._id
             };
             Rankings.addRanking(rankingData, function(err, ranking){
                 if (err) {
                     utils.sendErrorResponse(res, 500, err);
                 } else {
-                    Consensus.updateRankingsArray(consensus._id, ranking._id, function(err){
+                    List.updateRankingsArray(list._id, ranking._id, function(err){
                         if (err) {
                             utils.sendErrorResponse(res, 500, err);
                         } else {
@@ -143,16 +143,16 @@ router.post('/edit', function(req, res) {
 /**
  * Gets the consensus to allow non-creator users to post responses to
  */
-router.get('/edit/:consensusID', function(req, res){
-    Consensus.getConsensusById(req.params.consensusID, function(err, consensus){
+router.get('/edit/:listId', function(req, res){
+    List.getListById(req.params.listId, function(err, list){
         if(err){
-            utils.sendErrorResponse(res, 404, 'No such consensus.');
+            utils.sendErrorResponse(res, 404, 'No such list.');
         } else{
-            if(!req.body.currentUser.username === consensus.creator){
+            if(!req.body.currentUser.username === list.creator){
                 var rankingData = {
-                    items: req.body.content.submitted_items,
+                    order: req.body.content.submitted_items,
                     user: req.session.username,
-                    consensusRanking: consensus._id
+                    list: list._id
                 };
                 Rankings.addRanking(rankingData, function(err, ranking){
                     if (err) {

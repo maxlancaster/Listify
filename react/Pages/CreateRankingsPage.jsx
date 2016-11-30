@@ -28,7 +28,7 @@ class CreateRankingsPage extends Component {
     this.state = {items: [], i:0, rankingTitle:''};
   }
   addItem(itemTitle) {
-    var items = this.state.items;
+    var items = this.state.order;
     var item = Item(itemTitle,'','');
     items.push(item);
     this.setState({items:items});
@@ -40,12 +40,12 @@ class CreateRankingsPage extends Component {
 
   createRanking() {
     const rankingTitle = this.state.rankingTitle;
-    const items = this.state.items;
+    const items = this.state.order;
     //TODO: Create Ranking and Consensus Ranking here
   }
 
   navigateToEditRanking() {
-    if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
+    if (this.state.order.length !== 0 && this.state.rankingTitle !== '') {
       var this_state = this.state;
       this.props.router.push({
         pathname : '/rankings/edit',
@@ -59,7 +59,7 @@ class CreateRankingsPage extends Component {
       backgroundColor: "white"
     };
 
-    const items = this.state.items;
+    const items = this.state.order;
 
 		return (
       <div>
