@@ -84,7 +84,7 @@ a, a:visited {
   margin-left: 50px;
   display: block;
   margin-top:20px;
-  width:750px;
+  float:left;
 }
 
 .RankingTitleForm input {
@@ -112,6 +112,22 @@ textarea:focus, input:focus{
 
 :-ms-input-placeholder {
    color: #C4BFBF;
+}
+
+.PublicPrivateIndicator {
+  display:inline-block;
+  margin-top:40px;
+}
+
+.PublicPrivateIndicator button {
+  display:inline-block;
+  float:left;
+}
+.PublicPrivateIndicator h3 {
+  margin-top:0;
+  display:inline-block;
+  float:left;
+  color:#C4BFBF;
 }
 
 /**AddItemForm**/

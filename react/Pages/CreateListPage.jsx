@@ -46,7 +46,6 @@ class CreateListPage extends Component {
 
   }
 
-
   showCapacityPopup() {
     this.setState({showPopup:true});
   }
@@ -61,13 +60,10 @@ class CreateListPage extends Component {
   }
 
   render() {
-    const style = {
-      backgroundColor: "white"
-    };
-
     const items = this.state.items;
     const publicPrivateIndicator = (
         <div className = "PublicPrivateIndicator">
+          <h3>|</h3>
           <button onClick = {this.changePrivacySetting.bind(this)}>
               {this.state.publicList ? "UnlockImage" : "LockImage"}
           </button>
@@ -86,13 +82,14 @@ class CreateListPage extends Component {
         {!this.state.publicList &&
           <InviteUsersPanel />
         }
+
         <RankingTitleForm placeholder={"Name of List"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         {publicPrivateIndicator}
         <div className = "AddItemForm">
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
         </div>
         <div className = "CreateListOptionsList">
-          <OptionsList style = {style}  id={1} items={items} canEdit = {true} style={style}/>
+          <OptionsList  id={1} items={items} canEdit = {true} />
         </div>
         <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}/>
       </div>

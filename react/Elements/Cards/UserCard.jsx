@@ -14,7 +14,7 @@ class UserCard extends Component {
         <div className = "UserCard">
           <button className = "ItemCardEditButton"
             onClick={this.deletePressed.bind(this)}>x</button>
-          <p className = "UserCardTitle">{username}</p>
+          <p className = "UserCardTitle">{"@"+username}</p>
         </div>
     );
   }
