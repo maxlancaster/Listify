@@ -5,6 +5,7 @@ import AddItemForm from '../Elements/AddItemForm.jsx';
 import RankingTitleForm from '../Elements/RankingTitleForm.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import Navbar from '../Elements/Navbar.jsx';
+import InviteUsersPanel from '../Elements/InviteUsersPanel.jsx';
 import { DragDropContext } from 'react-dnd';
 import { withRouter } from 'react-router';
 import EditRankingsPage from './EditRankingsPage.jsx';
@@ -66,7 +67,7 @@ class CreateListPage extends Component {
 
     const items = this.state.items;
     const publicPrivateIndicator = (
-        <div clasName = "PublicPrivateIndicator">
+        <div className = "PublicPrivateIndicator">
           <button onClick = {this.changePrivacySetting.bind(this)}>
               {this.state.publicList ? "UnlockImage" : "LockImage"}
           </button>
@@ -82,6 +83,9 @@ class CreateListPage extends Component {
               createListWithCapacity = {this.createListWithCapacity.bind(this)}
             />
         }
+        {!this.state.publicList &&
+          <InviteUsersPanel />
+        }
         <RankingTitleForm placeholder={"Name of List"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         {publicPrivateIndicator}
         <div className = "AddItemForm">
@@ -90,11 +94,6 @@ class CreateListPage extends Component {
         <div className = "CreateListOptionsList">
           <OptionsList style = {style}  id={1} items={items} canEdit = {true} style={style}/>
         </div>
-        {!this.state.publicList &&
-          <div className = "InviteUsers" >
-            <h1 className = "OptionsListTitle"> Invite Users</h1>
-          </div>
-        }
         <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}/>
       </div>
 		);
