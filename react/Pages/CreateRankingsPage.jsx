@@ -28,7 +28,7 @@ class CreateRankingsPage extends Component {
     this.state = {items: [], i:0, rankingTitle:''};
   }
   addItem(itemTitle) {
-    var items = this.state.order;
+    var items = this.state.items;
     var item = Item(itemTitle,'','');
     items.push(item);
     this.setState({items:items});
@@ -59,7 +59,9 @@ class CreateRankingsPage extends Component {
       backgroundColor: "white"
     };
 
-    const items = this.state.order;
+    const items = this.state.items;
+    console.log("Create Rankings page");
+    console.log(this.state);
 
 		return (
       <div>
@@ -68,7 +70,7 @@ class CreateRankingsPage extends Component {
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
         </div>
         <div className = "CreateRankingsOptionsList">
-          <OptionsList style = {style}  id={1} list={items} canEdit = {true} style={style}/>
+          <OptionsList style = {style}  id={1} items={items} canEdit = {true} style={style}/>
         </div>
         <BottomRightButton onClick = {this.navigateToEditRanking.bind(this)}/>
       </div>

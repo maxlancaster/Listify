@@ -7,17 +7,17 @@ import { findDOMNode } from 'react-dom';
 class DraggableList extends Component {
   constructor(props) {
 		super(props);
-		this.state = { items: props.list };
+		this.state = { items: this.props.items };
 	}
 
 	addItem(item) {
-    var items = this.state.order;
+    var items = this.state.items;
     items.push(item);
     this.setState({items:items});
 	}
 
   deleteItem(item) {
-    var items = this.state.order;
+    var items = this.state.items;
     var index = items.indexOf(item);
     if (index > -1) {
       items.splice(index,1);
@@ -26,13 +26,13 @@ class DraggableList extends Component {
   }
 
 	removeItem(index) {
-    var items = this.state.order;
+    var items = this.state.items;
     items.splice(index,1);
     this.setState({items:items});
 	}
 
 	moveItem(originalIndex, hoverIndex) {
-    var items = this.state.order;
+    var items = this.state.items;
 		const draggedItem = items[originalIndex];
     items.splice(originalIndex,1);
     items.splice(hoverIndex,0, draggedItem);
@@ -42,7 +42,7 @@ class DraggableList extends Component {
 
 
 	render() {
-		const { items } = this.state;
+		var { items } = this.state;
 		const { canDrop, isOver, connectDropTarget} = this.props;
 		const isActive = canDrop && isOver;
     const defaultBackGroundColor = this.props.defaultBackGroundColor ? white : this.props.defaultBackGroundColor;
