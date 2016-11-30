@@ -22,7 +22,7 @@ var Item = function(title, description, photo) {
    return that;
 };
 
-class CreateRankingsPage extends Component {
+class CreateListPage extends Component {
   constructor(props) {
     super(props);
     this.state = {items: [], i:0, rankingTitle:''};
@@ -38,14 +38,14 @@ class CreateRankingsPage extends Component {
     this.setState({rankingTitle:rankingTitle});
   }
 
-  createRanking() {
-    const rankingTitle = this.state.rankingTitle;
-    const items = this.state.order;
+  createList() {
+    const listTitle = this.state.rankingTitle;
+    const items = this.state.items;
     //TODO: Create Ranking and Consensus Ranking here
   }
 
   navigateToEditRanking() {
-    if (this.state.order.length !== 0 && this.state.rankingTitle !== '') {
+    if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
       var this_state = this.state;
       this.props.router.push({
         pathname : '/rankings/edit',
@@ -60,22 +60,20 @@ class CreateRankingsPage extends Component {
     };
 
     const items = this.state.items;
-    console.log("Create Rankings page");
-    console.log(this.state);
 
 		return (
       <div>
-        <RankingTitleForm placeholder={"Name of ranking"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
+        <RankingTitleForm placeholder={"Name of List"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />
         <div className = "AddItemForm">
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
         </div>
         <div className = "CreateRankingsOptionsList">
           <OptionsList style = {style}  id={1} items={items} canEdit = {true} style={style}/>
         </div>
-        <BottomRightButton onClick = {this.navigateToEditRanking.bind(this)}/>
+        <BottomRightButton onClick = {this.createList.bind(this)}/>
       </div>
 		);
 	}
 }
 
-export default withRouter(DragDropContext(HTML5Backend)(CreateRankingsPage));
+export default withRouter(DragDropContext(HTML5Backend)(CreateListPage));

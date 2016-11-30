@@ -1,6 +1,6 @@
 import App from './App.jsx';
 import EditRankingsPage from './Pages/EditRankingsPage.jsx';
-import CreateRankingsPage from './Pages/CreateRankingsPage.jsx';
+import CreateListPage from './Pages/CreateListPage.jsx';
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import ViewCompletedRankingsPage from './Pages/ViewCompletedRankingsPage.jsx';
 import NotFound from './Pages/NotFound.jsx';
@@ -34,7 +34,7 @@ export default (
       <Route path='/' component={App}  >
         <IndexRoute component={ViewCompletedRankingsPage} onEnter={authCheck}/>
         <Route path="signin" component={LoginPage} />
-        <Route path="rankings" component={CreateRankingsPage} />
+        <Route path="rankings" component={CreateListPage} />
         <Route path="dashboard" component={ViewCompletedRankingsPage} />
         <Route path="rankings/edit" component={EditRankingsPage} />
         <Route path="rankings/edit/*" component={StandardRankingsPage} />
