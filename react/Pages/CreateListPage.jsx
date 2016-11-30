@@ -9,19 +9,7 @@ import { DragDropContext } from 'react-dnd';
 import { withRouter } from 'react-router';
 import EditRankingsPage from './EditRankingsPage.jsx';
 import SetListCapacityPopupView from '../Elements/PopupViews/SetListCapacityPopupView.jsx';
-
-const uuid = require('uuid');
-
-//TEMPORARY
-var Item = function(title, description, photo) {
-   var that = Object.create(Item.prototype);
-   that.id = uuid.v1();
-   that.title = title;
-   that.description = description;
-   that.photo = photo;
-   Object.freeze(that);
-   return that;
-};
+import Item from '../../Models/Item.js'
 
 class CreateListPage extends Component {
   constructor(props) {

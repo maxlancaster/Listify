@@ -4,18 +4,7 @@ import ViewableList from '../Elements/ViewableList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import { withRouter } from 'react-router';
-
-const uuid = require('uuid');
-//TODO: remove later
-var Item = function(title, description, photo) {
-   var that = Object.create(Item.prototype);
-   that.id = uuid.v1();
-   that.title = title;
-   that.description = description;
-   that.photo = photo;
-   Object.freeze(that);
-   return that;
-};
+import Item from '../../Models/Item.js'
 
 class ViewConsensusRankingPage extends Component {
   constructor(props) {
