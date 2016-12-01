@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 class SetListCapacityPopupView extends Component {
   constructor(props) {
     super(props);
-    this.state = {capacity : 8/*this.props.capacity*/};
+    this.state = {capacity : this.props.itemsCount};
   }
   createButtonClicked() {
     this.props.createListWithCapacity(this.state.capacity);
@@ -17,7 +17,7 @@ class SetListCapacityPopupView extends Component {
   }
 
   render() {
-    var itemsCount = 8/*this.props.itemsCount*/;
+    var itemsCount = this.props.itemsCount;
     return (<div>
         <ModalContainer onClose={this.props.onClose}>
           <ModalDialog onClose={this.props.onClose}>

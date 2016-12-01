@@ -104,6 +104,7 @@ class CreateListPage extends Component {
             <SetListCapacityPopupView
               onClose = {this.closePopup.bind(this)}
               createListWithCapacity = {this.createListWithCapacity.bind(this)}
+              itemsCount = {items.length}
             />
         }
         {!this.state.publicList &&
