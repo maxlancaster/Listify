@@ -10,7 +10,7 @@ import { DragDropContext } from 'react-dnd';
 import { withRouter } from 'react-router';
 import EditRankingsPage from './EditRankingsPage.jsx';
 import SetListCapacityPopupView from '../Elements/PopupViews/SetListCapacityPopupView.jsx';
-import Item from '../../Models/Item.js'
+import Items from '../../Models/Items.js'
 
 class CreateListPage extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class CreateListPage extends Component {
   }
   addItem(itemTitle) {
     var items = this.state.items;
-    var item = Item(itemTitle,'','');
+    var item = Items(itemTitle,'','');
     items.push(item);
     this.setState({items:items});
   }

@@ -5,6 +5,7 @@ import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import ViewListsPage from './Pages/ViewListsPage.jsx';
 import NotFound from './Pages/NotFound.jsx';
 import StandardRankingsPage from './Pages/StandardRankingsPage.jsx';
+import ListsSearchResultsPage from './Pages/ListsSearchResultsPage.jsx'
 // import services from '../services';
 import LoginPage from './Pages/LoginPage.jsx';
 import userServices from '../services/userServices.js';
@@ -34,6 +35,8 @@ export default (
       <Route path='/' component={App}  >
         <IndexRoute component={ViewListsPage} onEnter={authCheck}/>
         <Route path="signin" component={LoginPage} />
+        //TODO: WHY WON'T CSS LOAD?
+        <Route path="lists/search/:searchString" component={ListsSearchResultsPage} />
         <Route path="rankings" component={CreateListPage} />
         <Route path="dashboard" component={ViewListsPage} />
         <Route path="rankings/edit" component={EditRankingsPage} />

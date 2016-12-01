@@ -73,12 +73,12 @@ app.listen((process.env.PORT || 3000), function() {
 
 // Uncomment to clear Users, Ranking and Consensus tables
 
-// mongoose.model('Users').remove({}, function(err) { 
-//    console.log('Users collection removed') 
+// mongoose.model('Users').remove({}, function(err) {
+//    console.log('Users collection removed')
 // });
 
-mongoose.model('Ranking').remove({}, function(err) { 
-   console.log('Rankings collection removed') 
+mongoose.model('Ranking').remove({}, function(err) {
+   console.log('Rankings collection removed')
 });
 
 mongoose.model('List').remove({}, function(err) {

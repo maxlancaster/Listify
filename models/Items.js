@@ -1,6 +1,6 @@
 const uuid = require('uuid');
 
-var Item = function(title, description, photo) {
+var Items = function(title, description, photo) {
    var that = Object.create(Item.prototype);
    that.id = uuid.v1();
    that.title = title;
@@ -10,4 +10,4 @@ var Item = function(title, description, photo) {
    return that;
 };
 
-module.exports = Item;
+module.exports = Items;

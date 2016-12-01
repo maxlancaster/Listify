@@ -7,8 +7,6 @@ import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
 import { withRouter } from 'react-router';
 
 const uuid = require('uuid');
-
-
 //TODO: remove later
 var Card = function(title, description, photo) {
    var that = Object.create(Card.prototype);
@@ -20,15 +18,16 @@ var Card = function(title, description, photo) {
    return that;
 };
 
-//TODO: GET ALL CONSENSUES THE USER HAS CONTRIBUTED TO AND LOAD THEM
-class ViewListsPage extends Component {
+class ListsSearchResultsPage extends Component {
   constructor(props) {
     super(props);
-    var rankingTitle = "Test Title";
-    var rankingDescription = "created by Phillip Ou";
-    //LOAD COMPLETED CONSENSUSES ONTO COMPLETED RANKINGS
-    var completedRankings = [Card('Ranking 1',rankingDescription),Card('Ranking 2',rankingDescription), Card('Ranking 3',rankingDescription)];
-    this.state = {completedRankings:completedRankings};
+    this.state = {foundLists:[], searchString: this.props.params.searchString};
+  }
+
+  componentWillMount() {
+    //TODO: LOAD SEARCH RESULTS
+    var foundLists = [Card('Ranking 1'),Card('Ranking 2')];
+    this.setState({foundLists:foundLists});
   }
 
   //navigate to create rankings page
@@ -36,26 +35,15 @@ class ViewListsPage extends Component {
     this.props.router.push("rankings");
   }
 
-  didSwitchHeader(headerSide) {
-    if (headerSide === "LEFT") {
-      console.log("fetch trending");
-    } else {
-      console.log("fetch most recent");
-    }
-    //TODO: ISSUE GET REQUEST TO UPDATE LIST
-  }
-
   render() {
-    const completedRankings = this.state.completedRankings;
+    const foundLists = this.state.foundLists;
+    const headerTitle = 'Search Results for "' + this.state.searchString + '" | '+this.state.foundLists.length+' results';
 		return (
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
-            <SwitchableHeader leftTitle = "Trending"
-                              rightTitle = "Most Recent"
-                              didSwitchHeader = {this.didSwitchHeader.bind(this)}
-            />
-            <ViewableList id={1} list = {completedRankings} showRankingNumber = {true}/>
+            <h2>{headerTitle}</h2>
+            <ViewableList id={1} list = {foundLists} showRankingNumber = {false}/>
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
@@ -64,4 +52,4 @@ class ViewListsPage extends Component {
 	}
 }
 
-export default withRouter(ViewListsPage);
+export default withRouter(ListsSearchResultsPage);
