@@ -47,6 +47,10 @@ class ViewConsensusRankingPage extends Component {
     console.log("lock!")
   }
 
+  viewYourRanking() {
+    this.props.router.push("get_ranking");
+  }
+
   render() {
     const ranking = this.state.ranking;
 		return (
@@ -61,7 +65,11 @@ class ViewConsensusRankingPage extends Component {
       {this.currentUserIsCreatorOfConsensus() &&
         <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
       }
-      <ConsensusRankingDescription lock = {true} title = {ranking.title} votes = {25}/>
+      <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
+                                   lock = {true}
+                                   title = {ranking.title}
+                                   votes = {25}
+                                   />
     </div>
 		);
 	}
