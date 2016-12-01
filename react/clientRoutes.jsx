@@ -36,10 +36,9 @@ export default (
         <IndexRoute component={ViewListsPage} onEnter={authCheck}/>
         <Route path="signin" component={LoginPage} />
         //TODO: WHY WON'T CSS LOAD?
-        <Route path="lists/search/:searchString" component={ListsSearchResultsPage} />
-        <Route path="rankings" component={CreateListPage} />
-        <Route path="dashboard" component={ViewListsPage} />
-        <Route path="rankings/edit" component={EditRankingsPage} />
+        <Route path="lists/search/:searchString" component={ListsSearchResultsPage} onEnter={authCheck}/>
+        <Route path="rankings" component={CreateListPage} onEnter={authCheck}/>
+        <Route path="rankings/edit" component={EditRankingsPage}onEnter={authCheck} />
         <Route path="rankings/edit/*" component={StandardRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} />
         <Route path="current" component={StandardRankingsPage} />
