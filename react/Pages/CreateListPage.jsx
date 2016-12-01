@@ -17,9 +17,9 @@ import userServices from '../../services/userServices.js';
 class CreateListPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {items: [], i:0, rankingTitle:'', publicList: true, showPopup:false};
+    this.state = {items: [], invitedUsers:[], i:0, rankingTitle:'', publicList: true, showPopup:false};
   }
-  
+
   addItem(itemTitle) {
     var items = this.state.items;
     var item = Items(itemTitle,'','');
@@ -82,6 +82,10 @@ class CreateListPage extends Component {
     this.setState({publicList:!isPublic});
   }
 
+  updateInvitedUsers(invitedUsers) {
+    this.setState({invitedUsers:invitedUsers});
+  }
+
   render() {
     const items = this.state.items;
     const publicPrivateIndicator = (
@@ -103,7 +107,7 @@ class CreateListPage extends Component {
             />
         }
         {!this.state.publicList &&
-          <InviteUsersPanel />
+          <InviteUsersPanel updateInvitedUsers = {this.updateInvitedUsers.bind(this)}/>
         }
 
         <RankingTitleForm placeholder={"Name of List"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />

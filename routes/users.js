@@ -88,11 +88,16 @@ router.post('/login', function(req, res) {
 });
 
 router.post('/search/:username', function(req, res) {
+  var username = req.params.username;
+  if (!username || username.length === 0) {
+    utils.sendErrorResponse(res, 500, 'Invalid username');
+    return;
+  }
   Users.search(req.params.username, function(err, users) {
     if (!err) {
       utils.sendSuccessResponse(res, { users: users })
     } else {
-      utils.sendErrorResponse(res, 500, 'Invalid username or password.');
+      utils.sendErrorResponse(res, 500, 'Problem finding user');
     }
   });
 });

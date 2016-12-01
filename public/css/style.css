@@ -222,7 +222,7 @@ textarea:focus, input:focus{
   margin-top:-30px;
 }
 
-.UserSearchTextInput input[type=text] {
+#UserSearchTextInput {
   width: 90%;
   height: 25px;
   font-weight: 400;

@@ -1,26 +1,36 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
-import UserCard from './Cards/UserCard.jsx'
+import UserCard from './Cards/UserCard.jsx';
+import userServices from '../../services/userServices.js';
+
+import Autocomplete from 'react-autocomplete';
 
 
 class InviteUsersPanel extends Component {
   constructor(props) {
 		super(props);
-		this.state = { invitedUsers: []};
+		this.state = { invitedUsers: [],suggestedUsers: [], loading: false};
 	}
 
-  handleChange(event) {
-    var searchText = event.target.value;
-    this.setState({searchText: event.target.value});
-    //HANDLE AUTOCOMPLETE/ SEARCH FOR USERS
+  handleChange(event, value) {
+    var searchText = value;
+    this.setState({searchText:value, loading: true});
+    userServices.search(value).then( (res) => {
+      this.setState({suggestedUsers: res.content.users, loading:false});
+    });
   }
 
-  handleSubmit(event) {
-    event.preventDefault();
+  handleSuggestionSelection(username,user) {
     var invitedUsers = this.state.invitedUsers;
-    invitedUsers.push("User");
-    this.setState({invitedUsers:invitedUsers});
-    console.log(invitedUsers);
+    var invitedUserIds = this.state.invitedUsers.map(function(user) {
+      return user._id;
+    });
+    if (invitedUserIds.indexOf(user._id) === -1) {
+      invitedUsers.push(user);
+    }
+    this.props.updateInvitedUsers(invitedUsers);
+    this.setState({searchText: "", suggestedUsers: [], invitedUsers:invitedUsers});
+
   }
 
   deleteInvitedUser(user) {
@@ -34,25 +44,51 @@ class InviteUsersPanel extends Component {
 
 	render() {
     var invitedUsers = this.state.invitedUsers;
+    var suggestedUsers = this.state.suggestedUsers;
+    let styles = {
+      item: {
+        padding: '6px 6px',
+        cursor: 'default'
+      },
+
+      highlightedItem: {
+        color: 'white',
+        background: "#66B110",
+        padding: '6px 6px',
+        cursor: 'default'
+      },
+
+      menu: {
+        border: 'solid 1px #ccc'
+      }
+    }
 		return (
       <div className = "InviteUsersPanel">
         <h1 className = "OptionsListTitle"> Invite Users</h1>
-          <form onSubmit={this.handleSubmit.bind(this)} className = "UserSearchTextInput">
-            <input type="text"
-                   placeholder={"Search Username"}
-                   onChange={this.handleChange.bind(this)}
+        <Autocomplete
+          value={this.state.searchText}
+          inputProps={{name: "username", id: "UserSearchTextInput", placeholder: "Search usernames"}}
+          items={suggestedUsers}
+          getItemValue={(user) => user.username}
+          onChange={this.handleChange.bind(this)}
+          onSelect={this.handleSuggestionSelection.bind(this)}
+          renderItem={(user, isHighlighted) => (
+            <div
+              style={isHighlighted ? styles.highlightedItem : styles.item}
+              key={user.username}
+            >{"@"+user.username}</div>
+          )}
+        />
+        {invitedUsers.map((user, index) => {
+          return (
+            <UserCard
+              key={index}
+              index={index}
+              user={user}
+              deleteInvitedUser={this.deleteInvitedUser.bind(this)}
             />
-          </form>
-          {invitedUsers.map((username, index) => {
-            return (
-              <UserCard
-                key={index}
-                index={index}
-                username={username}
-                deleteInvitedUser={this.deleteInvitedUser.bind(this)}
-              />
-            );
-          })}
+          );
+        })}
       </div>
 		);
   }
