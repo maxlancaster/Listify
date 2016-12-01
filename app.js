@@ -8,6 +8,7 @@ var webpackDevHelper = require('./hotReload.js');
 // Require routes.
 var users = require('./routes/users');
 var rankings = require('./routes/rankings');
+var lists = require('./routes/lists');
 
 // Require Users model for authentication.
 var Users = require('./models/Users');
@@ -62,6 +63,7 @@ app.use(function(req, res, next) {
 // Set up our routes.
 app.use('/users', users);
 app.use('/rankings', rankings);
+app.use('/lists', lists);
 app.get('*', function(req, res){
   res.sendFile(path.join(__dirname, 'public/index.html'))
 });
@@ -73,8 +75,8 @@ app.listen((process.env.PORT || 3000), function() {
 
 // Uncomment to clear Users, Ranking and List tables
 
-// mongoose.model('Users').remove({}, function(err) { 
-//    console.log('Users collection removed') 
+// mongoose.model('Users').remove({}, function(err) {
+//    console.log('Users collection removed')
 // });
 
 // mongoose.model('Ranking').remove({}, function(err) { 

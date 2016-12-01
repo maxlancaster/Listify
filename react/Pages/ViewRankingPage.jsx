@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ViewableList from '../Elements/ViewableList.jsx';
+import ViewableItemsList from '../Elements/ViewableItemsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import { withRouter } from 'react-router';
 import Items from '../../models/Items.js'
 
-class ViewConsensusRankingPage extends Component {
+class ViewRankingPage extends Component {
   constructor(props) {
     super(props);
     //TODO: TEMP, REMOVE LATER
@@ -27,13 +27,15 @@ class ViewConsensusRankingPage extends Component {
 
   render() {
     const order = this.state.order;
+    console.log("yup");
+    console.log(order);
 		return (
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <h1 className = "RankingTitle">{this.state.title}</h1>
             <h2 className = "RankingAuthor">{"created by "+this.state.author}</h2>
-            <ViewableList id={1} lists = {order} showRankingNumber = {true}/>
+            <ViewableItemsList id={1} items = {order} showRankingNumber = {true}/>
           </div>
       </div>
       {this.currentUserIsCreatorOfConsensus() &&
@@ -44,4 +46,4 @@ class ViewConsensusRankingPage extends Component {
 	}
 }
 
-export default withRouter(ViewConsensusRankingPage);
+export default withRouter(ViewRankingPage);

@@ -110,20 +110,27 @@ var list = (function(listModel) {
     //pass in consensus object with same fields and same types, make sure they are the same
     //later I will add checks to make sure
     that.createList = function (listObject, callback) {
+        console.log(listObject.items);
         var newList = new listModel({
-            creator: listObject.creator,
-            title: listObject.title,
-            description: '',
-            all_items: listObject.order,
-            // overallRanking: consensusObject.items
+            title : listObject.title,
+            creator : listObject.creator,
+            // items : listObject.items,
+            rankings : listObject.rankings,
+            isPublic : listObject.isPublic,
+            upvotes : listObject.upvotes,
+            locked : listObject.locked,
+            maxLength : listObject.maxLength,
+            usersSharedWith : listObject.usersSharedWith
         });
 
         newList.save(function(err, list) {
             if (err) callback({ msg: err}, null);
-            callback(null, list);
-            listModel.find({creator:listObject.creator, title:listObject.title}).exec(function(error, lis) {
-                console.log("list created! : " + JSON.stringify(lis, null, '\t'));
-            });
+            else {
+                listModel.find({}).exec(function(error, lis) {
+                    console.log("list created! : " + JSON.stringify(lis, null, '\t'));
+                    callback(null, list);
+                });
+            }
         });
     };
 

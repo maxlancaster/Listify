@@ -3,7 +3,7 @@ import CreateListPage from './Pages/CreateListPage.jsx';
 import EditRankingsPage from './Pages/EditRankingsPage.jsx';
 import LoginPage from './Pages/LoginPage.jsx'
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
-import Navbar from './Elements/Navbar.jsx';
+import SearchableNavbar from './Elements/SearchableNavbar.jsx';
 import { withRouter } from 'react-router';
 import userServices from '../services/userServices.js';
 import rankingServices from '../services/rankingServices.js'
@@ -81,15 +81,19 @@ class App extends Component {
         });
 	}
 
-    registerUser(username, password){
-        userServices.register(username, password).then((res) => {
-            if (res.success){
-                this.loginUser(username, password);
-            } else {
-                console.log("Error on register user: ",res.err)
-            }
-        });
-    }
+  registerUser(username, password){
+      userServices.register(username, password).then((res) => {
+          if (res.success){
+              this.loginUser(username, password);
+          } else {
+              console.log("Error on register user: ",res.err)
+          }
+      });
+  }
+
+	profile() {
+		this.props.router.push('/your');
+	}
 
     loadEditPage() {
         rankingServices.loadEditPage().then((resp) => {
@@ -101,10 +105,10 @@ class App extends Component {
     }
 
 	render(){
-        return (
+    return (
 			<div id = "app">
-				<Navbar logout = {this.logout.bind(this)}/>
-				<div id="content">
+				<SearchableNavbar logout = {this.logout.bind(this)} profile = {this.profile.bind(this)}/>
+				<div className="content">
 					{React.cloneElement(this.props.children, {
                         userServices : userServices,
                         rankingServices : rankingServices,

@@ -1,10 +1,13 @@
 import App from './App.jsx';
 import EditRankingsPage from './Pages/EditRankingsPage.jsx';
+import ViewRankingPage from './Pages/ViewRankingPage.jsx';
 import CreateListPage from './Pages/CreateListPage.jsx';
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
-import ViewCompletedRankingsPage from './Pages/ViewCompletedRankingsPage.jsx';
+import ViewListsPage from './Pages/ViewListsPage.jsx';
 import NotFound from './Pages/NotFound.jsx';
 import StandardRankingsPage from './Pages/StandardRankingsPage.jsx';
+import ListsSearchResultsPage from './Pages/ListsSearchResultsPage.jsx'
+import ViewYourRankingsPage from './Pages/ViewYourRankingsPage.jsx'
 // import services from '../services';
 import LoginPage from './Pages/LoginPage.jsx';
 import userServices from '../services/userServices.js';
@@ -32,11 +35,16 @@ const authCheck = (nextState, replace, callback) => {
 export default (
     <Router history={browserHistory} >
       <Route path='/' component={App}  >
-        <IndexRoute component={ViewCompletedRankingsPage} onEnter={authCheck}/>
+        <IndexRoute component={ViewListsPage} onEnter={authCheck}/>
         <Route path="signin" component={LoginPage} />
-        <Route path="rankings" component={CreateListPage} />
-        <Route path="dashboard" component={ViewCompletedRankingsPage} />
-        <Route path="rankings/edit" component={EditRankingsPage} />
+        <Route path="dashboard" component={ListsSearchResultsPage} />
+        <Route path="your" component={ViewYourRankingsPage} />
+        //TODO: WHY WON'T CSS LOAD?
+        <Route path="lists/search/:searchString" component={ListsSearchResultsPage} onEnter={authCheck}/>
+        <Route path="rankings" component={CreateListPage} onEnter={authCheck}/>
+        //TODO:CHANGE LATER WHEN WE FIGURE OUT CSS ISSUE
+        <Route path="get_ranking" component={ViewRankingPage}/>
+        <Route path="rankings/edit" component={EditRankingsPage} onEnter={authCheck} />
         <Route path="rankings/edit/:listId" component={StandardRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} />
         <Route path="current" component={StandardRankingsPage} />

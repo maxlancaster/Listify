@@ -1,35 +1,13 @@
-var mongoose = require('mongoose');
-// var User = require('/models/Users');
-// var Consensus = require('/models/Consensus');
+const uuid = require('uuid');
 
-var itemSchema = mongoose.Schema({
-    title: String,
-    rank: Number
-});
-
-
-var itemsModel = mongoose.model('Items', itemSchema);
-
-var Items = (function(itemsModel) {
-
-    var that = {};
-
-    that.createItem = function (item, callback) {
-        var newItem = {
-            title: item.title,
-            rank: item.rank
-        };
-
-        newItem.save(function (err, itemReturned) {
-            if (err) callback({ msg: err});
-            callback(null, itemReturned);
-        })
-    };
-
-
-    Object.freeze(that);
-    return that;
-
-})(itemsModel);
+var Items = function(title, description, photo) {
+   var that = Object.create(Items.prototype);
+   that.id = uuid.v1();
+   that.title = title;
+   that.description = description;
+   that.photo = photo;
+   Object.freeze(that);
+   return that;
+};
 
 module.exports = Items;
