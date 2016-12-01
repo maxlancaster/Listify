@@ -14,7 +14,10 @@ var Ranking = require('../models/Ranking');
 var List = require('../models/List');
 
 var userSchema = mongoose.Schema({
-    username: String,
+    username: {
+        type: String,
+        index: {unique: true}
+    },
 
     password: String,
 
@@ -33,6 +36,8 @@ var userSchema = mongoose.Schema({
     followers: [String]
 
 });
+
+userSchema.index({username: 'text'});
 
 var userModel = mongoose.model('Users', userSchema);
 
@@ -88,92 +93,92 @@ var Users = (function(userModel) {
             }
         });
     };
-
-
-
-    that.followUser = function(usernameOfFollower, usernameToFollow, callback) {
-        if (usernameOfFollower === usernameToFollow) {
-            callback({ msg: 'You cannot follow yourself' });
-        } else {
-            userModel.findOne({ username: usernameToFollow }, function(err, followee) {
-                if (err) callback({ msg: err });
-                if (followee !== null) {
-                    userModel.findOne({ username: usernameOfFollower }, function(err, follower) {
-                        if (err) callback({ msg: err });
-                        if (follower !== null) {
-                            //sufficient to do a one way check assuming implementation is correct
-                            if (follower.following.indexOf(followee.username) > -1) {
-                                callback({ msg: 'Already following this user!'});
-                            }
-                            else {
-                                follower.following.push(followee.username);
-                                followee.followers.push(follower.username);
-                                follower.save(function(err) {
-                                    if (err) callback({ msg: err });
-                                    callback(null)
-                                });
-                            }
-                        } else {
-                            callback({ msg: 'The user you are trying to get to follow someone does not exist!'});
-                        }
-                    });
-                } else {
-                    callback({ msg: 'The user you want to follow does not exist!'});
-                }
-            });
-        }
-    };
-
-    //modified to allow dual synchronization of followers and following lists
-    that.unfollowUser = function (user, usernameToRemove, callback) {
-        if (usernameToRemove == user) {
-            callback({msg: 'You cannot unfollow yourself'});
-        } else {
-            userModel.findOne({username: user}, function (err, userToModify) {
-                if (err) callback({ msg: err });
-                if (userToModify !== null) {
-
-                    userModel.findOne({ username: usernameToRemove }, function(err, userToRemove) {
-                        if (err) callback({ msg: err });
-                        if (userToRemove !== null) {
-                            //because we have a two way modification, we should do robust checks before
-                            //modifying any lists
-                            if (userToModify.following.indexOf(userToRemove.username) > -1
-                                && userToRemove.followers.indexOf(userToModify.username) > -1) {
-
-                                var remove1 = userToRemove.followers.indexOf(userToModify.username);
-                                if (remove1 > -1) {
-                                    userToRemove.followers.splice(remove1, 1);
-                                }
-                                var remove2 = userToModify.following.indexOf(userToRemove.username);
-                                if (remove2 > -1) {
-                                    userToModify.following.splice(remove2, 1);
-                                }
-
-                                //TODO check this
-                                userToRemove.save(function (err) {
-                                    if (err) callback({msg: err});
-
-                                    userToModify.save(function(err) {
-                                        if (err) callback({msg: err});
-                                        callback(null);
-                                    });
-                                });
-
-                            } else {
-                                callback({ msg: 'You do not follow this user, so you cannot unfollow!'});
-                            }
-                        }
-                        else {
-                            callback({ msg: 'The user to remove does not exist!'});
-                        }
-                        });
-                    } else {
-                    callback({ msg: 'The user you want to modify does not exist!'});
-                }
-            });
-        }
-    };
+    //
+    //
+    //
+    // that.followUser = function(usernameOfFollower, usernameToFollow, callback) {
+    //     if (usernameOfFollower === usernameToFollow) {
+    //         callback({ msg: 'You cannot follow yourself' });
+    //     } else {
+    //         userModel.findOne({ username: usernameToFollow }, function(err, followee) {
+    //             if (err) callback({ msg: err });
+    //             if (followee !== null) {
+    //                 userModel.findOne({ username: usernameOfFollower }, function(err, follower) {
+    //                     if (err) callback({ msg: err });
+    //                     if (follower !== null) {
+    //                         //sufficient to do a one way check assuming implementation is correct
+    //                         if (follower.following.indexOf(followee.username) > -1) {
+    //                             callback({ msg: 'Already following this user!'});
+    //                         }
+    //                         else {
+    //                             follower.following.push(followee.username);
+    //                             followee.followers.push(follower.username);
+    //                             follower.save(function(err) {
+    //                                 if (err) callback({ msg: err });
+    //                                 callback(null)
+    //                             });
+    //                         }
+    //                     } else {
+    //                         callback({ msg: 'The user you are trying to get to follow someone does not exist!'});
+    //                     }
+    //                 });
+    //             } else {
+    //                 callback({ msg: 'The user you want to follow does not exist!'});
+    //             }
+    //         });
+    //     }
+    // };
+    //
+    // //modified to allow dual synchronization of followers and following lists
+    // that.unfollowUser = function (user, usernameToRemove, callback) {
+    //     if (usernameToRemove == user) {
+    //         callback({msg: 'You cannot unfollow yourself'});
+    //     } else {
+    //         userModel.findOne({username: user}, function (err, userToModify) {
+    //             if (err) callback({ msg: err });
+    //             if (userToModify !== null) {
+    //
+    //                 userModel.findOne({ username: usernameToRemove }, function(err, userToRemove) {
+    //                     if (err) callback({ msg: err });
+    //                     if (userToRemove !== null) {
+    //                         //because we have a two way modification, we should do robust checks before
+    //                         //modifying any lists
+    //                         if (userToModify.following.indexOf(userToRemove.username) > -1
+    //                             && userToRemove.followers.indexOf(userToModify.username) > -1) {
+    //
+    //                             var remove1 = userToRemove.followers.indexOf(userToModify.username);
+    //                             if (remove1 > -1) {
+    //                                 userToRemove.followers.splice(remove1, 1);
+    //                             }
+    //                             var remove2 = userToModify.following.indexOf(userToRemove.username);
+    //                             if (remove2 > -1) {
+    //                                 userToModify.following.splice(remove2, 1);
+    //                             }
+    //
+    //                             //TODO check this
+    //                             userToRemove.save(function (err) {
+    //                                 if (err) callback({msg: err});
+    //
+    //                                 userToModify.save(function(err) {
+    //                                     if (err) callback({msg: err});
+    //                                     callback(null);
+    //                                 });
+    //                             });
+    //
+    //                         } else {
+    //                             callback({ msg: 'You do not follow this user, so you cannot unfollow!'});
+    //                         }
+    //                     }
+    //                     else {
+    //                         callback({ msg: 'The user to remove does not exist!'});
+    //                     }
+    //                     });
+    //                 } else {
+    //                 callback({ msg: 'The user you want to modify does not exist!'});
+    //             }
+    //         });
+    //     }
+    // };
 
 
 
@@ -192,6 +197,22 @@ var Users = (function(userModel) {
                 callback(null, result);
             } else {
                 callback({ msg: 'This user does not exist!' });
+            }
+        });
+    };
+
+    /**
+     *  Find users given a search string. If no users are found an empty array is returned
+     * @param searchString {String} - the search string to query
+     * @param callback
+     */
+    that.search = function(searchString, callback) {
+        userModel.find({ "username": { "$regex": "^"+searchString} }).exec(function(err, result) {
+            if (err) callback({ msg: err });
+            if (result !== null) {
+                callback(null, result);
+            } else {
+                callback(null, []);
             }
         });
     };

@@ -56,7 +56,7 @@ class ViewListsPage extends Component {
                               rightTitle = "Most Recent"
                               didSwitchHeader = {this.didSwitchHeader.bind(this)}
             />
-          <ViewableList id={1} lists = {lists} showRankingNumber = {true}/>
+          <ViewableList id={1} lists = {lists} showRankingNumber = {false}/>
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>

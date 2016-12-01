@@ -12,12 +12,14 @@ import EditRankingsPage from './EditRankingsPage.jsx';
 import SetListCapacityPopupView from '../Elements/PopupViews/SetListCapacityPopupView.jsx';
 import Items from '../../models/Items.js'
 import listServices from '../../services/listServices.js';
+import userServices from '../../services/userServices.js';
 
 class CreateListPage extends Component {
   constructor(props) {
     super(props);
     this.state = {items: [], i:0, rankingTitle:'', publicList: true, showPopup:false};
   }
+  
   addItem(itemTitle) {
     var items = this.state.items;
     var item = Items(itemTitle,'','');
@@ -48,7 +50,7 @@ class CreateListPage extends Component {
 
               // navigate to edit page for creator to submit a Ranking
               // uncomment when /rankings/edit/:listId isn't broken!!
-              
+
               // this.props.router.push('/rankings/edit/' + res.content._id);
             } else {
               console.log("Error on submitOriginalRanking: ",res.err)

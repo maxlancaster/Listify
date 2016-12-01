@@ -87,6 +87,16 @@ router.post('/login', function(req, res) {
   });
 });
 
+router.post('/search/:username', function(req, res) {
+  Users.search(req.params.username, function(err, users) {
+    if (!err) {
+      utils.sendSuccessResponse(res, { users: users })
+    } else {
+      utils.sendErrorResponse(res, 500, 'Invalid username or password.');
+    }
+  });
+});
+
 /*
   GET /users/current
   No request parameters
