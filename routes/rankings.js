@@ -145,9 +145,10 @@ router.post('/edit', function(req, res) {
  * Gets the consensus to allow non-creator users to post responses to
  */
 router.get('/edit/:listId', function(req, res){
+    console.log("list id: " + req.params.listId);
     List.getListById(req.params.listId, function(err, list){
         if(err){
-            utils.sendErrorResponse(res, 404, 'No such consensus.');
+            utils.sendErrorResponse(res, 404, 'No such list.');
         } else {
             // load the edit page
             // rankingServices.loadEditPage(consensus);

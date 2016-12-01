@@ -37,7 +37,7 @@ export default (
         <Route path="rankings" component={CreateListPage} />
         <Route path="dashboard" component={ViewCompletedRankingsPage} />
         <Route path="rankings/edit" component={EditRankingsPage} />
-        // <Route path="rankings/edit/:consensusID" component={StandardRankingsPage} />
+        <Route path="rankings/edit/:listId" component={StandardRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} />
         <Route path="current" component={StandardRankingsPage} />
         <Route path="*" component={NotFound} />

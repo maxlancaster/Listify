@@ -41,18 +41,19 @@ class CreateListPage extends Component {
   createList() {
     const listTitle = this.state.rankingTitle;
     const items = this.state.items;
-    //TODO: Create Ranking and Consensus Ranking here
+    //TODO: Create Ranking and List Ranking here
+
   }
 
-  navigateToEditRanking() {
-    if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
-      var this_state = this.state;
-      this.props.router.push({
-        pathname : '/rankings/edit',
-        state : this_state
-      });
-    }
-  }
+  // navigateToEditRanking() {
+  //   if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
+  //     var this_state = this.state;
+  //     this.props.router.push({
+  //       pathname : '/rankings/edit',
+  //       state : this_state
+  //     });
+  //   }
+  // }
 
   render() {
     const style = {

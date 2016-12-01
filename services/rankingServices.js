@@ -12,20 +12,9 @@ export default {
 	    });
 	},
 
-	populateStandardRankingPage : () => {
+	loadEditPage : (list_id) => {
 		return request({
-			uri : BASE_URL + '/:consensus_id',
-			method : 'GET',
-			json : true,
-			body : {
-				// To DO
-			}
-		});
-	},
-
-	loadEditPage : (consensus_id) => {
-		return request({
-			uri : BASE_URL + '/edit' + `/${consensus_id}`,
+			uri : BASE_URL + '/edit' + `/${list_id}`,
 			method : 'GET',
 			json : true
 		})

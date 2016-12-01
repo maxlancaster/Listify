@@ -41,7 +41,7 @@ class StandardRankingsPage extends Component {
       // var request = this.props.rankingServices.loadEditPage(this.props.params.consensusID);
       // this.props.updateEditPage(request);
 
-      rankingServices.loadEditPage(this.props.params.consensusID).then((response) => {
+      rankingServices.loadEditPage(this.props.params.listId).then((response) => {
         if (response.success) {
           console.log(response.content);
           this.setState(
