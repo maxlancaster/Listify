@@ -36,7 +36,8 @@ const CardSource = {
 	endDrag(props, monitor) {
 		const itemCard = monitor.getItem();
 		const dropResult = monitor.getDropResult();
-		if (dropResult && dropResult.listId !== itemCard.listId ) {
+    var canDropIntoTarget = dropResult.targetCanDrop === undefined || dropResult.targetCanDrop === true;
+		if (dropResult && canDropIntoTarget && dropResult.listId !== itemCard.listId ) {
 			props.removeItem(itemCard.index);
 		}
 	}

@@ -8,7 +8,8 @@ class OptionsList extends DraggableList {
       <DraggableList id={this.props.id}
                      items={this.props.items}
                      canEdit = {this.props.canEdit}
-                     showRankingNumber = {false}/>
+                     showRankingNumber = {false}
+                     canDrop = {this.props.canDrop}/>
     );
   }
 
