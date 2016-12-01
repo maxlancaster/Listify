@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ViewableList from '../Elements/ViewableList.jsx';
+import ViewableItemsList from '../Elements/ViewableItemsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
+import ConsensusRankingDescription from '../Elements/ConsensusRankingDescription.jsx';
 import { withRouter } from 'react-router';
 import Items from '../../Models/Items.js'
+
+const uuid = require('uuid');
+//TODO: REMOVE WHEN WE HAVE SERVERSIDE WORKING
+var Ranking = function(title, author, order, capacity) {
+   var that = Object.create(Ranking.prototype);
+   that.id = uuid.v1();
+   that.title = title;
+   that.order = order;
+   that.author = author;
+   that.capacity = capacity;
+   Object.freeze(that);
+   return that;
+};
 
 //This page allows you to View a consensus ranking
 class ViewConsensusRankingPage extends Component {
@@ -17,7 +31,7 @@ class ViewConsensusRankingPage extends Component {
   componentWillMount() {
     //TODO: Get consensus ranking with ranking_id, via server request
     var rankingId = this.props.params.id;
-    var rankingTitle = "Test Title"
+    var rankingTitle = "CONSENSUS RANKING"
     var rankingAuthor = "Phillip Ou";
     var order = [Items('Lebron'),Items('Kobe'), Items('Carmelo')];
     var ranking = Ranking(rankingTitle, rankingAuthor, order);
@@ -47,6 +61,7 @@ class ViewConsensusRankingPage extends Component {
       {this.currentUserIsCreatorOfConsensus() &&
         <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
       }
+      <ConsensusRankingDescription lock = {true} title = {ranking.title} votes = {25}/>
     </div>
 		);
 	}

@@ -3,17 +3,19 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import ViewableItemsList from '../Elements/ViewableItemsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
+import RankingNavigationOptions from '../Elements/RankingNavigationOptions.jsx';
 import { withRouter } from 'react-router';
 import Items from '../../Models/Items.js'
 
 const uuid = require('uuid');
 //TODO: REMOVE WHEN WE HAVE SERVERSIDE WORKING
-var Ranking = function(title, author, order) {
+var Ranking = function(title, author, order, capacity) {
    var that = Object.create(Ranking.prototype);
    that.id = uuid.v1();
    that.title = title;
    that.order = order;
    that.author = author;
+   that.capacity = capacity;
    Object.freeze(that);
    return that;
 };
@@ -31,7 +33,7 @@ class ViewRankingPage extends Component {
     var rankingTitle = "Test Title"
     var rankingAuthor = "Phillip Ou";
     var order = [Items('Lebron'),Items('Kobe'), Items('Carmelo')];
-    var ranking = Ranking(rankingTitle, rankingAuthor, order);
+    var ranking = Ranking(rankingTitle, rankingAuthor, order, 8);
     this.setState({ranking:ranking});
   }
 
@@ -42,6 +44,14 @@ class ViewRankingPage extends Component {
   //lock consensus
   lockList() {
     console.log("lock!")
+  }
+
+  viewConsensus() {
+    this.props.router.push('/consensus');
+  }
+
+  editRanking() {
+    //TODO: navigate to edit ranking
   }
 
   render() {
@@ -58,6 +68,9 @@ class ViewRankingPage extends Component {
       {this.currentUserIsCreatorOfConsensus() &&
         <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
       }
+      <RankingNavigationOptions
+        editRanking = {this.editRanking.bind(this)}
+        viewConsensus = {this.viewConsensus.bind(this)}/>
     </div>
 		);
 	}
