@@ -43,7 +43,7 @@ class ListsSearchResultsPage extends Component {
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <h2>{headerTitle}</h2>
-            <ViewableList id={1} list = {foundLists} showRankingNumber = {false}/>
+            <ViewableList id={1} lists = {foundLists} showRankingNumber = {false}/>
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>

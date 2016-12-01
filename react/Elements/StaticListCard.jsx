@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 
 
-class StaticItemCard extends Component {
+class StaticListCard extends Component {
 
   render() {
 		const { item, isDragging, connectDragSource, connectDropTarget } = this.props;
@@ -23,4 +23,4 @@ class StaticItemCard extends Component {
   }
 }
 
-export default withRouter(StaticItemCard);
+export default withRouter(StaticListCard);

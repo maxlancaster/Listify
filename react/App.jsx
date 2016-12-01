@@ -69,7 +69,7 @@ class App extends Component {
   }
 
 	profile() {
-		this.props.router.push('your');
+		this.props.router.push('/your');
 	}
 
 	render(){

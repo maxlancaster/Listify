@@ -33,7 +33,7 @@ class ViewConsensusRankingPage extends Component {
           <div className = "EditRankingRankingList" >
             <h1 className = "RankingTitle">{this.state.title}</h1>
             <h2 className = "RankingAuthor">{"created by "+this.state.author}</h2>
-            <ViewableList id={1} list = {order} showRankingNumber = {true}/>
+            <ViewableList id={1} lists = {order} showRankingNumber = {true}/>
           </div>
       </div>
       {this.currentUserIsCreatorOfConsensus() &&

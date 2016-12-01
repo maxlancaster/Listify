@@ -55,7 +55,7 @@ class ViewYourListsPage extends Component {
                               rightTitle = "Rankings Invited To"
                               didSwitchHeader = {this.didSwitchHeader.bind(this)}
             />
-          <ViewableList id={1} list = {lists} showRankingNumber = {true}/>
+          <ViewableList id={1} lists = {lists} showRankingNumber = {true}/>
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>

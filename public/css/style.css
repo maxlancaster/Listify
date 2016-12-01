@@ -291,6 +291,23 @@ textarea:focus, input:focus{
   float:right;
 }
 
+/**Static List Card **/
+.StaticListCard .ItemCardRanking {
+  color:#9B9B9B;
+  font-size:25px;
+}
+
+.StaticListCard p{
+  display:inline;
+  margin-left: 10px;
+}
+
+
+.StaticListCardTite {
+  font-size: 20px;
+  font-weight:400;
+}
+
 /**EditRanking **/
 
 .RankingTitle {
