@@ -21,7 +21,7 @@ var Card = function(title, description, photo) {
 
 
 //TODO: GET ALL CONSENSUES THE USER HAS CONTRIBUTED TO AND LOAD THEM
-class ViewCompletedRankingsPage extends Component {
+class ViewListsPage extends Component {
   constructor(props) {
     super(props);
     var rankingTitle = "Test Title";
@@ -52,4 +52,4 @@ class ViewCompletedRankingsPage extends Component {
 	}
 }
 
-export default withRouter(ViewCompletedRankingsPage);
+export default withRouter(ViewListsPage);

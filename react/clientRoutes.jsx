@@ -2,7 +2,7 @@ import App from './App.jsx';
 import EditRankingsPage from './Pages/EditRankingsPage.jsx';
 import CreateListPage from './Pages/CreateListPage.jsx';
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
-import ViewCompletedRankingsPage from './Pages/ViewCompletedRankingsPage.jsx';
+import ViewListsPage from './Pages/ViewListsPage.jsx';
 import NotFound from './Pages/NotFound.jsx';
 import StandardRankingsPage from './Pages/StandardRankingsPage.jsx';
 // import services from '../services';
@@ -32,10 +32,10 @@ const authCheck = (nextState, replace, callback) => {
 export default (
     <Router history={browserHistory} >
       <Route path='/' component={App}  >
-        <IndexRoute component={ViewCompletedRankingsPage} onEnter={authCheck}/>
+        <IndexRoute component={ViewListsPage} onEnter={authCheck}/>
         <Route path="signin" component={LoginPage} />
         <Route path="rankings" component={CreateListPage} />
-        <Route path="dashboard" component={ViewCompletedRankingsPage} />
+        <Route path="dashboard" component={ViewListsPage} />
         <Route path="rankings/edit" component={EditRankingsPage} />
         <Route path="rankings/edit/*" component={StandardRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} />
