@@ -42,11 +42,12 @@ export default (
         //TODO: WHY WON'T CSS LOAD?
         <Route path="lists/search/:searchString" component={ListsSearchResultsPage} onEnter={authCheck}/>
         <Route path="rankings" component={CreateListPage} onEnter={authCheck}/>
-        //TODO:CHANGE LATER WHEN WE FIGURE OUT CSS ISSUE
-        <Route path="get_ranking" component={ViewRankingPage}/>
+        //TODO:CHANGE TO rankings/:id once we figure out why it collides with api
+        //TODO:WHY WON'T CSS LOAD?
+        <Route path="get_ranking" component={ViewRankingPage} onEnter={authCheck}/>
         <Route path="rankings/edit" component={EditRankingsPage} onEnter={authCheck} />
         <Route path="rankings/edit/:listId" component={StandardRankingsPage} />
-        <Route path="consensus" component={ViewConsensusRankingPage} />
+        <Route path="consensus" component={ViewConsensusRankingPage} onEnter={authCheck}/>
         <Route path="current" component={StandardRankingsPage} />
         <Route path="*" component={NotFound} />
       </Route>

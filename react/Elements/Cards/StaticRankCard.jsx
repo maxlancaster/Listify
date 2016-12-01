@@ -8,7 +8,7 @@ class StaticRankCard extends Component {
 		const { rank } = this.props;
 
 		return (
-      <a href="#">
+      <a href="get_ranking">
         <div className = "StaticListCard" >
           {this.props.showRankingNumber && <p className = "StaticListCardRanking">{this.props.index+1 + "."}</p>}
           <p className = "StaticListCardTitle">{rank.title}</p>

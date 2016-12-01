@@ -1,19 +1,41 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ViewableList from '../Elements/ViewableList.jsx';
+import ViewableItemsList from '../Elements/ViewableItemsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
+import ConsensusRankingDescription from '../Elements/ConsensusRankingDescription.jsx';
 import { withRouter } from 'react-router';
 import Items from '../../models/Items.js'
 
+const uuid = require('uuid');
+//TODO: REMOVE WHEN WE HAVE SERVERSIDE WORKING
+var Ranking = function(title, author, order, capacity) {
+   var that = Object.create(Ranking.prototype);
+   that.id = uuid.v1();
+   that.title = title;
+   that.order = order;
+   that.author = author;
+   that.capacity = capacity;
+   Object.freeze(that);
+   return that;
+};
+
+//This page allows you to View a consensus ranking
 class ViewConsensusRankingPage extends Component {
   constructor(props) {
     super(props);
     //TODO: TEMP, REMOVE LATER
-    var rankingTitle = "Test Title"
+    this.state = {ranking:null};
+  }
+
+  componentWillMount() {
+    //TODO: Get consensus ranking with ranking_id, via server request
+    var rankingId = this.props.params.id;
+    var rankingTitle = "CONSENSUS RANKING"
     var rankingAuthor = "Phillip Ou";
     var order = [Items('Lebron'),Items('Kobe'), Items('Carmelo')];
-    this.state = {title:rankingTitle, author: rankingAuthor, order: order};
+    var ranking = Ranking(rankingTitle, rankingAuthor, order);
+    this.setState({ranking:ranking});
   }
 
   currentUserIsCreatorOfConsensus() {
@@ -25,20 +47,29 @@ class ViewConsensusRankingPage extends Component {
     console.log("lock!")
   }
 
+  viewYourRanking() {
+    this.props.router.push("get_ranking");
+  }
+
   render() {
-    const order = this.state.order;
+    const ranking = this.state.ranking;
 		return (
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
-            <h1 className = "RankingTitle">{this.state.title}</h1>
-            <h2 className = "RankingAuthor">{"created by "+this.state.author}</h2>
-            <ViewableList id={1} lists = {order} showRankingNumber = {true}/>
+            <h1 className = "RankingTitle">{ranking.title}</h1>
+            <h2 className = "RankingAuthor">{"created by "+ranking.author}</h2>
+            <ViewableItemsList id={1} items = {ranking.order} showRankingNumber = {true}/>
           </div>
       </div>
       {this.currentUserIsCreatorOfConsensus() &&
         <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
       }
+      <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
+                                   lock = {true}
+                                   title = {ranking.title}
+                                   votes = {25}
+                                   />
     </div>
 		);
 	}

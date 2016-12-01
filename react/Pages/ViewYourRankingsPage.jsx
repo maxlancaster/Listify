@@ -27,7 +27,7 @@ class ViewYourRankingsPage extends Component {
   }
 
   componentWillMount() {
-    var ranks = [Rank('Your List 1'),Rank('Your List 2')];
+    var ranks = [Rank('Your Ranking 1'),Rank('Your Ranking 2')];
     this.setState({ranks:ranks});
   }
 
@@ -45,6 +45,10 @@ class ViewYourRankingsPage extends Component {
     //TODO: ISSUE GET REQUEST TO UPDATE LIST
   }
 
+  didClickRanking(event) {
+    console.log(event);
+  }
+
   render() {
     const ranks = this.state.ranks;
     console.log(this.state);
@@ -56,7 +60,7 @@ class ViewYourRankingsPage extends Component {
                               rightTitle = "Rankings Invited To"
                               didSwitchHeader = {this.didSwitchHeader.bind(this)}
             />
-          <ViewableRankingsList id={1} ranks = {ranks} showRankingNumber = {false}/>
+          <ViewableRankingsList id={1} ranks = {ranks} showRankingNumber = {false} onClick = {this.didClickRanking.bind(this)}/>
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
