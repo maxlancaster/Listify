@@ -58,20 +58,24 @@ class App extends Component {
         });
 	}
 
-    registerUser(username, password){
-        userServices.register(username, password).then((res) => {
-            if (res.success){
-                this.loginUser(username, password);
-            } else {
-                console.log("Error on register user: ",res.err)
-            }
-        });
-    }
+  registerUser(username, password){
+      userServices.register(username, password).then((res) => {
+          if (res.success){
+              this.loginUser(username, password);
+          } else {
+              console.log("Error on register user: ",res.err)
+          }
+      });
+  }
+
+	profile() {
+		this.props.router.push('your');
+	}
 
 	render(){
     return (
 			<div id = "app">
-				<SearchableNavbar logout = {this.logout.bind(this)}/>
+				<SearchableNavbar logout = {this.logout.bind(this)} profile = {this.profile.bind(this)}/>
 				<div className="content">
 					{React.cloneElement(this.props.children, {
                         userServices : userServices,

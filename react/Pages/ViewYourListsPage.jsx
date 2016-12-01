@@ -20,15 +20,14 @@ var Card = function(title, description, photo) {
    return that;
 };
 
-class ViewListsPage extends Component {
+class ViewYourListsPage extends Component {
   constructor(props) {
     super(props);
-    //LOAD COMPLETED CONSENSUSES ONTO COMPLETED RANKINGS
     this.state = {lists:[]};
   }
 
   componentWillMount() {
-    var lists = [Card('Ranking 1'),Card('Ranking 2'), Card('Ranking 3')];
+    var lists = [Card('Your List 1'),Card('Your List 2')];
     this.setState({lists:lists});
   }
 
@@ -39,9 +38,9 @@ class ViewListsPage extends Component {
 
   didSwitchHeader(headerSide) {
     if (headerSide === "LEFT") {
-      console.log("fetch trending");
+      console.log("fetch your lists");
     } else {
-      console.log("fetch most recent");
+      console.log("fetch lists you're invited to");
     }
     //TODO: ISSUE GET REQUEST TO UPDATE LIST
   }
@@ -52,11 +51,11 @@ class ViewListsPage extends Component {
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
-            <SwitchableHeader leftTitle = "Trending"
-                              rightTitle = "Most Recent"
+            <SwitchableHeader leftTitle = "Your Rankings"
+                              rightTitle = "Rankings Invited To"
                               didSwitchHeader = {this.didSwitchHeader.bind(this)}
             />
-            <ViewableList id={1} list = {lists} showRankingNumber = {true}/>
+          <ViewableList id={1} list = {lists} showRankingNumber = {true}/>
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
@@ -65,4 +64,4 @@ class ViewListsPage extends Component {
 	}
 }
 
-export default withRouter(ViewListsPage);
+export default withRouter(ViewYourListsPage);

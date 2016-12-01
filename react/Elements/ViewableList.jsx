@@ -6,20 +6,20 @@ import { withRouter } from 'react-router';
 class ViewableList extends Component {
   constructor(props) {
 		super(props);
-		this.state = { cards: props.list };
+		this.state = { items: props.list };
 	}
 
 	render() {
-		const { cards } = this.state;
+		const { items } = this.state;
 		return (
         <div>
-          {cards.map((card, index) => {
+          {items.map((item, index) => {
             return (
               <StaticItemCard
-                key={card.id}
+                key={item.id}
                 index={index}
                 listId={this.props.id}
-                item={card}
+                item={item}
                 canEdit = {false}
                 showRankingNumber = {this.props.showRankingNumber}/>
             );
