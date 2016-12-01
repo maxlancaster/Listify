@@ -45,7 +45,7 @@ router.post('/create', function(req, res) {
             console.log(err);
             utils.sendErrorResponse(res, 500, err);
         } else {
-            utils.sendSuccessResponse(res);
+            utils.sendSuccessResponse(res, list);
         }
     });
 

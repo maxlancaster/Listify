@@ -43,11 +43,16 @@ class CreateListPage extends Component {
         }
       ).then((res) => {
         if (res.success){
-                console.log("success!");
+              console.log("success!");
+              this.closePopup();
+
+              // navigate to edit page for creator to submit a Ranking
+              // uncomment when /rankings/edit/:listId isn't broken!!
+              
+              // this.props.router.push('/rankings/edit/' + res.content._id);
             } else {
-                console.log("Error on submitOriginalRanking: ",res.err)
+              console.log("Error on submitOriginalRanking: ",res.err)
         }
-        this.closePopup();
       });
 
   }
