@@ -215,7 +215,7 @@ textarea:focus, input:focus{
   height:100vh;
   background-color: #FAF9F9;
   padding-left:20px;
-  margin-top:5px;
+  margin-top:-30px;
 }
 /*.UserSearchTextInput{
   display: block;
@@ -310,10 +310,9 @@ textarea:focus, input:focus{
   height:100vh;
 }
 
-.EditRankingRankingList a{
+.SwitchableHeader a{
   font-size:30px;
   font-weight:600;
-  color:black;
 }
 
 .EditRankingRankingList .ItemCard {
