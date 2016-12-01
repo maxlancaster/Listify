@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ViewableList from '../Elements/ViewableList.jsx';
+import ViewableRankingsList from '../Elements/ViewableRankingsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
@@ -10,8 +10,8 @@ const uuid = require('uuid');
 
 
 //TODO: remove later
-var Card = function(title, description, photo) {
-   var that = Object.create(Card.prototype);
+var Rank = function(title, description, photo) {
+   var that = Object.create(Rank.prototype);
    that.id = uuid.v1();
    that.title = title;
    that.description = description;
@@ -20,15 +20,15 @@ var Card = function(title, description, photo) {
    return that;
 };
 
-class ViewYourListsPage extends Component {
+class ViewYourRankingsPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {lists:[]};
+    this.state = {ranks:[]};
   }
 
   componentWillMount() {
-    var lists = [Card('Your List 1'),Card('Your List 2')];
-    this.setState({lists:lists});
+    var ranks = [Rank('Your List 1'),Rank('Your List 2')];
+    this.setState({ranks:ranks});
   }
 
   //navigate to create rankings page
@@ -38,7 +38,7 @@ class ViewYourListsPage extends Component {
 
   didSwitchHeader(headerSide) {
     if (headerSide === "LEFT") {
-      console.log("fetch your lists");
+      console.log("fetch your ranks");
     } else {
       console.log("fetch lists you're invited to");
     }
@@ -46,7 +46,8 @@ class ViewYourListsPage extends Component {
   }
 
   render() {
-    const lists = this.state.lists;
+    const ranks = this.state.ranks;
+    console.log(this.state);
 		return (
       <div>
   			<div className = "EditRankingsPage">
@@ -55,7 +56,7 @@ class ViewYourListsPage extends Component {
                               rightTitle = "Rankings Invited To"
                               didSwitchHeader = {this.didSwitchHeader.bind(this)}
             />
-          <ViewableList id={1} lists = {lists} showRankingNumber = {true}/>
+          <ViewableRankingsList id={1} ranks = {ranks} showRankingNumber = {false}/>
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
@@ -64,4 +65,4 @@ class ViewYourListsPage extends Component {
 	}
 }
 
-export default withRouter(ViewYourListsPage);
+export default withRouter(ViewYourRankingsPage);

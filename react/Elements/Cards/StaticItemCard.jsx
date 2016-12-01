@@ -5,15 +5,11 @@ import { withRouter } from 'react-router';
 class StaticListCard extends Component {
 
   render() {
-		const { item, isDragging, connectDragSource, connectDropTarget } = this.props;
-		const opacity = isDragging ? 0 : 1;
-		const style = {
-			opacity: opacity
-		};
+		const { item } = this.props;
 
 		return (
       <a href="#">
-        <div className = "ItemCard" style={style}>
+        <div className = "ItemCard" >
           {this.props.showRankingNumber && <p className = "ItemCardRanking">{this.props.index+1 + "."}</p>}
           <p className = "ItemCardTitle">{item.title}</p>
 

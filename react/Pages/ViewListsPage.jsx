@@ -10,8 +10,8 @@ const uuid = require('uuid');
 
 
 //TODO: remove later
-var Card = function(title, description, photo) {
-   var that = Object.create(Card.prototype);
+var List = function(title, description, photo) {
+   var that = Object.create(List.prototype);
    that.id = uuid.v1();
    that.title = title;
    that.description = description;
@@ -28,7 +28,7 @@ class ViewListsPage extends Component {
   }
 
   componentWillMount() {
-    var lists = [Card('Ranking 1'),Card('Ranking 2'), Card('Ranking 3')];
+    var lists = [List('List 1'),List('List 2'), List('List 3')];
     this.setState({lists:lists});
   }
 

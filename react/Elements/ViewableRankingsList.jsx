@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
-import StaticListCard from './Cards/StaticListCard.jsx';
+import StaticRankCard from './Cards/StaticRankCard.jsx';
 import { withRouter } from 'react-router';
 
-class ViewableList extends Component {
+class ViewableRankingsList extends Component {
   constructor(props) {
 		super(props);
-		this.state = { lists: props.lists };
+		this.state = { ranks: props.ranks };
 	}
 
 	render() {
-		const { lists } = this.state;
+		const { ranks } = this.state;
 		return (
         <div>
-          {lists.map((list, index) => {
+          {ranks.map((rank, index) => {
             return (
-              <StaticListCard
-                key={list.id}
+              <StaticRankCard
+                key={rank.id}
                 index={index}
                 listId={this.props.id}
-                list={list}
+                rank={rank}
                 canEdit = {false}
                 showRankingNumber = {this.props.showRankingNumber}/>
             );
@@ -29,4 +29,4 @@ class ViewableList extends Component {
   }
 }
 
-export default withRouter(ViewableList);
+export default withRouter(ViewableRankingsList);
