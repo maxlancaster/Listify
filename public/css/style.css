@@ -331,6 +331,7 @@ textarea:focus, input:focus{
   margin-left:10px;
   width:70%;
   display:block;
+  float:left;
 }
 
 .EditableItemCard .ButtonContainer {

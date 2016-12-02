@@ -47,10 +47,10 @@ class ItemCard extends Component {
   }
 
   imageExists(image_url, success, failure){
-  var img = new Image();
-   img.onload = success;
-   img.onerror = failure;
-   img.src = image_url;
+    var img = new Image();
+     img.onload = success;
+     img.onerror = failure;
+     img.src = image_url;
  }
 
  photoURLInserted(event) {
@@ -70,7 +70,9 @@ class ItemCard extends Component {
     return (
       <div className = "EditableItemCard">
         <div className = "ItemContainer">
-          {this.props.showRankingNumber && <p className = "ItemCardRanking">{this.props.index+1 + "."}</p>}
+          {this.state.validPhoto &&
+            <img className = "ItemCardImage" src = {this.state.newPhotoURL}/>
+          }
           <input className = "TitleInput"
                  type="text"
                  placeholder={item.title}
@@ -86,9 +88,6 @@ class ItemCard extends Component {
                    placeholder={"URL of Photo"}
                    onChange = {this.photoURLInserted.bind(this)}
             />
-        }
-        {this.state.validPhoto &&
-          <img className = "ItemCardImage" src = {this.state.newPhotoURL}/>
         }
         </div>
         <div className = "ButtonContainer">
