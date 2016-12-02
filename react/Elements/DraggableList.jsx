@@ -39,7 +39,11 @@ class DraggableList extends Component {
     this.setState({items:items});
 	}
 
-
+  updateItem(index,newItem) {
+    var items = this.state.items;
+    items[index] = newItem;
+    this.setState({items:items});
+  }
 
 	render() {
 		var { items } = this.state;
@@ -66,6 +70,7 @@ class DraggableList extends Component {
                 deleteItem={this.deleteItem.bind(this)}
                 canEdit = {this.props.canEdit}
                 showRankingNumber = {this.props.showRankingNumber}
+                updateItem = {this.updateItem.bind(this)}
                 canDrop = {this.props.canDrop}/>
             );
           })}

@@ -287,6 +287,51 @@ textarea:focus, input:focus{
   float:right;
 }
 
+/** EditableItemCard **/
+
+.EditableItemCard{
+  margin-top:0px;
+  width:600px;
+}
+
+.EditableItemCard .TitleInput {
+  margin-top:0;
+  margin:10px;
+}
+
+.ItemContainer {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #C4BFBF;
+  width: 500px;
+  -webkit-border-radius: 5px;
+  background:white;
+  display: inline-block;
+  padding: 20px 0px;
+  float:left;
+}
+
+.ItemContainer .ItemCardRanking {
+  color:#9B9B9B;
+  font-size:25px;
+}
+
+.ItemContainer textarea {
+  margin-left:10px;
+  width:85%;
+  display:block;
+}
+
+.EditableItemCard .ButtonContainer {
+  width:40px;
+  float:left;
+}
+
+.ExitButtonContainer {
+  display:inline-block;
+  margin-top:25px;
+}
+
 /**Static List Card **/
 .StaticListCard {
   border-style: solid;
