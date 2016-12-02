@@ -191,6 +191,17 @@ var list = (function(listModel) {
         });
     };
 
+    that.search = function(searchString, callback) {
+      listModel.find({ "title": { "$regex": "^"+searchString} }).exec(function(err, result) {
+        if (err) callback({ msg: err });
+        if (result !== null) {
+            callback(null, result);
+        } else {
+            callback(null, []);
+        }
+      });
+    }
+
     /**
      * Returns a consensus from its id.
      */

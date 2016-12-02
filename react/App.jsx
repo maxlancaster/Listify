@@ -95,19 +95,29 @@ class App extends Component {
 		this.props.router.push('/your');
 	}
 
-    loadEditPage() {
-        rankingServices.loadEditPage().then((resp) => {
-            this.setState((prevState) => {
-                prevState.list = resp.content.list;
-                return prevState;
-            });
-        });
-    }
+  loadEditPage() {
+      rankingServices.loadEditPage().then((resp) => {
+          this.setState((prevState) => {
+              prevState.list = resp.content.list;
+              return prevState;
+          });
+      });
+  }
+
+	searchLists(searchString) {
+		var searchURL = "/lists/search/"+searchString;
+		console.log(searchString);
+		this.props.router.push(searchURL);
+	}
 
 	render(){
     return (
 			<div id = "app">
-				<SearchableNavbar logout = {this.logout.bind(this)} profile = {this.profile.bind(this)}/>
+				<SearchableNavbar
+						logout = {this.logout.bind(this)}
+						profile = {this.profile.bind(this)}
+						searchLists = {this.searchLists.bind(this)}
+						/>
 				<div className="content">
 					{React.cloneElement(this.props.children, {
                         userServices : userServices,

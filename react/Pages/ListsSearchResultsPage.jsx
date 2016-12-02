@@ -27,7 +27,8 @@ class ListsSearchResultsPage extends Component {
   componentWillMount() {
     //TODO: LOAD SEARCH RESULTS
     var foundLists = [Card('Ranking 1'),Card('Ranking 2')];
-    this.setState({foundLists:foundLists});
+    console.log("will mount!");
+    this.setState({foundLists:foundLists, searchString: this.props.params.searchString});
   }
 
   //navigate to create rankings page

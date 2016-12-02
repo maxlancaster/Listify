@@ -50,6 +50,16 @@ router.post('/create', function(req, res) {
 
 });
 
+router.get('/search/:searchString', function(req, res){
+    List.search(req.params.searchString, function(err, lists){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            utils.sendSuccessResponse(res, {lists : lists});
+        }
+    })
+});
+
 /**
  * Gets the consensus to allow non-creator users to post responses to
  */

@@ -15,7 +15,8 @@ class SearchableNavbar extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    console.log(this.state.searchText);
+    var searchString = this.state.searchText;
+    this.props.searchLists(searchString);
   }
 
   render() {

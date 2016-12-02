@@ -12,6 +12,14 @@ export default {
 	    });
 	},
 
+	search : (searchString) => {
+		return request({
+			uri : BASE_URL + `/${searchString}`,
+			method : 'POST',
+			json : true
+		})
+	},
+
 	getListDataFromId : (list_id) => {
 		return request({
 			uri : BASE_URL + `/${list_id}`,
