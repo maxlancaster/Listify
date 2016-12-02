@@ -32,7 +32,7 @@ class ViewRankingPage extends Component {
     var rankingId = this.props.params.id;
     var rankingTitle = "Test Title"
     var rankingAuthor = "Phillip Ou";
-    var order = [Items('Lebron'),Items('Kobe'), Items('Carmelo')];
+    var order = [Items('Lebron', "fdjklsajflkjioewj. Here's a description"),Items('Kobe'), Items('Carmelo')];
     var ranking = Ranking(rankingTitle, rankingAuthor, order, 8);
     this.setState({ranking:ranking});
   }
