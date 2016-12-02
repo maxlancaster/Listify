@@ -6,7 +6,7 @@ class Rankinglist extends DraggableList {
   render() {
     return (
       <DraggableList id={this.props.id}
-                     list={this.props.list}
+                     items={this.props.items}
                      canEdit = {false}
                      showRankingNumber = {true}/>
     );

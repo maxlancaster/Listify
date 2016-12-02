@@ -18,10 +18,14 @@ var listSchema = mongoose.Schema({
 
     creator: String,
 
-    items: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Items'
-    }],
+    items : [],
+
+    // giving me validation error. why?!
+
+    // items: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: 'Items'
+    // }],
 
     rankings: [{
         type: mongoose.Schema.Types.ObjectId,
@@ -110,11 +114,10 @@ var list = (function(listModel) {
     //pass in consensus object with same fields and same types, make sure they are the same
     //later I will add checks to make sure
     that.createList = function (listObject, callback) {
-        console.log(listObject.items);
         var newList = new listModel({
             title : listObject.title,
             creator : listObject.creator,
-            // items : listObject.items,
+            items : listObject.items,
             rankings : listObject.rankings,
             isPublic : listObject.isPublic,
             upvotes : listObject.upvotes,
@@ -126,10 +129,7 @@ var list = (function(listModel) {
         newList.save(function(err, list) {
             if (err) callback({ msg: err}, null);
             else {
-                listModel.find({}).exec(function(error, lis) {
-                    console.log("list created! : " + JSON.stringify(lis, null, '\t'));
-                    callback(null, list);
-                });
+                callback(null, list);
             }
         });
     };

@@ -10,5 +10,13 @@ export default {
 	        json : true,
 	        body : { content : content }
 	    });
+	},
+
+	getListDataFromId : (list_id) => {
+		return request({
+			uri : BASE_URL + `/${list_id}`,
+			method : 'GET',
+			json : true
+		})
 	}
 }

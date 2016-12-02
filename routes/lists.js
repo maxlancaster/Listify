@@ -28,7 +28,6 @@ var Users = require('../models/Users');
 
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/create', function(req, res) {
-    console.log(req.body.content);
     var listObject = {
         title : req.body.content.title,
         creator : req.session.username,
@@ -49,6 +48,19 @@ router.post('/create', function(req, res) {
         }
     });
 
+});
+
+/**
+ * Gets the consensus to allow non-creator users to post responses to
+ */
+router.get('/:listId', function(req, res){
+    List.getListById(req.params.listId, function(err, list){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            utils.sendSuccessResponse(res, {list : list});
+        }
+    })
 });
 
 module.exports = router;

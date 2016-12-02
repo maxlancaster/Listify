@@ -5,7 +5,6 @@ import CreateListPage from './Pages/CreateListPage.jsx';
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import ViewListsPage from './Pages/ViewListsPage.jsx';
 import NotFound from './Pages/NotFound.jsx';
-import StandardRankingsPage from './Pages/StandardRankingsPage.jsx';
 import ListsSearchResultsPage from './Pages/ListsSearchResultsPage.jsx'
 import ViewYourRankingsPage from './Pages/ViewYourRankingsPage.jsx'
 // import services from '../services';
@@ -45,10 +44,10 @@ export default (
         //TODO:CHANGE TO rankings/:id once we figure out why it collides with api
         //TODO:WHY WON'T CSS LOAD?
         <Route path="get_ranking" component={ViewRankingPage} onEnter={authCheck}/>
-        <Route path="rankings/edit" component={EditRankingsPage} onEnter={authCheck} />
-        <Route path="rankings/edit/:listId" component={StandardRankingsPage} />
+        // <Route path="rankings/edit" component={EditRankingsPage} onEnter={authCheck} />
+        <Route path="rankings/edit/:listId" component={EditRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} onEnter={authCheck}/>
-        <Route path="current" component={StandardRankingsPage} />
+        // <Route path="current" component={StandardRankingsPage} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>
