@@ -46,29 +46,21 @@ class CreateListPage extends Component {
         }
       ).then((res) => {
         if (res.success){
-              console.log("success!");
               this.closePopup();
-
               // navigate to edit page for creator to submit a Ranking
               // uncomment when /rankings/edit/:listId isn't broken!!
-
-              // this.props.router.push('/rankings/edit/' + res.content._id);
+              var pathname = '/rankings/edit/' + res.content._id;
+              var data = res.content;
+              this.props.router.push({
+                pathname : pathname,
+                state : { data }
+              });
             } else {
               console.log("Error on submitOriginalRanking: ",res.err)
         }
       });
 
   }
-
-  // navigateToEditRanking() {
-  //   if (this.state.items.length !== 0 && this.state.rankingTitle !== '') {
-  //     var this_state = this.state;
-  //     this.props.router.push({
-  //       pathname : '/rankings/edit',
-  //       state : this_state
-  //     });
-  //   }
-  // }
 
   showCapacityPopup() {
     this.setState({showPopup:true});
