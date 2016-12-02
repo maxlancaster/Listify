@@ -39,7 +39,11 @@ class DraggableList extends Component {
     this.setState({items:items});
 	}
 
-
+  updateItem(index,newItem) {
+    var items = this.state.items;
+    items[index] = newItem;
+    this.setState({items:items});
+  }
 
 	render() {
 		var { items } = this.state;
@@ -65,7 +69,9 @@ class DraggableList extends Component {
                 moveItem={this.moveItem.bind(this)}
                 deleteItem={this.deleteItem.bind(this)}
                 canEdit = {this.props.canEdit}
-                showRankingNumber = {this.props.showRankingNumber}/>
+                showRankingNumber = {this.props.showRankingNumber}
+                updateItem = {this.updateItem.bind(this)}
+                canDrop = {this.props.canDrop}/>
             );
           })}
       </div>
@@ -80,31 +86,13 @@ const CardTarget = {
 		if (cardTargetList.id !== sourceObj.listId ) {
       component.addItem(sourceObj.item);
     }
-		return {listId: cardTargetList.id};
+		return {listId: cardTargetList.id, targetCanDrop: cardTargetList.canDrop};
 	},
-
-  // hover(props, monitor, component) {
-  //   //props = information about list you're hovering over
-  //   //monitor.getItem() gets teh item you dragged
-	// 	const dragIndex = monitor.getItem().index;
-	// 	const hoverIndex = props.index;
-	// 	const sourceListId = monitor.getItem().listId;
-	// 	if (component.props.id !== sourceListId) {
-  //
-  //     const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
-  //
-  //     // Get vertical middle
-  //     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-  //
-  //     // Determine mouse position
-  //     const clientOffset = monitor.getClientOffset();
-  //
-  //     // Get pixels to the top
-  //     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
-	// 		component.moveItem(dragIndex, hoverIndex);
-	// 		monitor.getItem().index = hoverIndex;
-	// 	}
-	// }
+  canDrop(props, monitor) {
+    var canDrop = props.canDrop === undefined || props.canDrop === true;
+    console.log(canDrop);
+    return canDrop;
+  }
 }
 
 export default DropTarget("CARD", CardTarget, (connect, monitor) => ({

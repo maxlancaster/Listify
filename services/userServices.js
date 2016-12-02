@@ -43,21 +43,29 @@ const BASE_URL = 'http://localhost:3000/users';
       });
     },
 
-    follow : (username, following) => {
+    search : (username) => {
       return request({
-        uri : BASE_URL + `/follow/${username}`,
+        uri: BASE_URL + '/search' + `/${username}`,
         method: 'POST',
-        json : true,
-        body: {
-          following: following
-        }
-      });
-    },
-
-    getWhoImFollowing : () => {
-      return request(BASE_URL + '/following', {
-        method: 'GET',
-        json : true
+        json: true
       });
     }
+
+    // follow : (username, following) => {
+    //   return request({
+    //     uri : BASE_URL + `/follow/${username}`,
+    //     method: 'POST',
+    //     json : true,
+    //     body: {
+    //       following: following
+    //     }
+    //   });
+    // },
+
+    // getWhoImFollowing : () => {
+    //   return request(BASE_URL + '/following', {
+    //     method: 'GET',
+    //     json : true
+    //   });
+    // }
   }

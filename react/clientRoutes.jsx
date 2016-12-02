@@ -47,7 +47,6 @@ export default (
         // <Route path="rankings/edit" component={EditRankingsPage} onEnter={authCheck} />
         <Route path="rankings/edit/:listId" component={EditRankingsPage} />
         <Route path="consensus" component={ViewConsensusRankingPage} onEnter={authCheck}/>
-        // <Route path="current" component={StandardRankingsPage} />
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

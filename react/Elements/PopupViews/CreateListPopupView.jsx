@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import {ModalContainer, ModalDialog} from 'react-modal-dialog';
 import { withRouter } from 'react-router';
 
-class SetListCapacityPopupView extends Component {
+class CreateListPopupView extends Component {
   constructor(props) {
     super(props);
-    this.state = {capacity : 8/*this.props.capacity*/};
+    this.state = {capacity : this.props.itemsCount, description:""};
   }
   createButtonClicked() {
-    this.props.createListWithCapacity(this.state.capacity);
+    this.props.createList(this.state.capacity,this.state.description);
   }
 
   handleChange(event) {
@@ -16,12 +16,16 @@ class SetListCapacityPopupView extends Component {
     this.setState({capacity: capacity});
   }
 
+  typingDescription(event) {
+    this.setState({description:event.target.value});
+  }
+
   render() {
-    var itemsCount = 8/*this.props.itemsCount*/;
+    var itemsCount = this.props.itemsCount;
     return (<div>
         <ModalContainer onClose={this.props.onClose}>
           <ModalDialog onClose={this.props.onClose}>
-            <h1>{"Your List has "+itemsCount}</h1>
+            <h1>{this.props.title}</h1>
               <div>
               <p>{"How many items do you want people to rank?"}</p>
               <input type="number"
@@ -30,6 +34,7 @@ class SetListCapacityPopupView extends Component {
                       value = {this.state.capacity}
                       onChange={this.handleChange.bind(this)}
               />
+              <textarea placeholder="Write Description (Optional)" onChange={this.typingDescription.bind(this)}/>
               </div>
             <button onClick = {this.createButtonClicked.bind(this)}>Create</button>
           </ModalDialog>
@@ -38,4 +43,4 @@ class SetListCapacityPopupView extends Component {
   }
 }
 
-export default withRouter(SetListCapacityPopupView);
+export default withRouter(CreateListPopupView);

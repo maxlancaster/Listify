@@ -9,16 +9,17 @@ import InviteUsersPanel from '../Elements/InviteUsersPanel.jsx';
 import { DragDropContext } from 'react-dnd';
 import { withRouter } from 'react-router';
 import EditRankingsPage from './EditRankingsPage.jsx';
-import SetListCapacityPopupView from '../Elements/PopupViews/SetListCapacityPopupView.jsx';
+import CreateListPopupView from '../Elements/PopupViews/CreateListPopupView.jsx';
 import Items from '../../models/Items.js'
 import listServices from '../../services/listServices.js';
+import userServices from '../../services/userServices.js';
 
 class CreateListPage extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {items: [], i:0, rankingTitle:'', publicList: true, showPopup:false};
+    this.state = {items: [], invitedUsers:[], i:0, rankingTitle:'', publicList: true, showPopup:false};
   }
+
   addItem(itemTitle) {
     var items = this.state.items;
     var item = Items(itemTitle,'','');
@@ -30,9 +31,11 @@ class CreateListPage extends Component {
     this.setState({rankingTitle:rankingTitle});
   }
 
-  createListWithCapacity(capacity) {
+  createList(capacity, description) {
     const listTitle = this.state.rankingTitle;
-    // const items = this.state.items;
+    const items = this.state.items;
+    const maxLength = capacity;
+    const listDescription = description;
     //TODO: Create List Here and navigate to EditRankingsPage
 
     listServices.createList(
@@ -72,6 +75,10 @@ class CreateListPage extends Component {
     this.setState({publicList:!isPublic});
   }
 
+  updateInvitedUsers(invitedUsers) {
+    this.setState({invitedUsers:invitedUsers});
+  }
+
   render() {
     const items = this.state.items;
     const publicPrivateIndicator = (
@@ -87,13 +94,15 @@ class CreateListPage extends Component {
 		return (
       <div>
         {this.state.showPopup &&
-            <SetListCapacityPopupView
+            <CreateListPopupView
               onClose = {this.closePopup.bind(this)}
-              createListWithCapacity = {this.createListWithCapacity.bind(this)}
+              title = {this.state.rankingTitle}
+              createList = {this.createList.bind(this)}
+              itemsCount = {items.length}
             />
         }
         {!this.state.publicList &&
-          <InviteUsersPanel />
+          <InviteUsersPanel updateInvitedUsers = {this.updateInvitedUsers.bind(this)}/>
         }
 
         <RankingTitleForm placeholder={"Name of List"} didChangeRankingTitle = {this.didChangeRankingTitle.bind(this)} />

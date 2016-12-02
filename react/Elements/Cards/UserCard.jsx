@@ -4,17 +4,17 @@ import { withRouter } from 'react-router';
 class UserCard extends Component {
 
   deletePressed() {
-    this.props.deleteInvitedUser(this.props.username);
+    this.props.deleteInvitedUser(this.props.user);
   }
 
   render() {
-		const { username, index } = this.props;
+		const { user, index } = this.props;
 
 		return(
         <div className = "UserCard">
           <button className = "ItemCardEditButton"
             onClick={this.deletePressed.bind(this)}>x</button>
-          <p className = "UserCardTitle">{"@"+username}</p>
+          <p className = "UserCardTitle">{"@"+user.username}</p>
         </div>
     );
   }

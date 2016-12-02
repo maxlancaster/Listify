@@ -222,8 +222,8 @@ textarea:focus, input:focus{
   margin-top:-30px;
 }
 
-.UserSearchTextInput input[type=text] {
-  width: 90%;
+#UserSearchTextInput {
+  width: 300px;
   height: 25px;
   font-weight: 400;
   font-size:15px;
@@ -277,14 +277,71 @@ textarea:focus, input:focus{
   margin-left: 10px;
 }
 
-
 .ItemCardTitle {
   font-size: 20px;
   font-weight:400;
 }
 
+.ItemCardDescription {
+  font-size: 17px;
+  font-weight:300;
+  display:block;
+}
+
+.ItemCardImage {
+  float:right;
+  max-width: 100px;
+  max-height: 100px;
+}
+
 .ItemCardEditButton {
   float:right;
+}
+
+/** EditableItemCard **/
+
+.EditableItemCard{
+  margin-top:0px;
+  width:600px;
+}
+
+.EditableItemCard .TitleInput {
+  margin-top:0;
+  margin:10px;
+}
+
+.ItemContainer {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #C4BFBF;
+  width: 500px;
+  -webkit-border-radius: 5px;
+  background:white;
+  display: inline-block;
+  padding: 20px 0px;
+  float:left;
+}
+
+.ItemContainer .ItemCardRanking {
+  color:#9B9B9B;
+  font-size:25px;
+}
+
+.ItemContainer textarea {
+  margin-left:10px;
+  width:70%;
+  display:block;
+  float:left;
+}
+
+.EditableItemCard .ButtonContainer {
+  width:40px;
+  float:left;
+}
+
+.ExitButtonContainer {
+  display:inline-block;
+  margin-top:25px;
 }
 
 /**Static List Card **/
