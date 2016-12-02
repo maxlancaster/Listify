@@ -11,7 +11,9 @@ class ItemCard extends Component {
     this.state = {editMode:false,
                   descriptionMode:false,
                   newTitle:this.props.item.title,
-                  newDescription:this.props.item.description};
+                  newDescription:this.props.item.description,
+                  newPhotoURL: this.props.item.photo,
+                  validPhoto:false};
   }
 
   turnOnEditMode() {
@@ -19,7 +21,7 @@ class ItemCard extends Component {
   }
 
   turnOffEditMode() {
-    this.setState({editMode:false, descriptionMode:false});
+    this.setState({editMode:false, descriptionMode:false, validPhoto:false});
   }
 
   turnOnDescriptionMode() {
@@ -30,7 +32,8 @@ class ItemCard extends Component {
     this.turnOffEditMode();
     var newTitle = this.state.newTitle
     var newDescription = this.state.newDescription;
-    var newItem = Items(newTitle,newDescription,'');
+    var photo = this.state.newPhotoURL;
+    var newItem = Items(newTitle,newDescription,photo);
     var index = this.props.index;
     this.props.updateItem(index,newItem);
   }
@@ -43,6 +46,25 @@ class ItemCard extends Component {
     this.setState({newDescription:event.target.value});
   }
 
+  imageExists(image_url, success, failure){
+  var img = new Image();
+   img.onload = success;
+   img.onerror = failure;
+   img.src = image_url;
+ }
+
+ photoURLInserted(event) {
+   var url = event.target.value;
+   var that = this;
+   this.imageExists(url, function() {
+     //photo found
+     that.setState({newPhotoURL:url, validPhoto:true});
+   }, function() {
+     //photo not found
+     that.setState({newPhotoURL:"", validPhoto:false});
+   });
+ }
+
   editableItemCard() {
     const { item } = this.props;
     return (
@@ -54,8 +76,19 @@ class ItemCard extends Component {
                  placeholder={item.title}
                  onChange = {this.onTitleChange.bind(this)}
           />
+
         {this.state.descriptionMode &&
           <textarea placeholder="Description (Optional)" onChange = {this.onDescriptionChange.bind(this)}/>
+        }
+        {!this.state.validPhoto && !item.photo &&
+          <input className = "PhotoInput"
+                   type="text"
+                   placeholder={"URL of Photo"}
+                   onChange = {this.photoURLInserted.bind(this)}
+            />
+        }
+        {this.state.validPhoto &&
+          <img className = "ItemCardImage" src = {this.state.newPhotoURL}/>
         }
         </div>
         <div className = "ButtonContainer">
