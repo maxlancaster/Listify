@@ -85,6 +85,7 @@ class ItemCard extends Component {
           }
           {this.props.showRankingNumber && <p className = "ItemCardRanking">{this.props.index+1 + "."}</p>}
           <p className = "ItemCardTitle">{item.title}</p>
+          <p className = "ItemCardDescription">{item.description}</p>
 
         </div>
     ));

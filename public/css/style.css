@@ -283,6 +283,12 @@ textarea:focus, input:focus{
   font-weight:400;
 }
 
+.ItemCardDescription {
+  font-size: 17px;
+  font-weight:300;
+  display:block;
+}
+
 .ItemCardEditButton {
   float:right;
 }
