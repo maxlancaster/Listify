@@ -265,27 +265,30 @@ textarea:focus, input:focus{
   background:white;
   display: inline-block;
   padding: 20px 0px;
+  padding-left:10px;
 }
 
 .ItemCard .ItemCardRanking {
+  padding-left:10px;
   color:#9B9B9B;
   font-size:25px;
-}
-
-.ItemCard p{
-  display:inline;
-  margin-left: 10px;
 }
 
 .ItemCardTitle {
   font-size: 20px;
   font-weight:400;
+  display:block;
+  width:70%;
+  float:left;
+  margin-top:0px;
+  margin-bottom:0px;
 }
 
 .ItemCardDescription {
   font-size: 17px;
   font-weight:300;
-  display:block;
+  margin-top:5px;
+
 }
 
 .ItemCardImage {
@@ -306,11 +309,16 @@ textarea:focus, input:focus{
 }
 
 .EditableItemCard .TitleInput {
-  margin-top:0;
-  margin:10px;
+  width:70%;
+  height:30px;
+  font-size: 20px;
+  font-weight:400;
+  border:none;
+  border-bottom: 1px solid #C4BFBF;
 }
 
 .ItemContainer {
+  padding-left:10px;
   border-style: solid;
   border-width: 1px;
   border-color: #C4BFBF;
@@ -318,22 +326,26 @@ textarea:focus, input:focus{
   -webkit-border-radius: 5px;
   background:white;
   display: inline-block;
-  padding: 20px 0px;
+  padding-top: 20px;
+  padding-bottom:20px;
   float:left;
-}
-
-.ItemContainer .ItemCardRanking {
-  color:#9B9B9B;
-  font-size:25px;
 }
 
 .ItemContainer textarea {
-  margin-left:10px;
-  width:70%;
+  width:80%;
   display:block;
   float:left;
+  height:100px;
+  resize: none;
+  font-size: 17px;
+  margin-top:5px;
+  weight:300;
+  border-color: #C4BFBF;
 }
 
+.PhotoInput {
+  display:block;
+}
 .EditableItemCard .ButtonContainer {
   width:40px;
   float:left;

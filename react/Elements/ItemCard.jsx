@@ -10,6 +10,7 @@ class ItemCard extends Component {
     super(props);
     this.state = {editMode:false,
                   descriptionMode:false,
+                  photoMode:false,
                   newTitle:this.props.item.title,
                   newDescription:this.props.item.description,
                   newPhotoURL: this.props.item.photo,
@@ -21,11 +22,15 @@ class ItemCard extends Component {
   }
 
   turnOffEditMode() {
-    this.setState({editMode:false, descriptionMode:false, validPhoto:false});
+    this.setState({editMode:false, descriptionMode:false, photoMode:false, validPhoto:false});
   }
 
   turnOnDescriptionMode() {
     this.setState({descriptionMode:true});
+  }
+
+  turnOnPhotoMode() {
+    this.setState({photoMode:true});
   }
 
   savePressed() {
@@ -67,10 +72,11 @@ class ItemCard extends Component {
 
   editableItemCard() {
     const { item } = this.props;
+    const descriptionPlaceholder = item.description.length > 0 ?  item.description : "Description (Optional)";
     return (
       <div className = "EditableItemCard">
         <div className = "ItemContainer">
-          {this.state.validPhoto &&
+          {this.state.validPhoto && this.state.photoMode &&
             <img className = "ItemCardImage" src = {this.state.newPhotoURL}/>
           }
           <input className = "TitleInput"
@@ -79,10 +85,10 @@ class ItemCard extends Component {
                  onChange = {this.onTitleChange.bind(this)}
           />
 
-        {this.state.descriptionMode &&
-          <textarea placeholder="Description (Optional)" onChange = {this.onDescriptionChange.bind(this)}/>
+        {(this.state.descriptionMode || item.description.length > 0) &&
+          <textarea placeholder={descriptionPlaceholder} onChange = {this.onDescriptionChange.bind(this)}/>
         }
-        {!this.state.validPhoto && !item.photo &&
+        {!this.state.validPhoto && this.state.photoMode &&
           <input className = "PhotoInput"
                    type="text"
                    placeholder={"URL of Photo"}
@@ -92,7 +98,7 @@ class ItemCard extends Component {
         </div>
         <div className = "ButtonContainer">
           <button className = "AddDescriptionButton" onClick={this.turnOnDescriptionMode.bind(this)} >Add Info</button>
-          <button className = "AddPhotoButton" >Add Photo</button>
+          <button className = "AddPhotoButton" onClick={this.turnOnPhotoMode.bind(this)}>Add Photo</button>
           <button className = "DeleteButton" onClick={this.props.deleteItem.bind(null, item)}>Delete</button>
         </div>
         <div className = "ExitButtonContainer">
@@ -116,6 +122,9 @@ class ItemCard extends Component {
             <button className = "ItemCardEditButton" onClick={this.turnOnEditMode.bind(this)}>edit</button>
           }
           {this.props.showRankingNumber && <p className = "ItemCardRanking">{this.props.index+1 + "."}</p>}
+          {item.photo &&
+            <img className = "ItemCardImage" src = {item.photo}/>
+          }
           <p className = "ItemCardTitle">{item.title}</p>
           <p className = "ItemCardDescription">{item.description}</p>
 
