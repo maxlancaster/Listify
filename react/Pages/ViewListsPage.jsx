@@ -68,9 +68,7 @@ class ViewListsPage extends Component {
     var has_submitted_ranking_for_list = ranking_ids.length > 0;
     //TODO:DELETE LATER;
     ranking_ids = ["boom_bang"];
-    if (true/*list.locked*/) {
-      return "lists/"+list._id+"/consensus";
-    } else if (has_submitted_ranking_for_list) {
+    if (has_submitted_ranking_for_list) {
       return "rankings/"+ranking_ids[0];
     } else {
       return "rankings/edit/"+list._id;

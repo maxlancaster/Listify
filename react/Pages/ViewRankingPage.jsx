@@ -47,9 +47,10 @@ class ViewRankingPage extends Component {
   }
 
   viewConsensus() {
-    //TODO: GET CONSENSUSID
-    var consensus_id = "CONSENSUSID"
-    this.props.router.push('/lists/:consensus_id/consensus');
+    //GET LIST ID;
+    var list_id = "LISTID";
+    var path = "lists/"+list_id+"/consensus";
+    this.props.router.push(path);
   }
 
   editRanking() {
