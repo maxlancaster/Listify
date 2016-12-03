@@ -46,7 +46,11 @@ router.post('/create', function(req, res) {
             console.log(err);
             utils.sendErrorResponse(res, 500, err);
         } else {
+          var user_id = req.session.user._id
+          Users.hasCreatedList(user_id, list, function(err, user) {
+            req.session.user.lists.push(list._id);
             utils.sendSuccessResponse(res, list);
+          });
         }
     });
 
