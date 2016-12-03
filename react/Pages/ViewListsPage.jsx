@@ -56,6 +56,16 @@ class ViewListsPage extends Component {
     //TODO: ISSUE GET REQUEST TO UPDATE LIST
   }
 
+
+  determineCorrectPathForUser(list) {
+    return "rankings/edit/"+list._id;
+  }
+
+  didClickOnListCard(list) {
+    var path = this.determineCorrectPathForUser(list);
+    this.props.router.push(path);
+  }
+
   render() {
     const lists = this.state.lists;
 		return (
@@ -66,7 +76,11 @@ class ViewListsPage extends Component {
                               rightTitle = "Most Recent"
                               didSwitchHeader = {this.didSwitchHeader.bind(this)}
             />
-          <ViewableList id={1} lists = {this.state.lists} showRankingNumber = {false}/>
+          <ViewableList id={1}
+                        lists = {this.state.lists}
+                        showRankingNumber = {false}
+                        didClickOnListCard = {this.didClickOnListCard.bind(this)}
+                        />
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
