@@ -226,10 +226,10 @@ var Users = (function(userModel) {
      * @param callback
      */
     that.checkPassword = function(username, password, callback) {
-        userModel.findOne({ username: username }, function(err, result) {
+        userModel.findOne({ username: username }, function(err, user) {
             if (err) callback({ msg: err });
-            if (result !== null && password === result.password) {
-                callback(null, true);
+            if (user !== null && password === user.password) {
+                callback(null, user);
             } else {
                 callback(null, false);
             }

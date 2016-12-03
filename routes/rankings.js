@@ -110,7 +110,7 @@ router.post('/lock/:listId', function(req, res){
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/edit', function(req, res) {
     var listObject = {
-        creator : req.session.username,
+        creator : req.session.user._id,
         title : req.body.content.title,
         order : req.body.content.all_items
     };
@@ -120,7 +120,8 @@ router.post('/edit', function(req, res) {
         } else {
             var rankingData = {
                 order: req.body.content.submitted_items,
-                user: req.session.username,
+                user: req.session.user.username,
+                user_id: req.session.user._id,
                 list: list._id
             };
             Rankings.addRanking(rankingData, function(err, ranking){
@@ -152,39 +153,6 @@ router.get('/edit/:listId', function(req, res){
             // load the edit page
             // rankingServices.loadEditPage(consensus);
             utils.sendSuccessResponse(res, {list : list});
-
-            // Tweets.findTweetsByUser(req.params.username, function(err, tweets) {
-            //     if (err) {
-            //       Users.findUser(req.params.username, function(err, username) {
-            //         if (err) {
-            //           utils.sendErrorResponse(res, 404, err.msg);
-            //         } else {
-            //           utils.sendSuccessResponse(res, { tweets: [] });
-            //         }
-            //       });
-            //     } else {
-            //       utils.sendSuccessResponse(res, { tweets: tweets });
-            //     }
-            //   });
-
-
-            // if(!(req.currentUser.username === consensus.creator)){
-            //     var rankingData = {
-            //         items: req.body.content.submitted_items,
-            //         user: req.session.username,
-            //         consensusRanking: consensus._id
-            //     };
-            //     Rankings.addRanking(rankingData, function(err, ranking){
-            //         if (err) {
-            //             utils.sendErrorResponse(res, 500, err);
-            //         } else {
-            //             utils.sendSuccessResponse(res);
-            //         }
-            //     });
-            // } else {
-            //     console.log(req.currentUser.username);
-            //     console.log(consensus.creator);
-            // }
         }
     })
 });

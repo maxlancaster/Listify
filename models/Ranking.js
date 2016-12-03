@@ -16,6 +16,10 @@ var rankingSchema = mongoose.Schema({
     order: [{}],
 
     user: String,
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
 
     list: {
         type: mongoose.Schema.Types.ObjectId,

@@ -76,11 +76,11 @@ router.post('/login', function(req, res) {
   if (invalidLogin(req, res)) {
     return;
   }
-  Users.checkPassword(req.body.username, req.body.password, function(err, match) {
-    if (match) {
-      req.session.username = req.body.username;
-      console.log("login success by " + req.body.username);
-      utils.sendSuccessResponse(res, { user: req.body.username });
+  Users.checkPassword(req.body.username, req.body.password, function(err, user) {
+    if (user) {
+      req.session.user = user;
+      console.log("login success by " + user.username);
+      utils.sendSuccessResponse(res, { user: user});
     } else {
       utils.sendErrorResponse(res, 403, 'Invalid username or password.');
     }

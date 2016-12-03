@@ -58,8 +58,11 @@ class ViewListsPage extends Component {
 
 
   determineCorrectPathForUser(list) {
+    console.log(list);
     return "rankings/edit/"+list._id;
   }
+
+
 
   didClickOnListCard(list) {
     var path = this.determineCorrectPathForUser(list);

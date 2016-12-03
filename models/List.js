@@ -16,6 +16,11 @@ var listSchema = mongoose.Schema({
 
     title: String,
 
+    creator_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+
     creator: String,
 
     items : [],
