@@ -58,12 +58,23 @@ class ViewListsPage extends Component {
 
 
   determineCorrectPathForUser(list) {
-    console.log(this.props);
-    var current_user = req.session.user;
-    console.log(current_user);
-    var is_creator_of_list = current_user.lists.indexOf(list._id);
-    console.log(is_creator_of_list);
-    return "rankings/edit/"+list._id;
+    var current_user = this.props.user;
+    var is_creator_of_list = current_user.lists.indexOf(list._id) > -1;
+
+    // find intersection of list.rankings and current_user.rankings
+    var ranking_ids = list.rankings.filter(function(ranking) {
+      return current_user.rankings.indexOf(ranking) != -1;
+    });
+    var has_submitted_ranking_for_list = ranking_ids.length > 0;
+    //TODO:DELETE LATER;
+    ranking_ids = ["boom_bang"];
+    if (true/*is_creator_of_list || list.locked*/) {
+      return "lists/"+list._id+"/consensus";
+    } else if (has_submitted_ranking_for_list) {
+      return "rankings/"+ranking_ids[0];
+    } else {
+      return "rankings/edit/"+list._id;
+    }
   }
 
 
