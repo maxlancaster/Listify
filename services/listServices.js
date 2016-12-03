@@ -38,7 +38,7 @@ export default {
 
 	getListDataFromId : (list_id) => {
 		return request({
-			uri : BASE_URL + `find/${list_id}`,
+			uri : BASE_URL + `/find/${list_id}`,
 			method : 'GET',
 			json : true
 		})

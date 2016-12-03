@@ -13,7 +13,6 @@ const uuid = require('uuid');
 class EditRankingsPage extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       title: '', // data.title,
       creator: '', //data.creator,
@@ -35,6 +34,7 @@ class EditRankingsPage extends Component {
       // this.props.updateEditPage(request);
 
       listServices.getListDataFromId(this.props.params.listId).then((response) => {
+        console.log(response);
         if (response.success) {
           this.setState({
             title : response.content.list.title,

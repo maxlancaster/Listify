@@ -50,6 +50,19 @@ router.post('/create', function(req, res) {
 
 });
 
+/**
+ * Gets the consensus to allow non-creator users to post responses to
+ */
+router.get('/find/:listId', function(req, res){
+    List.getListById(req.params.listId, function(err, list){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            utils.sendSuccessResponse(res, {list : list});
+        }
+    })
+});
+
 router.post('/search/:searchString', function(req, res){
     List.search(req.params.searchString, function(err, lists){
       if(err){
@@ -82,17 +95,5 @@ router.get('/trending', function(req, res) {
   });
 });
 
-/**
- * Gets the consensus to allow non-creator users to post responses to
- */
-router.get('/find/:listId', function(req, res){
-    List.getListById(req.params.listId, function(err, list){
-        if(err){
-            utils.sendErrorResponse(res, 404, 'No such list.');
-        } else {
-            utils.sendSuccessResponse(res, {list : list});
-        }
-    })
-});
 
 module.exports = router;
