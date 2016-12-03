@@ -32,12 +32,11 @@ class CommentPopupView extends Component {
   }
 
   render() {
-    var style = {backgroundColor:"black"}
     return <div>
         <ModalContainer onClose={this.props.onClose}>
           <ModalDialog onClose={this.props.onClose}>
-            <textarea placeholder="Write your comment" onChange={this.handleChange.bind(this)}/>
-            <button onClick = {this.commentButtonClicked.bind(this)}>Comment</button>
+            <textarea className = "CommentTextArea" placeholder="Write your comment" onChange={this.handleChange.bind(this)}/>
+            <button className = "PopupButton" onClick = {this.commentButtonClicked.bind(this)}>Comment</button>
           </ModalDialog>
         </ModalContainer>
     </div>

@@ -7,6 +7,10 @@ html, body {
   margin: 0;
 }
 
+button {
+  border-style:none;
+}
+
 /** Navbar **/
 .Navbar {
   margin-top:-20px;
@@ -209,6 +213,25 @@ textarea:focus, input:focus{
     border: 0 none;
     margin-left: 50px;
     display: block;
+}
+
+/** Popups **/
+.DescriptionTextArea, .CommentTextArea {
+  resize: none;
+  margin-top:15px;
+  height:100px;
+  width: 90%;
+  border-color:#C4BFBF;
+  padding: 5px;
+  -webkit-border-radius: 5px;
+}
+
+.PopupButton {
+  width:80px;
+  height:25px;
+  background:#E52F4F;
+  color:white;
+  -webkit-border-radius: 5px;
 }
 
 /** InviteUsersPanel **/

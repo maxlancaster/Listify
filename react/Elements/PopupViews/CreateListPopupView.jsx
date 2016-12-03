@@ -34,9 +34,13 @@ class CreateListPopupView extends Component {
                       value = {this.state.capacity}
                       onChange={this.handleChange.bind(this)}
               />
-              <textarea placeholder="Write Description (Optional)" onChange={this.typingDescription.bind(this)}/>
+            <div>
+              <textarea className = "DescriptionTextArea"
+                        placeholder="Write Description (Optional)"
+                        onChange={this.typingDescription.bind(this)}/>
               </div>
-            <button onClick = {this.createButtonClicked.bind(this)}>Create</button>
+              </div>
+            <button className = "PopupButton" onClick = {this.createButtonClicked.bind(this)}>Create</button>
           </ModalDialog>
         </ModalContainer>
     </div>);
