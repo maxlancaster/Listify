@@ -5,6 +5,7 @@ import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
 import { withRouter } from 'react-router';
+import listServices from '../../services/listServices.js';
 
 const uuid = require('uuid');
 //TODO: remove later
@@ -25,10 +26,15 @@ class ListsSearchResultsPage extends Component {
   }
 
   componentWillMount() {
-    //TODO: LOAD SEARCH RESULTS
-    var foundLists = [Card('Ranking 1'),Card('Ranking 2')];
-    console.log("will mount!");
-    this.setState({foundLists:foundLists, searchString: this.props.params.searchString});
+    var searchString = this.props.params.searchString;
+    listServices.search(searchString).then((res) => {
+      if (res.success){
+        var lists = res.content.lists;
+        this.setState({foundLists:lists});
+      } else {
+        this.setState({foundLists:[]});
+      }
+    });
   }
 
   //navigate to create rankings page
@@ -38,13 +44,15 @@ class ListsSearchResultsPage extends Component {
 
   render() {
     const foundLists = this.state.foundLists;
-    const headerTitle = 'Search Results for "' + this.state.searchString + '" | '+this.state.foundLists.length+' results';
+    const headerTitle = 'Search Results for "' + this.state.searchString + '" | '+foundLists.length+' results';
 		return (
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <h2>{headerTitle}</h2>
-            <ViewableList id={1} lists = {foundLists} showRankingNumber = {false}/>
+            {this.state.foundLists && this.state.foundLists.length > 0 &&
+              <ViewableList id={1} lists = {foundLists} showRankingNumber = {false}/>
+            }
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>

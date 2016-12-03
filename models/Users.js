@@ -207,7 +207,7 @@ var Users = (function(userModel) {
      * @param callback
      */
     that.search = function(searchString, callback) {
-        userModel.find({ "username": { "$regex": "^"+searchString} }).exec(function(err, result) {
+        userModel.find({ "username": { "$regex": new RegExp(searchString, "i")} }).exec(function(err, result) {
             if (err) callback({ msg: err });
             if (result !== null) {
                 callback(null, result);

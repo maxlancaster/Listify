@@ -42,7 +42,7 @@ var listSchema = mongoose.Schema({
 
     usersSharedWith: [String]
 
-});
+}, { timestamps: true });
 
 var listModel = mongoose.model('List', listSchema);
 
@@ -156,7 +156,7 @@ var list = (function(listModel) {
      *  Returns a public feed of consensuses.
      */
     that.getPublicLists = function(callback) {
-        listModel.find({}).find({ isPublic: true }).exec(function(err, result) {
+        listModel.find({}).find({ isPublic: true }).sort({createdAt: -1}).exec(function(err, result) {
             if (err) callback({ msg: err });
             if (result.length > 0) {
                 callback(null, result);
@@ -192,7 +192,7 @@ var list = (function(listModel) {
     };
 
     that.search = function(searchString, callback) {
-      listModel.find({ "title": { "$regex": "^"+searchString} }).exec(function(err, result) {
+      listModel.find({ "title": { "$regex": new RegExp(searchString, "i")} }).exec(function(err, result) {
         if (err) callback({ msg: err });
         if (result !== null) {
             callback(null, result);

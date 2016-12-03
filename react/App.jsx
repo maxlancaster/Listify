@@ -105,9 +105,8 @@ class App extends Component {
   }
 
 	searchLists(searchString) {
-		var searchURL = "/lists/search/"+searchString;
-		console.log(searchString);
-		this.props.router.push(searchURL);
+		var path = "/lists/search/"+searchString;
+		this.props.router.push(path);
 	}
 
 	render(){

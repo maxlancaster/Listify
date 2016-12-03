@@ -14,8 +14,16 @@ export default {
 
 	search : (searchString) => {
 		return request({
-			uri : BASE_URL + `/${searchString}`,
+			uri : BASE_URL + `/search/${searchString}`,
 			method : 'POST',
+			json : true
+		})
+	},
+
+	getMostRecentLists : () => {
+		return request({
+			uri : BASE_URL + '/most_recent',
+			method : 'GET',
 			json : true
 		})
 	},

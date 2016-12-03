@@ -16,7 +16,7 @@ class ViewableList extends Component {
           {lists.map((list, index) => {
             return (
               <StaticListCard
-                key={list.id}
+                key={list._id}
                 index={index}
                 listId={this.props.id}
                 list={list}

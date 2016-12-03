@@ -50,13 +50,13 @@ router.post('/create', function(req, res) {
 
 });
 
-router.get('/search/:searchString', function(req, res){
+router.post('/search/:searchString', function(req, res){
     List.search(req.params.searchString, function(err, lists){
-        if(err){
-            utils.sendErrorResponse(res, 404, 'No such list.');
-        } else {
-            utils.sendSuccessResponse(res, {lists : lists});
-        }
+      if(err){
+          utils.sendErrorResponse(res, 500, err);
+      } else {
+          utils.sendSuccessResponse(res, {lists : lists});
+      }
     })
 });
 
@@ -72,5 +72,15 @@ router.get('/:listId', function(req, res){
         }
     })
 });
+
+router.get('/most_recent', function(req, res) {
+  List.getPublicLists(function(err, lists) {
+    if(err){
+        utils.sendErrorResponse(res, 500, err);
+    } else {
+        utils.sendSuccessResponse(res, {lists : lists});
+    }
+  });
+})
 
 module.exports = router;
