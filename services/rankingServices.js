@@ -18,6 +18,14 @@ export default {
 			method : 'GET',
 			json : true
 		})
+	},
+
+	getRankingById : (ranking_id) => {
+		return request({
+			uri : BASE_URL + '/get' + `/${ranking_id}`,
+			method: 'GET',
+			json: true
+		})
 	}
 	// ,
 	// getListById : (consensus_id) => {

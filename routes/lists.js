@@ -9,26 +9,9 @@ var Users = require('../models/Users');
 // var rankingServices = require('../services/rankingServices');
 
 
-/**
- * Get all rankings created by the currently logged in user.
- */
-
-// /rankings should just load the createRankingsPage via clientRoutes.jsx
-
-// router.get('/', function(req, res){
-    // Consensus.getUserPrivateLists(req.currentUser.username, function(err, consensuses){
-    //     if(err){
-    //         utils.sendSuccessResponse(res, { rankings : [] });
-    //     } else {
-    //         utils.sendSuccessResponse(res, { rankings : rankings});
-    //     }
-    // })
-// });
-
-
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/create', function(req, res) {
-  console.log(req.session);
+    console.log(req.session);
     var listObject = {
         title : req.body.content.title,
         creator : req.session.user.username,
@@ -46,11 +29,11 @@ router.post('/create', function(req, res) {
             console.log(err);
             utils.sendErrorResponse(res, 500, err);
         } else {
-          var user_id = req.session.user._id
-          Users.hasCreatedList(user_id, list, function(err, user) {
-            req.session.user.lists.push(list._id);
-            utils.sendSuccessResponse(res, list);
-          });
+            var user_id = req.session.user._id;
+            Users.hasCreatedList(user_id, list, function(err, user) {
+                req.session.user.lists.push(list._id);
+                utils.sendSuccessResponse(res, list);
+            });
         }
     });
 
@@ -71,34 +54,44 @@ router.get('/find/:listId', function(req, res){
 
 router.post('/search/:searchString', function(req, res){
     List.search(req.params.searchString, function(err, lists){
-      if(err){
-          utils.sendErrorResponse(res, 500, err);
-      } else {
-          utils.sendSuccessResponse(res, {lists : lists});
-      }
+        if(err){
+            utils.sendErrorResponse(res, 500, err);
+        } else {
+            utils.sendSuccessResponse(res, {lists : lists});
+        }
     })
 });
 
 
 router.get('/most_recent', function(req, res) {
-  List.getPublicLists(function(err, lists) {
-    if(err){
-        utils.sendErrorResponse(res, 500, err);
-    } else {
-        utils.sendSuccessResponse(res, {lists : lists});
-    }
-  });
+    List.getPublicLists(function(err, lists) {
+        if(err){
+            utils.sendErrorResponse(res, 500, err);
+        } else {
+            utils.sendSuccessResponse(res, {lists : lists});
+        }
+    });
 });
 
 
 router.get('/trending', function(req, res) {
-  List.getTrendingLists(function(err, lists) {
-    if(err){
-        utils.sendErrorResponse(res, 500, err);
-    } else {
-        utils.sendSuccessResponse(res, {lists : lists});
-    }
-  });
+    List.getTrendingLists(function(err, lists) {
+        if(err){
+            utils.sendErrorResponse(res, 500, err);
+        } else {
+            utils.sendSuccessResponse(res, {lists : lists});
+        }
+    });
+});
+
+router.put('/lock/:listId', function(req, res) {
+    List.lockList(req.params.listId, function(err) {
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            utils.sendSuccessResponse(res);
+        }
+    });
 });
 
 
