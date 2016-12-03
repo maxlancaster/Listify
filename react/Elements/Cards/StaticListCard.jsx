@@ -25,6 +25,9 @@ class StaticListCard extends Component {
 		return (
       <a href = "#" onClick = {this.handleClick.bind(this)}>
         <div className = "StaticListCard" >
+          {list.locked &&
+            <div className="CircleMarker"></div>
+          }
           <div className = "StaticListCardFirstLineContainer">
             {this.props.showRankingNumber && <p className = "StaticListCardRanking">{this.props.index+1 + "."}</p>}
             <p className = "StaticListCardTitle">{list.title}</p>

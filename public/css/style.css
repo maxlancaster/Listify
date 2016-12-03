@@ -371,6 +371,19 @@ textarea:focus, input:focus{
   padding-left:10px;
 }
 
+
+.CircleMarker{
+  float:right;
+  margin-right:10px;
+  margin-top:-10px;
+  width: 20px;
+  height: 20px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  background: #E52F4F;
+  }
+
 .StaticListCard .StaticListCardRanking {
   color:#9B9B9B;
   font-size:25px;
