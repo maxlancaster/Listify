@@ -8,7 +8,8 @@ class Rankinglist extends DraggableList {
       <DraggableList id={this.props.id}
                      items={this.props.items}
                      canEdit = {false}
-                     showRankingNumber = {true}/>
+                     showRankingNumber = {true}
+                     showStandbyCard = {this.props.showStandbyCard}/>
     );
   }
 

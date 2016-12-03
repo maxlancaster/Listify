@@ -89,7 +89,7 @@ class EditRankingsPage extends Component {
             <div className = "EditRankingRankingList" >
               <h1 className = "RankingTitle">{this.state.title}</h1>
               <h2 className = "RankingAuthor">{"created by "+this.state.creator}</h2>
-              <RankingList id={1} items = {this.state.submission} canEdit = {false} />
+              <RankingList id={1} items = {this.state.submission} canEdit = {false} showStandbyCard = {true}/>
             </div>
             <div className = "EditRankingOptionsList" >
               <h1 className = "OptionsListTitle"> Options</h1>

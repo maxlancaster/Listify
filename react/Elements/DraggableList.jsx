@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
 import ItemCard from './ItemCard.jsx';
+import StandbyItemCard from './Cards/StandbyItemCard.jsx';
 import { DropTarget } from 'react-dnd';
 import { findDOMNode } from 'react-dom';
 
@@ -58,6 +59,9 @@ class DraggableList extends Component {
 
 		return connectDropTarget(
         <div style = {style}>
+          {this.props.showStandbyCard && items.length < 1 &&
+            <StandbyItemCard />
+          }
           {items.map((item, index) => {
             return (
               <ItemCard

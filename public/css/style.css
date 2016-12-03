@@ -253,6 +253,21 @@ textarea:focus, input:focus{
   width:90%;
 }
 
+/**StandbyItemCard **/
+.StandbyItemCard {
+  border-style: dashed;
+  border-width: 1px;
+  border-color: #C4BFBF;
+  width: 500px;
+  margin-top: 25px;
+  -webkit-border-radius: 5px;
+  background:#F2EEEE;
+  display: inline-block;
+  padding: 10px 0px;
+  padding-left:10px;
+}
+
+
 /** ItemCard **/
 
 .ItemCard {
