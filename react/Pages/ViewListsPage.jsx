@@ -5,6 +5,7 @@ import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
 import { withRouter } from 'react-router';
+import listServices from '../../services/listServices.js';
 
 const uuid = require('uuid');
 
@@ -12,7 +13,7 @@ const uuid = require('uuid');
 //TODO: remove later
 var List = function(title, description, photo) {
    var that = Object.create(List.prototype);
-   that.id = uuid.v1();
+   that._id = uuid.v1();
    that.title = title;
    that.description = description;
    that.photo = photo;
@@ -28,8 +29,7 @@ class ViewListsPage extends Component {
   }
 
   componentWillMount() {
-    var lists = [List('List 1'),List('List 2'), List('List 3')];
-    this.setState({lists:lists});
+
   }
 
   //navigate to create rankings page
@@ -41,13 +41,19 @@ class ViewListsPage extends Component {
     if (headerSide === "LEFT") {
       console.log("fetch trending");
     } else {
-      console.log("fetch most recent");
+      listServices.getMostRecentLists().then((res) => {
+        console.log(res);
+        var lists = res.content.lists;
+        this.setState({lists:lists});
+      });
     }
     //TODO: ISSUE GET REQUEST TO UPDATE LIST
   }
 
   render() {
     const lists = this.state.lists;
+    console.log("RENDER");
+    console.log(lists);
 		return (
       <div>
   			<div className = "EditRankingsPage">
@@ -56,7 +62,7 @@ class ViewListsPage extends Component {
                               rightTitle = "Most Recent"
                               didSwitchHeader = {this.didSwitchHeader.bind(this)}
             />
-          <ViewableList id={1} lists = {lists} showRankingNumber = {false}/>
+          <ViewableList id={1} lists = {this.state.lists} showRankingNumber = {false}/>
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>

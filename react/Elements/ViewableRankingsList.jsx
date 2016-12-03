@@ -9,6 +9,10 @@ class ViewableRankingsList extends Component {
 		this.state = { ranks: props.ranks };
 	}
 
+  componentWillReceiveProps(props) {
+    this.setState({lists: props.ranks});
+  }
+
 	render() {
 		const { ranks } = this.state;
 		return (

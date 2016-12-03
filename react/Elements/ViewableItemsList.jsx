@@ -9,6 +9,10 @@ class ViewableItemsList extends Component {
 		this.state = { items: props.items };
 	}
 
+  componentWillReceiveProps(props) {
+    this.setState({items: props.items});
+  }
+
 	render() {
 		const { items } = this.state;
 		return (

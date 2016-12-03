@@ -157,6 +157,7 @@ var list = (function(listModel) {
      */
     that.getPublicLists = function(callback) {
         listModel.find({}).find({ isPublic: true }).sort({createdAt: -1}).exec(function(err, result) {
+          console.log("IN MODEL???");
             if (err) callback({ msg: err });
             if (result.length > 0) {
                 callback(null, result);
