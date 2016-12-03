@@ -28,6 +28,14 @@ export default {
 		})
 	},
 
+	getTrendingLists : () => {
+		return request({
+			uri : BASE_URL + '/trending',
+			method : 'GET',
+			json : true
+		})
+	},
+
 	getListDataFromId : (list_id) => {
 		return request({
 			uri : BASE_URL + `find/${list_id}`,

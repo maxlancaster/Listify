@@ -71,6 +71,17 @@ router.get('/most_recent', function(req, res) {
   });
 });
 
+
+router.get('/trending', function(req, res) {
+  List.getTrendingLists(function(err, lists) {
+    if(err){
+        utils.sendErrorResponse(res, 500, err);
+    } else {
+        utils.sendSuccessResponse(res, {lists : lists});
+    }
+  });
+});
+
 /**
  * Gets the consensus to allow non-creator users to post responses to
  */

@@ -29,7 +29,10 @@ class ViewListsPage extends Component {
   }
 
   componentWillMount() {
-
+    listServices.getTrendingLists().then((res) => {
+      var lists = res.content.lists;
+      this.setState({lists:lists});
+    });
   }
 
   //navigate to create rankings page
@@ -39,7 +42,10 @@ class ViewListsPage extends Component {
 
   didSwitchHeader(headerSide) {
     if (headerSide === "LEFT") {
-      console.log("fetch trending");
+      listServices.getTrendingLists().then((res) => {
+        var lists = res.content.lists;
+        this.setState({lists:lists});
+      });
     } else {
       listServices.getMostRecentLists().then((res) => {
         console.log(res);
@@ -52,8 +58,6 @@ class ViewListsPage extends Component {
 
   render() {
     const lists = this.state.lists;
-    console.log("RENDER");
-    console.log(lists);
 		return (
       <div>
   			<div className = "EditRankingsPage">

@@ -152,12 +152,8 @@ var list = (function(listModel) {
         });
     };
 
-    /**
-     *  Returns a public feed of consensuses.
-     */
     that.getPublicLists = function(callback) {
         listModel.find({}).find({ isPublic: true }).sort({createdAt: -1}).exec(function(err, result) {
-          console.log("IN MODEL???");
             if (err) callback({ msg: err });
             if (result.length > 0) {
                 callback(null, result);
@@ -166,6 +162,17 @@ var list = (function(listModel) {
             }
         });
     };
+
+    that.getTrendingLists = function(callback) {
+      listModel.find({}).find({ isPublic: true }).sort({upvotes: -1}).limit(25).exec(function(err, result) {
+          if (err) callback({ msg: err });
+          if (result.length > 0) {
+              callback(null, result);
+          } else {
+              callback({ msg: 'No public lists!'})
+          }
+      });
+    }
 
     /**
      *  Returns a user's private consensuses.
