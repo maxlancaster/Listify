@@ -3,7 +3,7 @@ import { withRouter } from 'react-router';
 
 
 class StaticListCard extends Component {
-
+  
   render() {
 		const { item } = this.props;
 

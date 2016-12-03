@@ -4,8 +4,14 @@ import { withRouter } from 'react-router';
 
 class StaticListCard extends Component {
 
+    constructor(props) {
+      super(props);
+      this.state = {list : props.list};
+    }
+
+
   determineCorrectPathForUser() {
-    return "#";
+    return "rankings/edit/"+this.state.list._id;
   }
 
   render() {

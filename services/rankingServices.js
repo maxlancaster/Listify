@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/rankings';
+const BASE_URL = 'http://localhost:3000/api/rankings';
 
 var request = require('request-promise-native');
 

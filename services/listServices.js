@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/lists';
+const BASE_URL = 'http://localhost:3000/api/lists';
 
 var request = require('request-promise-native');
 

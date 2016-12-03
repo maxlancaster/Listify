@@ -61,9 +61,9 @@ app.use(function(req, res, next) {
 });
 
 // Set up our routes.
-app.use('/users', users);
-app.use('/rankings', rankings);
-app.use('/lists', lists);
+app.use('/api/users', users);
+app.use('/api/rankings', rankings);
+app.use('/api/lists', lists);
 app.get('*', function(req, res){
   res.sendFile(path.join(__dirname, 'public/index.html'))
 });
