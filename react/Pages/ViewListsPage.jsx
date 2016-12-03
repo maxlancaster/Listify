@@ -37,7 +37,7 @@ class ViewListsPage extends Component {
 
   //navigate to create rankings page
   navigateToCreateRankingsPage() {
-    this.props.router.push("rankings");
+    this.props.router.push("lists/create");
   }
 
   didSwitchHeader(headerSide) {
