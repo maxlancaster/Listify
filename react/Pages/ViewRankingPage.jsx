@@ -37,7 +37,7 @@ class ViewRankingPage extends Component {
     this.setState({ranking:ranking});
   }
 
-  currentUserIsCreatorOfConsensus() {
+  currentUserIsCreatorOfList() {
     return true;
   }
 
@@ -47,10 +47,13 @@ class ViewRankingPage extends Component {
   }
 
   viewConsensus() {
-    this.props.router.push('/consensus');
+    //TODO: GET CONSENSUSID
+    var consensus_id = "CONSENSUSID"
+    this.props.router.push('/lists/:consensus_id/consensus');
   }
 
   editRanking() {
+
     //TODO: navigate to edit ranking
   }
 
@@ -65,7 +68,7 @@ class ViewRankingPage extends Component {
             <ViewableItemsList id={1} items = {ranking.order} showRankingNumber = {true}/>
           </div>
       </div>
-      {this.currentUserIsCreatorOfConsensus() &&
+      {this.currentUserIsCreatorOfList() &&
         <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
       }
       <RankingNavigationOptions
