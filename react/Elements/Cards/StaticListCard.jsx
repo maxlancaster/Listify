@@ -18,11 +18,21 @@ class StaticListCard extends Component {
 		const { list } = this.props;
     //when user clicks on a list, you navigate him to EditRankingsPage if he hasn't voted yet
     // else you navigate him to ViewRankingPage
+    var upvoteColor = list.upvotes > 0 ? "#66B110" : "#E52F4F";
+    var upvoteStyle = {
+      color:upvoteColor
+    };
 		return (
       <a href = "#" onClick = {this.handleClick.bind(this)}>
         <div className = "StaticListCard" >
-          {this.props.showRankingNumber && <p className = "StaticListCardRanking">{this.props.index+1 + "."}</p>}
-          <p className = "StaticListCardTitle">{list.title}</p>
+          <div className = "StaticListCardFirstLineContainer">
+            {this.props.showRankingNumber && <p className = "StaticListCardRanking">{this.props.index+1 + "."}</p>}
+            <p className = "StaticListCardTitle">{list.title}</p>
+            {list.upvotes !== 0 &&
+              <p className = "StaticListCardUpvotes" style = {upvoteStyle}>{"+10"}</p>
+            }
+          </div>
+          <p className = "StaticListCardCreator">{"Created by "+list.creator}</p>
 
         </div>
       </a>

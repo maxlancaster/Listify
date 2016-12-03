@@ -368,6 +368,7 @@ textarea:focus, input:focus{
   background:white;
   display: inline-block;
   padding: 20px 0px;
+  padding-left:10px;
 }
 
 .StaticListCard .StaticListCardRanking {
@@ -377,13 +378,23 @@ textarea:focus, input:focus{
 
 .StaticListCard p{
   display:inline;
-  margin-left: 10px;
 }
 
 
-.StaticListCardTite {
-  font-size: 20px;
+.StaticListCardTitle {
+  font-size: 25px;
   font-weight:400;
+}
+
+.StaticListCardUpvotes {
+  font-size:20px;
+  margin-left:20px;
+}
+
+.StaticListCardCreator {
+  margin-top:20px;
+  display:block;
+  font-weight: 300;
 }
 
 /**EditRanking **/
