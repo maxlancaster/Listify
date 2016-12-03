@@ -110,8 +110,16 @@ router.post('/search/:username', function(req, res) {
     - success.user: if success.loggedIn, the currently logged in user
 */
 router.get('/current', function(req, res) {
-  if (req.currentUser) {
-    utils.sendSuccessResponse(res, { loggedIn: true, user: req.currentUser.username });
+  if (req.session.user) {
+    Users.findById(req.session.user._id, function(error, user) {
+      if (!error) {
+        req.session.user = user;
+        utils.sendSuccessResponse(res, { loggedIn: true, user: user })
+      } else {
+        utils.sendErrorResponse(res, 500, 'Problem finding current_user user');
+      }
+
+    })
   } else {
     utils.sendSuccessResponse(res, { loggedIn: false });
   }

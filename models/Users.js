@@ -82,6 +82,23 @@ var Users = (function(userModel) {
     };
 
     /**
+     *  If the id is valid, returns the user object.
+     *  Otherwise, returns an error message
+     * @param id {ObjectId} - ObjectId to query
+     * @param callback
+     */
+    that.findById = function(user_id, callback) {
+        userModel.findById(user_id, function(err, result) {
+            if (err) callback({ msg: err });
+            if (result !== null) {
+                callback(null, result);
+            } else {
+                callback({ msg: 'This user does not exist!' });
+            }
+        });
+    };
+
+    /**
      *  Find users given a search string. If no users are found an empty array is returned
      * @param searchString {String} - the search string to query
      * @param callback

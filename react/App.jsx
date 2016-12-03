@@ -34,6 +34,8 @@ class App extends Component {
     componentWillMount(){
         userServices.getCurrentUser()
             .then((res) => {
+							console.log("fjdklsds");
+							console.log(res);
                 if (res.content.loggedIn) {
                     this.setState((prevState) => {
                         prevState.user = res.content.user;

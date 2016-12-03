@@ -58,7 +58,11 @@ class ViewListsPage extends Component {
 
 
   determineCorrectPathForUser(list) {
-    console.log(list);
+    console.log(this.props);
+    var current_user = req.session.user;
+    console.log(current_user);
+    var is_creator_of_list = current_user.lists.indexOf(list._id);
+    console.log(is_creator_of_list);
     return "rankings/edit/"+list._id;
   }
 
