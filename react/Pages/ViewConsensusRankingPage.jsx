@@ -59,7 +59,9 @@ class ViewConsensusRankingPage extends Component {
       var listId = this.props.params.listId;
       listServices.lockList(listId).then((res) => {
           if (res.success) {
-              console.log("successfully locked");
+            var list = this.state.list;
+            list.locked = true;
+            this.setState({list:list});
           } else {
               console.log("unsuccessful lock");
           }
@@ -87,7 +89,7 @@ class ViewConsensusRankingPage extends Component {
             }
         </div>
 
-        {this.currentUserIsCreatorOfConsensus() &&
+        {this.currentUserIsCreatorOfConsensus() && list && !list.locked &&
           <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
         }
         {list &&
