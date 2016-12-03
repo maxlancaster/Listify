@@ -79,6 +79,15 @@ router.post('*', requireContent);
     // })
 // });
 
+router.get('/get/:rankingId', function(req, res){
+    Rankings.getRankingByID(req.params.rankingId, function (err, ranking) {
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such ranking.');
+        } else{
+            utils.sendSuccessResponse(res, { ranking : ranking});
+        }
+    });
+});
 
 /**
  * Returns
@@ -91,7 +100,7 @@ router.get('/:consensus_id', function(req, res){
         } else{
             utils.sendSuccessResponse(res, { list : list});
         }
-    })
+    });
 });
 
 /**

@@ -42,5 +42,13 @@ export default {
 			method : 'GET',
 			json : true
 		})
+	},
+
+	lockList : (list_id) => {
+		return request({
+			uri : BASE_URL + `/lock/${list_id}`,
+			method: 'PUT',
+			json: true
+		})
 	}
 }

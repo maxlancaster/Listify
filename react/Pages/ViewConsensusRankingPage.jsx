@@ -56,12 +56,19 @@ class ViewConsensusRankingPage extends Component {
 
   //lock consensus
   lockList() {
-    console.log("lock!")
+      var listId = this.props.params.listId;
+      listServices.lockList(listId).then((res) => {
+          if (res.success) {
+              console.log("successfully locked");
+          } else {
+              console.log("unsuccessful lock");
+          }
+      });
   }
 
   viewYourRanking() {
     var ranking_id = this.getSubmittedRankingId();
-    var path = "rankings/"+ranking_id
+    var path = "rankings/"+ranking_id;
     //TODO: NAVIGATE TO PATH (WITHOUT PUSH)
   }
 
