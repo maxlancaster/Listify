@@ -4,6 +4,7 @@ import ViewableList from '../Elements/ViewableList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
+import SearchableNavbar from '../Elements/SearchableNavbar.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
 
@@ -26,13 +27,25 @@ class ListsSearchResultsPage extends Component {
   }
 
   componentWillMount() {
+    this.props.showNavbar(false);
     var searchString = this.props.params.searchString;
+    this.searchLists(searchString);
+  }
+
+
+  componentWillUnmount() {
+    this.props.showNavbar(true);
+  }
+
+  searchLists(searchString) {
+    var path = "/lists/search/"+searchString;
+    this.props.router.push(path);
     listServices.search(searchString).then((res) => {
       if (res.success){
         var lists = res.content.lists;
-        this.setState({foundLists:lists});
+        this.setState({foundLists:lists, searchString:searchString});
       } else {
-        this.setState({foundLists:[]});
+        this.setState({foundLists:[], searchString:searchString});
       }
     });
   }
@@ -47,6 +60,11 @@ class ListsSearchResultsPage extends Component {
     const headerTitle = 'Search Results for "' + this.state.searchString + '" | '+foundLists.length+' results';
 		return (
       <div>
+        <SearchableNavbar
+            logout = {this.props.logout}
+            profile = {this.props.profile}
+            searchLists = {this.searchLists.bind(this)}
+            />
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <h2>{headerTitle}</h2>
