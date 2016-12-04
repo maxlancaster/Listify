@@ -150,7 +150,7 @@ const CardSource = {
 		const dropResult = monitor.getDropResult();
     if (dropResult) {
       var canDropIntoTarget = dropResult.targetCanDrop === undefined || dropResult.targetCanDrop === true;
-      if (canDropIntoTarget && dropResult.listId !== itemCard.listId ) {
+      if (canDropIntoTarget && dropResult.listId && dropResult.listId !== itemCard.listId ) {
   			props.removeItem(itemCard.index);
   		}
     }
