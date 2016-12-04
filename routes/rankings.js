@@ -116,39 +116,18 @@ router.post('/lock/:listId', function(req, res){
     })
 });
 
-// initial creation of the Consensus entry and the Ranking entry by the creator
-router.post('/edit', function(req, res) {
-    var listObject = {
-        creator : req.session.user._id,
-        title : req.body.content.title,
-        order : req.body.content.all_items
-    };
-    List.createList(listObject, function(err, list) {
+// submit a ranking
+router.post('/submit', function(req, res) {
+    var rankingData = req.body.content;
+    rankingData["user"] = req.session.user.username;
+    rankingData["user_id"] = req.session.user._id;
+    Rankings.addRanking(rankingData, function(err, ranking){
         if (err) {
             utils.sendErrorResponse(res, 500, err);
         } else {
-            var rankingData = {
-                order: req.body.content.submitted_items,
-                user: req.session.user.username,
-                user_id: req.session.user._id,
-                list: list._id
-            };
-            Rankings.addRanking(rankingData, function(err, ranking){
-                if (err) {
-                    utils.sendErrorResponse(res, 500, err);
-                } else {
-                    List.updateRankingsArray(list._id, ranking._id, function(err){
-                        if (err) {
-                            utils.sendErrorResponse(res, 500, err);
-                        } else {
-                            utils.sendSuccessResponse(res);
-                        }
-                    })
-                }
-            });
+            utils.sendSuccessResponse(res);
         }
     });
-
 });
 
 /**

@@ -3,12 +3,12 @@ const BASE_URL = 'http://localhost:3000/api/rankings';
 var request = require('request-promise-native');
 
 export default {
-	submitOriginalRanking : (content) => {
+	submitRanking : (content) => {
 	    return request({
-	        uri : BASE_URL + '/edit',
+	        uri : BASE_URL + '/submit',
 	        method: 'POST',
 	        json : true,
-	        body : { content : content }
+	        body : {content : content}
 	    });
 	},
 

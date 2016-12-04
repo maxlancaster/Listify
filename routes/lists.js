@@ -21,6 +21,7 @@ router.post('/create', function(req, res) {
         isPublic : req.body.content.isPublic,
         upvotes : 0,
         locked : false,
+        // TO DO, hardcoded
         maxLength : 5,
         usersSharedWith : []
     };

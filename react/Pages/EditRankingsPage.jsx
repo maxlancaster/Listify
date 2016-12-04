@@ -7,6 +7,7 @@ import { DragDropContext } from 'react-dnd';
 import ConfirmAlertView from '../Elements/ConfirmAlertView.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import listServices from '../../services/listServices.js';
+import rankingServices from '../../services/rankingServices.js';
 
 const uuid = require('uuid');
 
@@ -25,7 +26,8 @@ class EditRankingsPage extends Component {
       usersSharedWith : [], //data.usersSharedWith,
       description: '',
       showCreateRankingConfirm : false,
-      submission: []
+      submission: [],
+      comment : ''
     }
   }
 
@@ -57,6 +59,28 @@ class EditRankingsPage extends Component {
     submitRanking() {
       console.log("submit");
       console.log(this.state.submission);
+
+      var order_object = []
+      var listId = this.props.params.listId;
+      // var user = req.session.user.username;
+      // var user_id = req.session.user._id;
+      var comment = this.state.comment;
+      // description, id, photo, title
+      this.state.submission.forEach(function(item, index) {
+        var element = {}
+        element[item.id] = index+1;
+        order_object.push(element); // start indexing at 1
+      });
+
+      rankingServices.submitRanking(
+        {
+          order : order_object,
+          // user : user,
+          // user_id : user_id,
+          list : listId,
+          comment : comment
+        }
+      );
 
       //TODO : submit Ranking to the associated List
     }

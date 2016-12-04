@@ -67,12 +67,17 @@ var Rankings = (function(rankingModel) {
         var ranking = new rankingModel({
             order: ranking.order,
             user: ranking.user,
-            list: ranking.list
+            list: ranking.list,
+            user_id: ranking.user_id,
+            comment: ranking.comment
         });
 
         ranking.save(function (err, newRanking) {
             if (err) callback({ msg: err});
             else {
+                // rankingModel.find({}).exec(function(error, ranking) {
+                //     console.log("ranking created! : " + JSON.stringify(ranking, null, '\t'));
+                // });
                 callback(null, newRanking);
             }
         })
