@@ -56,6 +56,8 @@ var list = (function(listModel) {
 
     var that = {};
 
+
+    //TODO: this does not work yet, fix once max finishes ranking submissions
     /**
      * Updates the consensus overallRanking (called when a ranking is submitted) according to the following algorithm:
      *

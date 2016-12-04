@@ -40,6 +40,19 @@ router.post('/create', function(req, res) {
 });
 
 /**
+ * Gets the ordering for the list based on the rankings submitted thus far
+ */
+router.get('/:listId', function (req, res) {
+    List.updateList(req.params.listId, function (err, list) {
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            utils.sendSuccessResponse(res, {list : list});
+        }
+    });
+});
+
+/**
  * Gets the consensus to allow non-creator users to post responses to
  */
 router.get('/find/:listId', function(req, res){
@@ -93,6 +106,7 @@ router.put('/lock/:listId', function(req, res) {
         }
     });
 });
+
 
 
 module.exports = router;

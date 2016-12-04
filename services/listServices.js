@@ -50,5 +50,13 @@ export default {
 			method: 'PUT',
 			json: true
 		})
-	}
+	},
+
+    calculateOrdering : (list_id) => {
+        return request({
+            uri : BASE_URL + `/${list_id}`,
+            method: 'GET',
+            json: true
+        })
+    }
 }
