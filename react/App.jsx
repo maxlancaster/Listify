@@ -3,7 +3,7 @@ import CreateListPage from './Pages/CreateListPage.jsx';
 import EditRankingsPage from './Pages/EditRankingsPage.jsx';
 import LoginPage from './Pages/LoginPage.jsx'
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
-import SearchableNavbar from './Elements/SearchableNavbar.jsx';
+import Navbar from './Elements/Navbar.jsx';
 import { withRouter } from 'react-router';
 import userServices from '../services/userServices.js';
 import rankingServices from '../services/rankingServices.js'
@@ -14,6 +14,7 @@ class App extends Component {
         this.state = {
             user : undefined,
             test : "test data",
+						showNavbar : true,
             list : {
                 creator: '',
                 title: '',
@@ -34,8 +35,6 @@ class App extends Component {
     componentWillMount(){
         userServices.getCurrentUser()
             .then((res) => {
-							console.log("fjdklsds");
-							console.log(res);
                 if (res.content.loggedIn) {
                     this.setState((prevState) => {
                         prevState.user = res.content.user;
@@ -106,19 +105,19 @@ class App extends Component {
       });
   }
 
-	searchLists(searchString) {
-		var path = "/lists/search/"+searchString;
-		this.props.router.push(path);
+	showNavbar(show) {
+		this.setState({showNavbar:show});
 	}
 
 	render(){
     return (
 			<div id = "app">
-				<SearchableNavbar
-						logout = {this.logout.bind(this)}
-						profile = {this.profile.bind(this)}
-						searchLists = {this.searchLists.bind(this)}
-						/>
+				{this.state.showNavbar &&
+					<Navbar
+							logout = {this.logout.bind(this)}
+							profile = {this.profile.bind(this)}
+							/>
+				}
 				<div className="content">
 					{React.cloneElement(this.props.children, {
                         userServices : userServices,
@@ -127,7 +126,9 @@ class App extends Component {
                         loginUser : this.loginUser,
                         registerUser : this.registerUser,
                         loadEditPage : this.loadEditPage,
-                        updateEditPage : this.updateEditPage
+                        updateEditPage : this.updateEditPage,
+												showNavbar : this.showNavbar.bind(this),
+												profile : this.profile.bind(this)
                     })}
 				</div>
 			</div>

@@ -4,6 +4,7 @@ import ViewableList from '../Elements/ViewableList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
+import SearchableNavbar from '../Elements/SearchableNavbar.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
 
@@ -29,11 +30,18 @@ class ViewListsPage extends Component {
   }
 
   componentWillMount() {
+    this.props.showNavbar(false);
     listServices.getTrendingLists().then((res) => {
       var lists = res.content.lists;
       this.setState({lists:lists});
     });
   }
+
+  componentWillUnmount() {
+    this.props.showNavbar(true);
+  }
+
+
 
   //navigate to create rankings page
   navigateToCreateRankingsPage() {
@@ -75,7 +83,10 @@ class ViewListsPage extends Component {
     }
   }
 
-
+  searchLists(searchString) {
+    var path = "/lists/search/"+searchString;
+    this.props.router.push(path);
+  }
 
   didClickOnListCard(list) {
     var path = this.determineCorrectPathForUser(list);
@@ -86,6 +97,11 @@ class ViewListsPage extends Component {
     const lists = this.state.lists;
 		return (
       <div>
+        <SearchableNavbar
+            logout = {this.props.logout}
+            profile = {this.props.profile}
+            searchLists = {this.searchLists.bind(this)}
+            />
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <SwitchableHeader leftTitle = "Trending"

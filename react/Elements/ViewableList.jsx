@@ -18,6 +18,7 @@ class ViewableList extends Component {
   }
 
 	render() {
+
 		const { lists } = this.state;
 		return (
         <div>
