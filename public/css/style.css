@@ -450,9 +450,22 @@ textarea:focus, input:focus{
 
 /**EditRanking **/
 
+.RankingTitleContainer {
+  display:inline-block;
+  margin-bottom:0px;
+}
+
 .RankingTitle {
   margin-bottom:0px;
   margin-left:10px;
+  display:inline-block;
+}
+
+.RankingLimit {
+  display:inline-block;
+  margin-left: 5px;
+  color:#9B9B9B;
+  font-weight:300;
 }
 
 .RankingAuthor {

@@ -9,7 +9,8 @@ class Rankinglist extends DraggableList {
                      items={this.props.items}
                      canEdit = {false}
                      showRankingNumber = {true}
-                     showStandbyCard = {this.props.showStandbyCard}/>
+                     showStandbyCard = {this.props.showStandbyCard}
+                     canDrop = {this.props.maxLength && this.props.items.length < this.props.maxLength}/>
     );
   }
 

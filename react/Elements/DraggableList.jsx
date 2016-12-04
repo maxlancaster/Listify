@@ -94,7 +94,6 @@ const CardTarget = {
 	},
   canDrop(props, monitor) {
     var canDrop = props.canDrop === undefined || props.canDrop === true;
-    console.log(canDrop);
     return canDrop;
   }
 }

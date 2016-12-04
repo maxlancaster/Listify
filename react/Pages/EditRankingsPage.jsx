@@ -73,7 +73,6 @@ class EditRankingsPage extends Component {
       if (this.state.items.length === 0) {
         return null;
       }
-
       return (
         <div>
           {
@@ -87,9 +86,16 @@ class EditRankingsPage extends Component {
           }
           <div className = "EditRankingsPage">
             <div className = "EditRankingRankingList" >
-              <h1 className = "RankingTitle">{this.state.title}</h1>
+              <div className = "RankingTitleContainer">
+                <h1 className = "RankingTitle">{this.state.title}</h1>
+                <h1 className = "RankingLimit"> {" | Top "+this.state.maxLength}</h1>
+              </div>
               <h2 className = "RankingAuthor">{"created by "+this.state.creator}</h2>
-              <RankingList id={1} items = {this.state.submission} canEdit = {false} showStandbyCard = {true}/>
+              <RankingList id={1}
+                           items = {this.state.submission}
+                           canEdit = {false}
+                           showStandbyCard = {true}
+                           maxLength = {this.state.maxLength}/>
             </div>
             <div className = "EditRankingOptionsList" >
               <h1 className = "OptionsListTitle"> Options</h1>
