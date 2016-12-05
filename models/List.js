@@ -23,6 +23,8 @@ var listSchema = mongoose.Schema({
 
     creator: String,
 
+    description: String,
+
     items : [],
 
     // giving me validation error. why?!
@@ -69,53 +71,53 @@ var list = (function(listModel) {
      * @param listId
      * @param callback
      */
-    that.updateList = function (listId, callback) {
-
-        //search for all the rankings with a given consensusId
-        Ranking.getAllRankingsForSingleList(listId, function (err, rankings) {
-            if (err) callback({ msg: err });
-            if (rankings != null) {
-
-                //keeps track of the sums for all items
-                var sums = {};
-
-                //find the sums
-                rankings.forEach(function (object) {
-                    var items = object.order;
-                    items.forEach(function (item) {
-                        if (!(item in sums)) {
-                            sums[item] = items.indexOf(item);
-                        } else {
-                            sums[item] += items.indexOf(item);
-                        }
-                    });
-                });
-
-                //create a list of the sums in increasing order
-                var new_ranking = Object.keys(sums).reduce(function(a, b){ return sums[a] < sums[b] ? a : b });
-
-                //make sure that the list is only object IDs so we can add it to the schema
-                var returnRanking = [];
-                new_ranking.forEach(function (item) {
-                    returnRanking.push(item._id)
-                });
-
-                //assign the new list to the overallRanking field
-                listModel.findById(listId, function (err, list) {
-                    if (err) callback({ msg: err });
-                    if (list != null) {
-                        list.overallRanking = returnRanking;
-                        callback(null, list);
-                    } else {
-                        callback({ msg: 'The consensus does not exist!'});
-                    }
-                });
-
-            } else {
-                callback({ msg: 'No rankings!'});
-            }
-        });
-    };
+    // that.updateList = function (listId, callback) {
+    //
+    //     //search for all the rankings with a given consensusId
+    //     Ranking.getAllRankingsForSingleList(listId, function (err, rankings) {
+    //         if (err) callback({ msg: err });
+    //         if (rankings != null) {
+    //
+    //             //keeps track of the sums for all items
+    //             var sums = {};
+    //
+    //             //find the sums
+    //             rankings.forEach(function (object) {
+    //                 var items = object.order;
+    //                 items.forEach(function (item) {
+    //                     if (!(item in sums)) {
+    //                         sums[item] = items.indexOf(item);
+    //                     } else {
+    //                         sums[item] += items.indexOf(item);
+    //                     }
+    //                 });
+    //             });
+    //
+    //             //create a list of the sums in increasing order
+    //             var new_ranking = Object.keys(sums).reduce(function(a, b){ return sums[a] < sums[b] ? a : b });
+    //
+    //             //make sure that the list is only object IDs so we can add it to the schema
+    //             var returnRanking = [];
+    //             new_ranking.forEach(function (item) {
+    //                 returnRanking.push(item._id)
+    //             });
+    //
+    //             //assign the new list to the overallRanking field
+    //             listModel.findById(listId, function (err, list) {
+    //                 if (err) callback({ msg: err });
+    //                 if (list != null) {
+    //                     list.overallRanking = returnRanking;
+    //                     callback(null, list);
+    //                 } else {
+    //                     callback({ msg: 'The consensus does not exist!'});
+    //                 }
+    //             });
+    //
+    //         } else {
+    //             callback({ msg: 'No rankings!'});
+    //         }
+    //     });
+    // };
 
 
     //pass in consensus object with same fields and same types, make sure they are the same
@@ -130,6 +132,7 @@ var list = (function(listModel) {
             upvotes : listObject.upvotes,
             locked : listObject.locked,
             maxLength : listObject.maxLength,
+            description : listObject.description,
             usersSharedWith : listObject.usersSharedWith
         });
 

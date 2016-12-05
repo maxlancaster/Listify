@@ -22,7 +22,7 @@ class EditRankingsPage extends Component {
       isPublic: false, //data.isPublic,
       upvotes : 0, //data.upvotes,
       locked: false, //data.locked,
-      maxLength : 5, //data.maxLength,
+      maxLength : 0, //data.maxLength,
       usersSharedWith : [], //data.usersSharedWith,
       description: '',
       showCreateRankingConfirm : false,

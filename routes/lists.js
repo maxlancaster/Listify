@@ -11,7 +11,7 @@ var Users = require('../models/Users');
 
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/create', function(req, res) {
-    console.log(req.session);
+    console.log(req.body.content);
     var listObject = {
         title : req.body.content.title,
         creator : req.session.user.username,
@@ -21,8 +21,9 @@ router.post('/create', function(req, res) {
         isPublic : req.body.content.isPublic,
         upvotes : 0,
         locked : false,
+        description : req.body.content.description,
         // TO DO, hardcoded
-        maxLength : 5,
+        maxLength : req.body.content.maxLength,
         usersSharedWith : []
     };
     List.createList(listObject, function(err, list) {
@@ -43,15 +44,15 @@ router.post('/create', function(req, res) {
 /**
  * Gets the ordering for the list based on the rankings submitted thus far
  */
-router.get('/:listId', function (req, res) {
-    List.updateList(req.params.listId, function (err, list) {
-        if(err){
-            utils.sendErrorResponse(res, 404, 'No such list.');
-        } else {
-            utils.sendSuccessResponse(res, {list : list});
-        }
-    });
-});
+// router.get('/:listId', function (req, res) {
+//     List.updateList(req.params.listId, function (err, list) {
+//         if(err){
+//             utils.sendErrorResponse(res, 404, 'No such list.');
+//         } else {
+//             utils.sendSuccessResponse(res, {list : list});
+//         }
+//     });
+// });
 
 /**
  * Gets the consensus to allow non-creator users to post responses to

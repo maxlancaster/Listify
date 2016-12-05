@@ -41,8 +41,6 @@ class ViewListsPage extends Component {
     this.props.showNavbar(true);
   }
 
-
-
   //navigate to create rankings page
   navigateToCreateRankingsPage() {
     this.props.router.push("lists/create");

@@ -36,13 +36,14 @@ class CreateListPage extends Component {
     const items = this.state.items;
     const maxLength = capacity;
     const listDescription = description;
-    //TODO: Create List Here and navigate to EditRankingsPage
-
     listServices.createList(
         {
-          title : this.state.rankingTitle,
-          items : this.state.items,
+          title : listTitle,
+          items : items,
           isPublic : this.state.publicList,
+          maxLength : maxLength,
+          description : listDescription
+
         }
       ).then((res) => {
         if (res.success){
