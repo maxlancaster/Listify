@@ -45,7 +45,7 @@ router.post('/create', function(req, res) {
  * Gets the ordering for the list based on the rankings submitted thus far
  */
 
-router.get('/view/:listId', function (req, res) {
+router.get('/consensus/:listId', function (req, res) {
     List.getRankings(req.params.listId, function (err, listRankingIds) {
         if(err){
             utils.sendErrorResponse(res, 404, 'No such list.');
@@ -55,25 +55,40 @@ router.get('/view/:listId', function (req, res) {
                     utils.sendErrorResponse(res, 500, err);
                 } else {
 
-                    var sums = {};
+                    var sums = {}; //{itemId:Sum of ranks}
+                    var itemMap = {};
 
                     listRankings.forEach(function (ranking) {
                         var order = ranking.order;
 
-                        order.forEach(function (dictionary) {
-
-                            Object.keys(dictionary).forEach(function(itemId) {
-                                if (!(itemId in sums)) {
-                                    sums[itemId] = dictionary[itemId];
-                                } else {
-                                    sums[itemId] += dictionary[itemId];
-                                }
-                            });
+                        order.forEach(function (item) {
+                          itemMap[item.id] = item;
+                           if (!(item.id in sums)) {
+                             sums[item.id] = item.rank;
+                           } else {
+                             sums[item.id] += item.rank;
+                           }
                         });
                     });
 
-                    var new_ranking = Object.keys(sums).reduce(function(a, b){ return sums[a] < sums[b] ? a : b });
-                    utils.sendSuccessResponse(res, {order : new_ranking});
+                    var itemIds = Object.keys(sums);
+                    var sumObjects = [];
+                    var sumbObjects = itemIds.map(function(itemId) {
+                      var sumObject = {itemId:itemId, rank:sums[itemId]};
+                      console.log(sumObject);
+                      return sumObject;
+                    });
+                    sumObjects.sort(function(a,b) { return b.val - a.val; });
+                    var updated_order = sumObjects.map(function(sumObject) {
+                      console.log(sumObject);
+                      return itemMap[sumObject];
+                    });
+                    console.log("HERE!!!");
+                    console.log(sumObjects);
+                    console.log(sums);
+                    console.log("Final order!!");
+                    console.log(updated_order);
+                    utils.sendSuccessResponse(res, {order : updated_order});
                 }
             })
         }

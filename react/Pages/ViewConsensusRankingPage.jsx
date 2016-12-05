@@ -36,6 +36,9 @@ class ViewConsensusRankingPage extends Component {
       var list = res.content.list;
       //TODO: DELETE LATER AFTER WE CALCULATE ORDER WITH ALGORITHM AND SET ORDER HERE
       var order = [Items('Lebron'),Items('Kobe'), Items('Carmelo')];
+      listServices.calculateOrdering(list._id).then((res) => {
+        console.log(res);
+      });
       this.setState({list:list, order:order});
     });
   }

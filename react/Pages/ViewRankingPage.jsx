@@ -33,7 +33,7 @@ class ViewRankingPage extends Component {
 
   viewConsensus() {
     //GET LIST ID;
-    var list_id = this.state.list;
+    var list_id = this.state.ranking.list;
     var path = "lists/"+list_id+"/consensus";
     this.props.router.push(path);
   }
