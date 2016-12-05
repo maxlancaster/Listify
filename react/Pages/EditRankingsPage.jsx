@@ -114,7 +114,9 @@ class EditRankingsPage extends Component {
                 <h1 className = "RankingTitle">{this.state.title}</h1>
                 <h1 className = "RankingLimit"> {" | Top "+this.state.maxLength}</h1>
               </div>
-              <h2 className = "RankingAuthor">{"created by "+this.state.creator}</h2>
+              <div className = "TitleSecondRow">
+                <h2 className = "RankingAuthor">{"created by "+this.state.creator}</h2>
+              </div>
               <RankingList id={1}
                            items = {this.state.submission}
                            canEdit = {false}

@@ -9,6 +9,9 @@ html, body {
 
 button {
   border-style:none;
+  -webkit-border-radius: 5px;
+  padding: 3px 10px;
+  color:white;
 }
 
 /** Navbar **/
@@ -454,6 +457,11 @@ textarea:focus, input:focus{
   display:inline-block;
 }
 
+.RankingTitleSecondRowContainer {
+  margin-top:100px;
+  display:inline-block;
+}
+
 .RankingTitle {
   margin-bottom:0px;
   padding-bottom:0px;
@@ -475,6 +483,17 @@ textarea:focus, input:focus{
   color:#C4BFBF;
   margin-left:10px;
   margin-top:-20px;
+  display:inline-block;
+}
+
+.TitleSecondRow {
+  margin-top:-20px;
+  display:block;
+}
+
+.CloseVotingButton {
+  margin-left:20px;
+  display:inline-block;
 }
 
 

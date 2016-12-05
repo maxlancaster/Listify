@@ -50,8 +50,12 @@ class ViewRankingPage extends Component {
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
-            <h1 className = "RankingTitle">{ranking.title}</h1>
-            <h2 className = "RankingAuthor">{"created by "+ranking.user}</h2>
+            <div className = "RankingTitleContainer">
+              <h1 className = "RankingTitle">{ranking.title}</h1>
+            </div>
+            <div className = "TitleSecondRow">
+              <h2 className = "RankingAuthor">{"created by "+ranking.user}</h2>
+            </div>
             <ViewableItemsList id={1} items = {ranking.order} showRankingNumber = {true}/>
           </div>
       </div>
