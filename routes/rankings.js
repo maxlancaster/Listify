@@ -125,6 +125,7 @@ router.post('/submit', function(req, res) {
         if (err) {
             utils.sendErrorResponse(res, 500, err);
         } else {
+            console.log(ranking);
             utils.sendSuccessResponse(res);
         }
     });
