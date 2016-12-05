@@ -125,8 +125,13 @@ router.post('/submit', function(req, res) {
         if (err) {
             utils.sendErrorResponse(res, 500, err);
         } else {
-            console.log(ranking);
-            utils.sendSuccessResponse(res);
+            Users.hasSubmittedRanking(req.session.user._id, ranking, function(err, user) {
+                if (err) {
+                    utils.sendErrorResponse(res, 500, err);
+                } else {
+                    utils.sendSuccessResponse(res);
+                }
+            });
         }
     });
 });
