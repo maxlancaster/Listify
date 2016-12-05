@@ -45,7 +45,7 @@ class ViewConsensusRankingPage extends Component {
   getSubmittedRankingId() {
     var current_user = this.props.user;
     // find intersection of list.rankings and current_user.rankings
-    var ranking_ids = this.state.lists.rankings.filter(function(ranking) {
+    var ranking_ids = this.state.list.rankings.filter(function(ranking) {
       return current_user.rankings.indexOf(ranking) != -1;
     });
     return ranking_ids.length > 0 ? ranking_ids[0] : null;
@@ -74,7 +74,8 @@ class ViewConsensusRankingPage extends Component {
   viewYourRanking() {
     var ranking_id = this.getSubmittedRankingId();
     var path = "rankings/"+ranking_id;
-    //TODO: NAVIGATE TO PATH (WITHOUT PUSH)
+    console.log(path);
+    this.props.router.push(path);
   }
 
   render() {

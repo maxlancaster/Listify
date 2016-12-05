@@ -60,9 +60,8 @@ class ViewListsPage extends Component {
     });
 
     var has_submitted_ranking_for_list = ranking_ids.length > 0;
-    //TODO:DELETE LATER;
     if (has_submitted_ranking_for_list) {
-      return "rankings/"+ranking_ids[0];
+      return "lists/"+list._id+"/consensus";
     } else {
       return "rankings/edit/"+list._id;
     }
