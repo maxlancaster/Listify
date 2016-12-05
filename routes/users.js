@@ -138,6 +138,19 @@ router.put('/logout', function(req, res) {
   utils.sendSuccessResponse(res);
 });
 
+router.put('/update_last_viewed_invitations_date', function(req,res) {
+  Users.updateLastViewedInvitationsDate(req.session.user._id, function(error, user) {
+    console.log(req.session.user);
+    console.log(error);
+    if (!error) {
+      req.session.user = user;
+      utils.sendSuccessResponse(res, { user: user })
+    } else {
+      utils.sendErrorResponse(res, 500, 'Problem updating timestampe');
+    }
+  });
+})
+
 /*
   PUT /users/follow/:username
   Request parameters:

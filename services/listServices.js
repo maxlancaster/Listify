@@ -44,9 +44,9 @@ export default {
 		})
 	},
 
-	getInvitedLists: (user_id) => {
+	getInvitedLists: (username) => {
 		return request({
-			uri : BASE_URL + `/invited/${user_id}`,
+			uri : BASE_URL + `/invited/${username}`,
 			method : 'GET',
 			json : true
 		})

@@ -48,10 +48,7 @@ var listSchema = mongoose.Schema({
 
     maxLength: Number,
 
-    usersSharedWith: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
-    }]
+    usersSharedWith: [String]
 
 }, { timestamps: true });
 
@@ -164,10 +161,12 @@ var list = (function(listModel) {
     /**
      *  Returns a user's lists.
      */
-    that.getInvitedLists = function(user_id, callback) {
-        console.log(user_id);
-        listModel.find({ usersSharedWith: new ObjectId(user_id) }).exec(function(err, result) {
+    that.getInvitedLists = function(username, callback) {
+        console.log(username);
+        //WHY WON'T THIS WORK???
+        listModel.find({ usersSharedWith:  { $all: [ username] }}).exec(function(err, result) {
             if (err) callback({ msg: err });
+            console.log(result);
             if (result.length > 0) {
                 callback(null, result);
             } else {

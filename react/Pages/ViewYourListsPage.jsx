@@ -6,6 +6,7 @@ import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
+import userServices from '../../services/userServices.js';
 
 class ViewYourListsPage extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class ViewYourListsPage extends Component {
   }
 
   componentWillMount() {
-    listServices.getInvitedLists(this.props.user._id).then((res) => {
+    listServices.getInvitedLists(this.props.user.username).then((res) => {
       var lists = res.content.lists;
       this.setState({lists:lists});
     });
@@ -29,7 +30,9 @@ class ViewYourListsPage extends Component {
     if (headerSide === "LEFT") {
       console.log("fetch your ranks");
     } else {
-
+      userServices.updateLastViewedInvitationsDate().then((res) => {
+        console.log(res);
+      });
       console.log("fetch lists you're invited to");
     }
     //TODO: ISSUE GET REQUEST TO UPDATE LIST

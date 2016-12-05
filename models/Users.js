@@ -163,7 +163,7 @@ var Users = (function(userModel) {
     }
 
     that.updateLastViewedInvitationsDate = function(user_id, callback) {
-      userModel.findOneAndUpdate({_id:user_id}, {last_viewed_invitations_date:Date.now}, function(error ,user) {
+      userModel.findOneAndUpdate({_id:user_id}, {last_viewed_invitations_date:Date.now()}, function(error ,user) {
         if (error) callback({msg:error});
         if (user !== null) {
           callback(null, user);

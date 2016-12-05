@@ -96,8 +96,8 @@ router.get('/find/:listId', function(req, res){
 /**
  * Gets the lists of a creatd by a user given his user_id
  */
-router.get('/invited/:userId', function(req, res){
-    List.getInvitedLists(req.params.userId, function(err, lists){
+router.get('/invited/:username', function(req, res){
+    List.getInvitedLists(req.params.username, function(err, lists){
         if(err){
           console.log(err);
             utils.sendErrorResponse(res, 500, err);
