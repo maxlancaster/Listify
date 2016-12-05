@@ -72,22 +72,16 @@ router.get('/consensus/:listId', function (req, res) {
                     });
 
                     var itemIds = Object.keys(sums);
-                    var sumObjects = [];
-                    var sumbObjects = itemIds.map(function(itemId) {
+                    var sumObjects = itemIds.map(function(itemId) {
                       var sumObject = {itemId:itemId, rank:sums[itemId]};
-                      console.log(sumObject);
                       return sumObject;
                     });
-                    sumObjects.sort(function(a,b) { return b.val - a.val; });
+
+                    sumObjects.sort(function(a,b) { return a.rank - b.rank; });
+
                     var updated_order = sumObjects.map(function(sumObject) {
-                      console.log(sumObject);
-                      return itemMap[sumObject];
+                      return itemMap[sumObject.itemId];
                     });
-                    console.log("HERE!!!");
-                    console.log(sumObjects);
-                    console.log(sums);
-                    console.log("Final order!!");
-                    console.log(updated_order);
                     utils.sendSuccessResponse(res, {order : updated_order});
                 }
             })
