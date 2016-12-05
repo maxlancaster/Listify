@@ -6,65 +6,77 @@ import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import RankingNavigationOptions from '../Elements/RankingNavigationOptions.jsx';
 import { withRouter } from 'react-router';
 import Items from '../../models/Items.js'
+import rankingServices from '../../services/rankingServices.js';
 
 const uuid = require('uuid');
-//TODO: REMOVE WHEN WE HAVE SERVERSIDE WORKING
-var Ranking = function(title, user, order, capacity) {
-   var that = Object.create(Ranking.prototype);
-   that.id = uuid.v1();
-   that.title = title;
-   that.order = order;
-   that.user = user;
-   that.capacity = capacity;
-   Object.freeze(that);
-   return that;
-};
+
 //This page allows you to View a ranking
 class ViewRankingPage extends Component {
   constructor(props) {
     super(props);
-    //TODO: TEMP, REMOVE LATER
-    this.state = {ranking:null};
+    this.state = {
+      order : [{}],
+      user : '',
+      user_id : '',
+      list : '',
+      comment : ''
+    };
   }
 
   componentWillMount() {
-    //TODO: Get ranking with ranking_id, via server request
     var rankingId = this.props.params.id;
-    var rankingTitle = "Test Title"
-    var rankingAuthor = "Phillip Ou";
-    var order = [Items('Lebron', "fdjklsajflkjioewj. Here's a description"),Items('Kobe'), Items('Carmelo')];
-    var ranking = Ranking(rankingTitle, rankingAuthor, order, 8);
-    this.setState({ranking:ranking});
+
+    rankingServices.getRankingById(rankingId).then((response) => {
+      if (response.success) {
+        this.setState({
+          order : response.content.order,
+          user : repsonse.content.user,
+          user_id : response.content.user_id,
+          list : response.content.list,
+          comment : response.content.comment
+        });
+      } else {
+        console.log(repsonse.err);
+      }
+    });
   }
 
   viewConsensus() {
     //GET LIST ID;
-    var list_id = this.state.ranking.list;
+    var list_id = this.state.list;
     var path = "lists/"+list_id+"/consensus";
     this.props.router.push(path);
   }
 
+  editRanking() {
+    console.log("edit this ranking");
+  }
+
   render() {
-    const ranking = this.state.ranking;
-		return (
+    console.log(this.state.order);
+    if (this.state.list === '') {
+      return null;
+    }
+
+    return (
       <div>
-  			<div className = "EditRankingsPage">
+        <div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <div className = "RankingTitleContainer">
-              <h1 className = "RankingTitle">{ranking.title}</h1>
+              <h1 className = "RankingTitle">{this.state.title}</h1>
             </div>
             <div className = "TitleSecondRow">
-              <h2 className = "RankingAuthor">{"created by "+ranking.user}</h2>
+              <h2 className = "RankingAuthor">{"created by "+this.state.user}</h2>
             </div>
-            <ViewableItemsList id={1} items = {ranking.order} showRankingNumber = {true}/>
+            <ViewableItemsList id={1} items = {this.state.order} showRankingNumber = {true}/>
           </div>
       </div>
       <RankingNavigationOptions
         editRanking = {this.editRanking.bind(this)}
         viewConsensus = {this.viewConsensus.bind(this)}/>
     </div>
-		);
-	}
+    );
+  }
 }
 
 export default withRouter(ViewRankingPage);

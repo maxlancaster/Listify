@@ -44,7 +44,6 @@ export default (
         //TODO:CHANGE TO rankings/:id once we figure out why it collides with api
         //TODO:WHY WON'T CSS LOAD?
         <Route path="rankings/:id" component={ViewRankingPage} onEnter={authCheck}/>
-        // <Route path="rankings/edit" component={EditRankingsPage} onEnter={authCheck} />
         <Route path="rankings/edit/:listId" component={EditRankingsPage} />
         <Route path="lists/:listId/consensus" component={ViewConsensusRankingPage} onEnter={authCheck}/>
         <Route path="*" component={NotFound} />
