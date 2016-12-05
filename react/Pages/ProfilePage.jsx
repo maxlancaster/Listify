@@ -35,7 +35,10 @@ class ProfilePage extends Component {
         this.setState({headerSide:"LEFT", rankings:rankings});
       });
     } else if (headerSide === "CENTER") {
-      this.setState({headerSide:"CENTER"});
+      listServices.getUserLists(this.props.user._id).then( (res) => {
+        this.setState({headerSide:"CENTER", lists:res.content.lists});
+      });
+
     }
     else {
       this.setState({headerSide:"RIGHT"});
@@ -96,7 +99,7 @@ class ProfilePage extends Component {
                                     showRankingNumber = {false}
                                     onClick = {this.didClickRanking.bind(this)}/>
             }
-            {this.state.headerSide !== "LEFT" &&
+            {this.state.headerSide !== "LEFT" && lists &&
               <ViewableList id={1}
                             lists = {lists}
                             showRankingNumber = {false}

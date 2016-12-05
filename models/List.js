@@ -161,8 +161,21 @@ var list = (function(listModel) {
     /**
      *  Returns a user's lists.
      */
+    that.getUserLists = function(user_id, callback) {
+        listModel.find({ creator_id:new ObjectId(user_id)}).exec(function(err, result) {
+            if (err) callback({ msg: err });
+            if (result.length > 0) {
+                callback(null, result);
+            } else {
+                callback({ msg: 'No private consensuses for this user!'})
+            }
+        });
+    };
+
+    /**
+     *  Returns lists a user's been invited to.
+     */
     that.getInvitedLists = function(username, callback) {
-        console.log(username);
         //WHY WON'T THIS WORK???
         listModel.find({ usersSharedWith:  { $all: [ username] }}).exec(function(err, result) {
             if (err) callback({ msg: err });

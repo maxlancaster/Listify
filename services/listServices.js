@@ -52,6 +52,14 @@ export default {
 		})
 	},
 
+	getUserLists: (user_id) => {
+		return request({
+			uri : BASE_URL + `/user/${user_id}`,
+			method : 'GET',
+			json : true
+		})
+	},
+
 	lockList : (list_id) => {
 		return request({
 			uri : BASE_URL + `/lock/${list_id}`,
