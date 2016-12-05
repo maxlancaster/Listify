@@ -9,11 +9,17 @@ class StaticRankCard extends Component {
     return false;
   }
 
+  handleClick(event) {
+    console.log(this.props);
+    this.props.didClickOnRankingCard(this.props.rank);
+    return true;
+  }
+
   render() {
 		const { rank } = this.props;
 
 		return (
-      <a href="#">
+      <a href="#" onClick = {this.handleClick.bind(this)}>
         <div className = "StaticListCard" >
           {this.listIsLocked() &&
             <div className="CircleMarker"></div>

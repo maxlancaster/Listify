@@ -74,8 +74,9 @@ class ProfilePage extends Component {
     this.props.router.push(path);
   }
 
-  didClickRanking(ranking) {
-
+  didClickOnRankingCard(ranking) {
+    var path = "rankings/"+ranking._id;
+    this.props.router.push(path);
   }
 
   render() {
@@ -98,7 +99,7 @@ class ProfilePage extends Component {
               <ViewableRankingsList id={1}
                                     rankings = {rankings}
                                     showRankingNumber = {false}
-                                    onClick = {this.didClickRanking.bind(this)}/>
+                                    didClickOnRankingCard = {this.didClickOnRankingCard.bind(this)}/>
             }
             {this.state.headerSide !== "LEFT" && lists &&
               <ViewableList id={1}
