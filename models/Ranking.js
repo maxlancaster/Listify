@@ -8,6 +8,7 @@
 var mongoose = require('mongoose');
 var Items = require('../models/Items');
 var List = require('../models/List');
+var ObjectId = require('mongoose').Types.ObjectId
 
 
 var rankingSchema = mongoose.Schema({
@@ -47,6 +48,16 @@ var Rankings = (function(rankingModel) {
         });
     };
 
+    that.getUserRankings = function(user_id, callback) {
+      rankingModel.find({user_id : new ObjectId(user_id)}, function(err, rankings) {
+        if (err) {
+          callback({ msg: err});
+        } else {
+            callback(null, rankings);
+        }
+      });
+    }
+
 
     //add an item to a ranking, item parameter should be passed in as {title: string, ranking: number}
     that.addItemToRanking = function (item, rankingId, callback) {
@@ -82,7 +93,6 @@ var Rankings = (function(rankingModel) {
             }
         })
     };
-
 
     //returns the id of the Consensus object that a given ranking refers to
     that.getListByRankingId = function (rankingId, callback) {

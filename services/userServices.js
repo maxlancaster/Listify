@@ -43,6 +43,14 @@ const BASE_URL = 'http://localhost:3000/api/users';
       });
     },
 
+    updateLastViewedInvitationsDate : () => {
+      return request({
+        uri : BASE_URL + '/update_last_viewed_invitations_date',
+        method: 'PUT',
+        json : true
+      });
+    },
+
     search : (username) => {
       return request({
         uri: BASE_URL + '/search' + `/${username}`,

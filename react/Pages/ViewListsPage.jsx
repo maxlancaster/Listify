@@ -8,20 +8,6 @@ import SearchableNavbar from '../Elements/SearchableNavbar.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
 
-const uuid = require('uuid');
-
-
-//TODO: remove later
-var List = function(title, description, photo) {
-   var that = Object.create(List.prototype);
-   that._id = uuid.v1();
-   that.title = title;
-   that.description = description;
-   that.photo = photo;
-   Object.freeze(that);
-   return that;
-};
-
 class ViewListsPage extends Component {
   constructor(props) {
     super(props);
@@ -40,8 +26,6 @@ class ViewListsPage extends Component {
   componentWillUnmount() {
     this.props.showNavbar(true);
   }
-
-
 
   //navigate to create rankings page
   navigateToCreateRankingsPage() {

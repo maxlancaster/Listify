@@ -56,6 +56,7 @@ class ViewConsensusRankingPage extends Component {
 
   //lock consensus
   lockList() {
+    if (this.state.list && !this.state.list.locked) {
       var listId = this.props.params.listId;
       listServices.lockList(listId).then((res) => {
           if (res.success) {
@@ -66,6 +67,7 @@ class ViewConsensusRankingPage extends Component {
               console.log("unsuccessful lock");
           }
       });
+    }
   }
 
   viewYourRanking() {
@@ -77,21 +79,41 @@ class ViewConsensusRankingPage extends Component {
   render() {
     const list = this.state.list;
     const order = this.state.order;
+
+    var buttonTitle = (list && list.locked) ? "Voting Closed" : "Close Voting";
+    var buttonColor = (list && list.locked) ? "#E52F4F" : "#66B110";
+    var buttonStyle = {
+      background:buttonColor
+    }
 		return (
       <div>
     			<div className = "EditRankingsPage">
             {list &&
             <div className = "EditRankingRankingList" >
-              <h1 className = "RankingTitle">{list.title}</h1>
-              <h2 className = "RankingAuthor">{"created by "+list.creator}</h2>
+              <div className = "RankingTitleContainer">
+                <h1 className = "RankingTitle">{list.title}</h1>
+                <h1 className = "RankingLimit"> {" | Top "+list.maxLength}</h1>
+              </div>
+              <div className = "TitleSecondRow">
+                <h2 className = "RankingAuthor">{"created by "+list.creator}</h2>
+                <button className = "CloseVotingButton"
+                        onClick = {this.lockList.bind(this)}
+                        style = {buttonStyle}>{buttonTitle}</button>
+              </div>
               <ViewableItemsList id={1} items = {order} showRankingNumber = {true}/>
             </div>
             }
-        </div>
+          </div>
 
         {this.currentUserIsCreatorOfConsensus() && list && !list.locked &&
           <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
         }
+        {list && list.description &&
+          <div className = "ConsensusRankingDescription">
+            {list.description}
+          </div>
+        }
+
         {list &&
           <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
                                        lock = {true}

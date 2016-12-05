@@ -11,6 +11,7 @@
 var mongoose = require('mongoose');
 var Ranking = require('../models/Ranking');
 var Items = require('../models/Items');
+var ObjectId = require('mongoose').Types.ObjectId
 
 var listSchema = mongoose.Schema({
 
@@ -22,6 +23,8 @@ var listSchema = mongoose.Schema({
     },
 
     creator: String,
+
+    description: String,
 
     items : [],
 
@@ -62,6 +65,7 @@ var list = (function(listModel) {
      * @param listId
      * @param callback
      */
+
     that.getRankings = function (listId, callback) {
         listModel.findById(listId, function (err, list) {
             if (err) callback({ msg: err });
@@ -81,12 +85,14 @@ var list = (function(listModel) {
         var newList = new listModel({
             title : listObject.title,
             creator : listObject.creator,
+            creator_id : listObject.creator_id,
             items : listObject.items,
             rankings : listObject.rankings,
             isPublic : listObject.isPublic,
             upvotes : listObject.upvotes,
             locked : listObject.locked,
             maxLength : listObject.maxLength,
+            description : listObject.description,
             usersSharedWith : listObject.usersSharedWith
         });
 
@@ -148,6 +154,36 @@ var list = (function(listModel) {
                 callback(null, result);
             } else {
                 callback({ msg: 'No private consensuses for this user!'})
+            }
+        });
+    };
+
+    /**
+     *  Returns a user's lists.
+     */
+    that.getUserLists = function(user_id, callback) {
+        listModel.find({ creator_id:new ObjectId(user_id)}).exec(function(err, result) {
+            if (err) callback({ msg: err });
+            if (result.length > 0) {
+                callback(null, result);
+            } else {
+                callback({ msg: 'No private consensuses for this user!'})
+            }
+        });
+    };
+
+    /**
+     *  Returns lists a user's been invited to.
+     */
+    that.getInvitedLists = function(username, callback) {
+        //WHY WON'T THIS WORK???
+        listModel.find({ usersSharedWith:  { $all: [ username] }}).exec(function(err, result) {
+            if (err) callback({ msg: err });
+            console.log(result);
+            if (result.length > 0) {
+                callback(null, result);
+            } else {
+                callback({ msg: 'No lists for this user'})
             }
         });
     };

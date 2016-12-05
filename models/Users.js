@@ -31,6 +31,8 @@ var userSchema = mongoose.Schema({
         ref: 'List'
     }],
 
+    last_viewed_invitations_date: {type: Date, default: Date.now}
+
 });
 
 userSchema.index({username: 'text'});
@@ -158,6 +160,21 @@ var Users = (function(userModel) {
           callback(null, false);
         }
       });
+    }
+
+    that.updateLastViewedInvitationsDate = function(user_id, callback) {
+      userModel.findOneAndUpdate({_id:user_id}, {last_viewed_invitations_date:Date.now()}, function(error ,user) {
+        if (error) callback({msg:error});
+        if (user !== null) {
+          callback(null, user);
+        } else {
+          userModel.find({_id : user_id}).exec(function(error, user) {
+              console.log("user updated : " + JSON.stringify(user, null, '\t'))
+          });
+          callback(null, false);
+        }
+      });
+
     }
 
 

@@ -6,21 +6,21 @@ import { withRouter } from 'react-router';
 class ViewableRankingsList extends Component {
   constructor(props) {
 		super(props);
-		this.state = { ranks: props.ranks };
+		this.state = { ranks: props.rankings };
 	}
 
   componentWillReceiveProps(props) {
-    this.setState({lists: props.ranks});
+    this.setState({lists: props.rankings});
   }
 
 	render() {
-		const { ranks } = this.state;
+		const { rankings } = this.props;
 		return (
         <div>
-          {ranks.map((rank, index) => {
+          {rankings.map((rank, index) => {
             return (
               <StaticRankCard
-                key={rank.id}
+                key={rank._id}
                 index={index}
                 listId={this.props.id}
                 rank={rank}

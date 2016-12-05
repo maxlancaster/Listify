@@ -116,7 +116,7 @@ class App extends Component {
 					<Navbar
 							logout = {this.logout.bind(this)}
 							profile = {this.profile.bind(this)}
-							/>
+						/>
 				}
 				<div className="content">
 					{React.cloneElement(this.props.children, {
@@ -128,7 +128,8 @@ class App extends Component {
                         loadEditPage : this.loadEditPage,
                         updateEditPage : this.updateEditPage,
 												showNavbar : this.showNavbar.bind(this),
-												profile : this.profile.bind(this)
+												profile : this.profile.bind(this),
+												logout : this.logout.bind(this)
                     })}
 				</div>
 			</div>

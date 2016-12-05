@@ -9,6 +9,9 @@ html, body {
 
 button {
   border-style:none;
+  -webkit-border-radius: 5px;
+  padding: 3px 10px;
+  color:white;
 }
 
 /** Navbar **/
@@ -454,6 +457,18 @@ textarea:focus, input:focus{
   display:inline-block;
 }
 
+.InviteNumber {
+  display:inline-block;
+  color:#E52F4F;
+  margin-left:5px;
+  weight:300;
+}
+
+.RankingTitleSecondRowContainer {
+  margin-top:100px;
+  display:inline-block;
+}
+
 .RankingTitle {
   margin-bottom:0px;
   padding-bottom:0px;
@@ -475,6 +490,17 @@ textarea:focus, input:focus{
   color:#C4BFBF;
   margin-left:10px;
   margin-top:-20px;
+  display:inline-block;
+}
+
+.TitleSecondRow {
+  margin-top:-20px;
+  display:block;
+}
+
+.CloseVotingButton {
+  margin-left:20px;
+  display:inline-block;
 }
 
 
@@ -486,12 +512,17 @@ textarea:focus, input:focus{
 }
 
 .SwitchableHeader {
+  display:inline-block;
   margin-top:40px;
 }
 
 .SwitchableHeader a{
   font-size:30px;
   font-weight:600;
+}
+
+.InviteNumber {
+  color:
 }
 
 .EditRankingRankingList .ItemCard {
@@ -538,6 +569,7 @@ textarea:focus, input:focus{
   float:right;
   margin-right:40px;
   margin-top:40px;
+  margin-bottom:-20px;
   padding-right:20px;
   padding-left:10px;
   padding-top:5px;

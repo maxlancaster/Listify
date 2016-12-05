@@ -26,6 +26,14 @@ export default {
 			method: 'GET',
 			json: true
 		})
+	},
+
+	getUserRankings : (user_id) => {
+		return request({
+			uri : BASE_URL + '/user' + `/${user_id}`,
+			method: 'GET',
+			json: true
+		})
 	}
 	// ,
 	// getListById : (consensus_id) => {

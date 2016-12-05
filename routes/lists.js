@@ -11,7 +11,7 @@ var Users = require('../models/Users');
 
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/create', function(req, res) {
-    console.log(req.session);
+    console.log(req.body.content);
     var listObject = {
         title : req.body.content.title,
         creator : req.session.user.username,
@@ -21,8 +21,9 @@ router.post('/create', function(req, res) {
         isPublic : req.body.content.isPublic,
         upvotes : 0,
         locked : false,
+        description : req.body.content.description,
         // TO DO, hardcoded
-        maxLength : 5,
+        maxLength : req.body.content.maxLength,
         usersSharedWith : []
     };
     List.createList(listObject, function(err, list) {
@@ -43,6 +44,7 @@ router.post('/create', function(req, res) {
 /**
  * Gets the ordering for the list based on the rankings submitted thus far
  */
+
 router.get('/view/:listId', function (req, res) {
     List.getRankings(req.params.listId, function (err, listRankingIds) {
         if(err){
@@ -87,6 +89,30 @@ router.get('/find/:listId', function(req, res){
             utils.sendErrorResponse(res, 404, 'No such list.');
         } else {
             utils.sendSuccessResponse(res, {list : list});
+        }
+    })
+});
+
+/**
+ * Gets the lists of creatde by a user given his user_id
+ */
+ router.get('/user/:userId', function(req, res){
+     List.getUserLists(req.params.userId, function(err, lists){
+         if(err){
+             utils.sendErrorResponse(res, 500, err);
+         } else {
+             utils.sendSuccessResponse(res, {lists : lists});
+         }
+     })
+ });
+
+router.get('/invited/:username', function(req, res){
+    List.getInvitedLists(req.params.username, function(err, lists){
+        if(err){
+          console.log(err);
+            utils.sendErrorResponse(res, 500, err);
+        } else {
+            utils.sendSuccessResponse(res, {lists : lists});
         }
     })
 });
