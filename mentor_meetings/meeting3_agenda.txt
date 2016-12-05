@@ -1,3 +1,4 @@
 1) recap progress since last meeting
 2) go over next steps
-3) ask for advice on
+3) ask for advice on Passport implementation and CSRF protection
+4) ask Phil's question about Mongoose
