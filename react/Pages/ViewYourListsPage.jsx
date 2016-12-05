@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ViewableList from '../Elements/ViewableList.jsx';
+import ViewableRankingsList from '../Elements/ViewableRankingsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
@@ -12,12 +13,13 @@ import rankingServices from '../../services/rankingServices.js';
 class ViewYourListsPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {lists:[]};
+    this.state = {lists:[],rankings:[], headerSide: "LEFT"};
   }
 
   componentWillMount() {
     rankingServices.getUserRankings(this.props.user._id).then((res) => {
-      console.log(res);
+      var rankings = res.content.rankings;
+      this.setState({headerSide:"LEFT", rankings:rankings});
     });
   }
 
@@ -28,8 +30,15 @@ class ViewYourListsPage extends Component {
 
   didSwitchHeader(headerSide) {
     if (headerSide === "LEFT") {
-      console.log("fetch your ranks");
-    } else {
+      rankingServices.getUserRankings(this.props.user._id).then((res) => {
+        var rankings = res.content.rankings;
+        this.setState({headerSide:"LEFT", rankings:rankings});
+      });
+    } else if (headerSide === "CENTER") {
+      this.setState({headerSide:"CENTER"});
+    }
+    else {
+      this.setState({headerSide:"RIGHT"});
       userServices.updateLastViewedInvitationsDate().then((res) => {
         console.log(res);
       });
@@ -61,24 +70,39 @@ class ViewYourListsPage extends Component {
     this.props.router.push(path);
   }
 
+  didClickRanking(ranking) {
+
+  }
+
   render() {
     const lists = this.state.lists;
+    const rankings = this.state.rankings;
+    console.log(rankings);
 		return (
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
             <div className = "RankingTitleContainer">
-              <SwitchableHeader leftTitle = "Your Lists"
+              <SwitchableHeader leftTitle = "Your Rankings"
+                                centerTitle = "Your Lists"
                                 rightTitle = "Lists Invited To"
                                 didSwitchHeader = {this.didSwitchHeader.bind(this)}
               />
             <h2 className = "InviteNumber">{"("+3+")"}</h2>
             </div>
-            <ViewableList id={1}
-                          lists = {lists}
-                          showRankingNumber = {false}
-                          didClickOnListCard = {this.didClickOnListCard.bind(this)}
-                          />
+            {this.state.headerSide === "LEFT" && rankings &&
+              <ViewableRankingsList id={1}
+                                    rankings = {rankings}
+                                    showRankingNumber = {false}
+                                    onClick = {this.didClickRanking.bind(this)}/>
+            }
+            {this.state.headerSide !== "LEFT" &&
+              <ViewableList id={1}
+                            lists = {lists}
+                            showRankingNumber = {false}
+                            didClickOnListCard = {this.didClickOnListCard.bind(this)}
+                            />
+            }
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>

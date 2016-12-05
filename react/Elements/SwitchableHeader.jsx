@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 
 var HeaderSideEnum = {
     LEFT : "LEFT",
+    CENTER : "CENTER",
     RIGHT : "RIGHT"
 }
 
@@ -12,6 +13,7 @@ class SwitchableHeader extends Component {
     super(props);
     this.state = { activeSide: HeaderSideEnum.LEFT,
                    leftTitle: this.props.leftTitle,
+                   centerTitle: this.props.centerTitle,
                    rightTitle: this.props.rightTitle};
   }
   didSwitchHeader(headerSide) {
@@ -26,12 +28,22 @@ class SwitchableHeader extends Component {
     var rightHeaderStyle = {
       color: this.state.activeSide === HeaderSideEnum.RIGHT ? "#4A4A4A" : "#C4BFBF"
     };
+
+    var centerHeaderStyle = {
+      color: this.state.activeSide === HeaderSideEnum.CENTER ? "#4A4A4A" : "#C4BFBF"
+    };
+
 		return(
       <div className = "SwitchableHeader">
       <a href="#"
          onClick={this.didSwitchHeader.bind(this, HeaderSideEnum.LEFT)}
          style = {leftHeaderStyle}>{this.state.leftTitle}</a>
        <a style = {{color:"#C4BFBF"}} href ="#"> | </a>
+       {this.props.centerTitle &&
+         <a href="#"
+            onClick={this.didSwitchHeader.bind(this, HeaderSideEnum.CENTER)}
+            style = {centerHeaderStyle}>{this.state.centerTitle + " | "}</a>
+       }
       <a href="#"
          onClick={this.didSwitchHeader.bind(this, HeaderSideEnum.RIGHT)}
          style = {rightHeaderStyle}>{this.state.rightTitle}</a>
