@@ -4,6 +4,7 @@ import RankingList from '../Elements/RankingList.jsx';
 import OptionsList from '../Elements/OptionsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import { DragDropContext } from 'react-dnd';
+import { withRouter } from 'react-router';
 import ConfirmAlertView from '../Elements/ConfirmAlertView.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import listServices from '../../services/listServices.js';
@@ -75,12 +76,16 @@ class EditRankingsPage extends Component {
       rankingServices.submitRanking(
         {
           order : order_object,
-          // user : user,
-          // user_id : user_id,
           list : listId,
           comment : comment
         }
-      );
+      ).then((response) => {
+        if (response.success) {
+          this.props.router.push("/");
+        } else {
+          console.log("failed to submit ranking.");
+        }
+      });
 
       //TODO : submit Ranking to the associated List
     }
@@ -136,4 +141,4 @@ class EditRankingsPage extends Component {
     }
   }
 
-export default DragDropContext(HTML5Backend)(EditRankingsPage);
+export default withRouter(DragDropContext(HTML5Backend)(EditRankingsPage));
