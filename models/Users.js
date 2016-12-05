@@ -152,6 +152,9 @@ var Users = (function(userModel) {
         if (user !== null) {
           callback(null, user);
         } else {
+          userModel.find({_id : user_id}).exec(function(error, user) {
+              console.log("user created! : " + JSON.stringify(user, null, '\t'))
+          });
           callback(null, false);
         }
       });
