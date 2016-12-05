@@ -4,27 +4,20 @@ import ViewableList from '../Elements/ViewableList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
-import SearchableNavbar from '../Elements/SearchableNavbar.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
 
-class ViewListsPage extends Component {
+class ViewYourListsPage extends Component {
   constructor(props) {
     super(props);
-    //LOAD COMPLETED CONSENSUSES ONTO COMPLETED RANKINGS
     this.state = {lists:[]};
   }
 
   componentWillMount() {
-    this.props.showNavbar(false);
-    listServices.getTrendingLists().then((res) => {
+    listServices.getInvitedLists(this.props.user._id).then((res) => {
       var lists = res.content.lists;
       this.setState({lists:lists});
     });
-  }
-
-  componentWillUnmount() {
-    this.props.showNavbar(true);
   }
 
   //navigate to create rankings page
@@ -34,20 +27,13 @@ class ViewListsPage extends Component {
 
   didSwitchHeader(headerSide) {
     if (headerSide === "LEFT") {
-      listServices.getTrendingLists().then((res) => {
-        var lists = res.content.lists;
-        this.setState({lists:lists});
-      });
+      console.log("fetch your ranks");
     } else {
-      listServices.getMostRecentLists().then((res) => {
-        console.log(res);
-        var lists = res.content.lists;
-        this.setState({lists:lists});
-      });
+
+      console.log("fetch lists you're invited to");
     }
     //TODO: ISSUE GET REQUEST TO UPDATE LIST
   }
-
 
   determineCorrectPathForUser(list) {
     var current_user = this.props.user;
@@ -67,11 +53,6 @@ class ViewListsPage extends Component {
     }
   }
 
-  searchLists(searchString) {
-    var path = "/lists/search/"+searchString;
-    this.props.router.push(path);
-  }
-
   didClickOnListCard(list) {
     var path = this.determineCorrectPathForUser(list);
     this.props.router.push(path);
@@ -81,22 +62,20 @@ class ViewListsPage extends Component {
     const lists = this.state.lists;
 		return (
       <div>
-        <SearchableNavbar
-            logout = {this.props.logout}
-            profile = {this.props.profile}
-            searchLists = {this.searchLists.bind(this)}
-            />
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
-            <SwitchableHeader leftTitle = "Trending"
-                              rightTitle = "Most Recent"
-                              didSwitchHeader = {this.didSwitchHeader.bind(this)}
-            />
-          <ViewableList id={1}
-                        lists = {this.state.lists}
-                        showRankingNumber = {false}
-                        didClickOnListCard = {this.didClickOnListCard.bind(this)}
-                        />
+            <div className = "RankingTitleContainer">
+              <SwitchableHeader leftTitle = "Your Lists"
+                                rightTitle = "Lists Invited To"
+                                didSwitchHeader = {this.didSwitchHeader.bind(this)}
+              />
+            <h2 className = "InviteNumber">{"("+3+")"}</h2>
+            </div>
+            <ViewableList id={1}
+                          lists = {lists}
+                          showRankingNumber = {false}
+                          didClickOnListCard = {this.didClickOnListCard.bind(this)}
+                          />
           </div>
       </div>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
@@ -105,4 +84,4 @@ class ViewListsPage extends Component {
 	}
 }
 
-export default withRouter(ViewListsPage);
+export default withRouter(ViewYourListsPage);

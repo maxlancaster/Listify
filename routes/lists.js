@@ -44,15 +44,41 @@ router.post('/create', function(req, res) {
 /**
  * Gets the ordering for the list based on the rankings submitted thus far
  */
-// router.get('/:listId', function (req, res) {
-//     List.updateList(req.params.listId, function (err, list) {
-//         if(err){
-//             utils.sendErrorResponse(res, 404, 'No such list.');
-//         } else {
-//             utils.sendSuccessResponse(res, {list : list});
-//         }
-//     });
-// });
+
+router.get('/view/:listId', function (req, res) {
+    List.getRankings(req.params.listId, function (err, listRankingIds) {
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            Rankings.getRankingObjectsFromListOfIds(listRankingIds, function (err, listRankings) {
+                if(err){
+                    utils.sendErrorResponse(res, 500, err);
+                } else {
+
+                    var sums = {};
+
+                    listRankings.forEach(function (ranking) {
+                        var order = ranking.order;
+
+                        order.forEach(function (dictionary) {
+
+                            Object.keys(dictionary).forEach(function(itemId) {
+                                if (!(itemId in sums)) {
+                                    sums[itemId] = dictionary[itemId];
+                                } else {
+                                    sums[itemId] += dictionary[itemId];
+                                }
+                            });
+                        });
+                    });
+
+                    var new_ranking = Object.keys(sums).reduce(function(a, b){ return sums[a] < sums[b] ? a : b });
+                    utils.sendSuccessResponse(res, {order : new_ranking});
+                }
+            })
+        }
+    })
+});
 
 /**
  * Gets the consensus to allow non-creator users to post responses to
@@ -63,6 +89,20 @@ router.get('/find/:listId', function(req, res){
             utils.sendErrorResponse(res, 404, 'No such list.');
         } else {
             utils.sendSuccessResponse(res, {list : list});
+        }
+    })
+});
+
+/**
+ * Gets the lists of a creatd by a user given his user_id
+ */
+router.get('/invited/:userId', function(req, res){
+    List.getInvitedLists(req.params.userId, function(err, lists){
+        if(err){
+          console.log(err);
+            utils.sendErrorResponse(res, 500, err);
+        } else {
+            utils.sendSuccessResponse(res, {lists : lists});
         }
     })
 });

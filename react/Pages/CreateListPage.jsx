@@ -36,13 +36,19 @@ class CreateListPage extends Component {
     const items = this.state.items;
     const maxLength = capacity;
     const listDescription = description;
+    var invitedUserIds = this.state.invitedUsers.map(function(user) {
+      return user._id
+    });
+    const usersSharedWith = this.state.publicList ? [] : invitedUserIds;
+    console.log(invitedUserIds);
     listServices.createList(
         {
           title : listTitle,
           items : items,
           isPublic : this.state.publicList,
           maxLength : maxLength,
-          description : listDescription
+          description : listDescription,
+          usersSharedWith : usersSharedWith
 
         }
       ).then((res) => {
