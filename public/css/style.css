@@ -498,6 +498,10 @@ textarea:focus, input:focus{
   display:block;
 }
 
+#RankingPageSecondRow{
+  margin-top:0px;
+}
+
 .CloseVotingButton {
   margin-left:20px;
   display:inline-block;

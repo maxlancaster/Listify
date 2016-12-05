@@ -14,7 +14,7 @@ var ObjectId = require('mongoose').Types.ObjectId
 var rankingSchema = mongoose.Schema({
 
     //order in ranking is the order that it is preferred
-    order: [{}],
+    order: [],
 
     user: String,
     user_id: {
@@ -27,8 +27,11 @@ var rankingSchema = mongoose.Schema({
         ref: 'List'
     },
 
+    listTitle:String,
+    listCreatorUsername:String,
+
     comment: String
-});
+}, { timestamps: true });
 
 
 var rankingModel = mongoose.model('Ranking', rankingSchema);
@@ -49,7 +52,7 @@ var Rankings = (function(rankingModel) {
     };
 
     that.getUserRankings = function(user_id, callback) {
-      rankingModel.find({user_id : new ObjectId(user_id)}, function(err, rankings) {
+      rankingModel.find({user_id : new ObjectId(user_id)}).sort({createdAt: -1}).exec(function(err, rankings) {
         if (err) {
           callback({ msg: err});
         } else {
@@ -64,7 +67,7 @@ var Rankings = (function(rankingModel) {
 
         rankingModel.findByIdAndUpdate(
             rankingId,
-            {$push: {"order": {title: item.title, rank: item.rank}}},
+            {$push: {"order": item }},
             function (err, ranking) {
                 if (err) callback({ msg: err });
                 callback(null, ranking);
@@ -74,13 +77,15 @@ var Rankings = (function(rankingModel) {
 
     //expect in the same form as schema above
     that.addRanking = function (ranking, callback) {
-
+        console.log(ranking);
         var ranking = new rankingModel({
             order: ranking.order,
             user: ranking.user,
             list: ranking.list,
             user_id: ranking.user_id,
-            comment: ranking.comment
+            comment: ranking.comment,
+            listTitle: ranking.listTitle,
+            listCreatorUsername: ranking.listCreatorUsername
         });
 
         ranking.save(function (err, newRanking) {

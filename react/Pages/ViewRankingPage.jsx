@@ -7,6 +7,7 @@ import RankingNavigationOptions from '../Elements/RankingNavigationOptions.jsx';
 import { withRouter } from 'react-router';
 import Items from '../../models/Items.js'
 import rankingServices from '../../services/rankingServices.js';
+import listServices from '../../services/listServices.js';
 
 const uuid = require('uuid');
 
@@ -14,36 +15,26 @@ const uuid = require('uuid');
 class ViewRankingPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      order : [{}],
-      user : '',
-      user_id : '',
-      list : '',
-      comment : ''
-    };
+    this.state = {ranking:null};
   }
 
   componentWillMount() {
     var rankingId = this.props.params.id;
 
     rankingServices.getRankingById(rankingId).then((response) => {
+      console.log(response);
+      var ranking = response.content.ranking;
       if (response.success) {
-        this.setState({
-          order : response.content.order,
-          user : repsonse.content.user,
-          user_id : response.content.user_id,
-          list : response.content.list,
-          comment : response.content.comment
-        });
+        this.setState({ranking:ranking});
       } else {
-        console.log(repsonse.err);
+        console.log(response.err);
       }
     });
   }
 
   viewConsensus() {
     //GET LIST ID;
-    var list_id = this.state.list;
+    var list_id = this.state.ranking.list;
     var path = "lists/"+list_id+"/consensus";
     this.props.router.push(path);
   }
@@ -53,23 +44,29 @@ class ViewRankingPage extends Component {
   }
 
   render() {
-    console.log(this.state.order);
     if (this.state.list === '') {
       return null;
     }
 
+    var ranking = this.state.ranking;
+    console.log(ranking);
+
     return (
       <div>
         <div className = "EditRankingsPage">
+          {ranking &&
           <div className = "EditRankingRankingList" >
+
+
             <div className = "RankingTitleContainer">
-              <h1 className = "RankingTitle">{this.state.title}</h1>
+              <h1 className = "RankingTitle">{ranking.listTitle}</h1>
             </div>
-            <div className = "TitleSecondRow">
-              <h2 className = "RankingAuthor">{"created by "+this.state.user}</h2>
+            <div className = "TitleSecondRow" id = "RankingPageSecondRow">
+              <h2 className = "RankingAuthor">{"created by "+ranking.listCreatorUsername}</h2>
             </div>
-            <ViewableItemsList id={1} items = {this.state.order} showRankingNumber = {true}/>
+            <ViewableItemsList id={1} items = {ranking.order} showRankingNumber = {true}/>
           </div>
+        }
       </div>
       <RankingNavigationOptions
         editRanking = {this.editRanking.bind(this)}

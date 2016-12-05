@@ -30,13 +30,14 @@ class ViewConsensusRankingPage extends Component {
   }
 
   componentWillMount() {
-    //TODO: Get consensus ranking with ranking_id, via server request
     var listId = this.props.params.listId;
     listServices.getListDataFromId(listId).then((res) => {
       var list = res.content.list;
-      //TODO: DELETE LATER AFTER WE CALCULATE ORDER WITH ALGORITHM AND SET ORDER HERE
-      var order = [Items('Lebron'),Items('Kobe'), Items('Carmelo')];
-      this.setState({list:list, order:order});
+      listServices.calculateOrdering(list._id).then((res) => {
+        var order = res.content.order;
+        this.setState({list:list, order:order});
+      });
+
     });
   }
 

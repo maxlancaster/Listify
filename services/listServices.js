@@ -70,7 +70,7 @@ export default {
 
     calculateOrdering : (list_id) => {
         return request({
-            uri : BASE_URL + `/view/${list_id}`,
+            uri : BASE_URL + `/consensus/${list_id}`,
             method: 'GET',
             json: true
         })
