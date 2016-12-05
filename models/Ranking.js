@@ -83,7 +83,6 @@ var Rankings = (function(rankingModel) {
         })
     };
 
-
     //returns the id of the Consensus object that a given ranking refers to
     that.getListByRankingId = function (rankingId, callback) {
         rankingModel.findById(rankingId, function (err, ranking) {

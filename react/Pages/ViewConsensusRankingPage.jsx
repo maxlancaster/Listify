@@ -81,17 +81,27 @@ class ViewConsensusRankingPage extends Component {
       <div>
     			<div className = "EditRankingsPage">
             {list &&
+
             <div className = "EditRankingRankingList" >
-              <h1 className = "RankingTitle">{list.title}</h1>
+              <div className = "RankingTitleContainer">
+                <h1 className = "RankingTitle">{list.title}</h1>
+                <h1 className = "RankingLimit"> {" | Top "+list.maxLength}</h1>
+              </div>
               <h2 className = "RankingAuthor">{"created by "+list.creator}</h2>
               <ViewableItemsList id={1} items = {order} showRankingNumber = {true}/>
             </div>
             }
-        </div>
+          </div>
 
         {this.currentUserIsCreatorOfConsensus() && list && !list.locked &&
           <BottomRightButton title = {"Lock"} onClick = {this.lockList.bind(this)}/>
         }
+        {list && list.description &&
+          <div className = "ConsensusRankingDescription">
+            {list.description}
+          </div>
+        }
+
         {list &&
           <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
                                        lock = {true}
