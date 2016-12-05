@@ -36,17 +36,17 @@ var Rankings = (function(rankingModel) {
 
     var that = {};
 
-    that.getAllRankingsForSingleList = function (listId, callback) {
-        rankingModel.find({ list: listId })
-            .exec(function (err, rankings) {
-                if (err) callback({ msg: err });
-                if (rankings != null) {
-                    callback(null, rankings);
-                } else {
-                    callback({ msg: 'No rankings for this list!'})
-                }
-            })
+    //Helps with the consensus updating, TODO make sure this works!
+    that.getRankingObjectsFromListOfIds = function (listOfRankings, callback) {
+        rankingModel.find({
+            '_id' : { $in:
+            listOfRankings
+            }
+        }, function (err, array) {
+            callback(null, array);
+        });
     };
+
 
     //add an item to a ranking, item parameter should be passed in as {title: string, ranking: number}
     that.addItemToRanking = function (item, rankingId, callback) {

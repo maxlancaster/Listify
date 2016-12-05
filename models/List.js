@@ -56,66 +56,23 @@ var list = (function(listModel) {
 
     var that = {};
 
-
-    //TODO: this does not work yet, fix once max finishes ranking submissions
+    //Helps with the consensus updating, TODO make sure this works!
     /**
-     * Updates the consensus overallRanking (called when a ranking is submitted) according to the following algorithm:
-     *
-     * For a consensus, find the rankings assocaited with it, where each individual ranking is a list of items (first is the best, last is the worst).
-     * Each item occurs in every list at various indices.
-     * For each item, sum up the value of the indices where it is placed in each list.
-     * Rank all the items by this sum, where the lowest sum is ranked first.
-     * should be simple enough and will work well enough for the MVP. Thoughts?
+     * Gets rankings owned by a list
      * @param listId
      * @param callback
      */
-    that.updateList = function (listId, callback) {
-
-        //search for all the rankings with a given consensusId
-        Ranking.getAllRankingsForSingleList(listId, function (err, rankings) {
+    that.getRankings = function (listId, callback) {
+        listModel.findById(listId, function (err, list) {
             if (err) callback({ msg: err });
-            if (rankings != null) {
-
-                //keeps track of the sums for all items
-                var sums = {};
-
-                //find the sums
-                rankings.forEach(function (object) {
-                    var items = object.order;
-                    items.forEach(function (item) {
-                        if (!(item in sums)) {
-                            sums[item] = items.indexOf(item);
-                        } else {
-                            sums[item] += items.indexOf(item);
-                        }
-                    });
-                });
-
-                //create a list of the sums in increasing order
-                var new_ranking = Object.keys(sums).reduce(function(a, b){ return sums[a] < sums[b] ? a : b });
-
-                //make sure that the list is only object IDs so we can add it to the schema
-                var returnRanking = [];
-                new_ranking.forEach(function (item) {
-                    returnRanking.push(item._id)
-                });
-
-                //assign the new list to the overallRanking field
-                listModel.findById(listId, function (err, list) {
-                    if (err) callback({ msg: err });
-                    if (list != null) {
-                        list.overallRanking = returnRanking;
-                        callback(null, list);
-                    } else {
-                        callback({ msg: 'The consensus does not exist!'});
-                    }
-                });
-
+            if (list != null) {
+                callback(null, list.rankings);
             } else {
-                callback({ msg: 'No rankings!'});
+                callback({ msg: 'The list does not exist!'});
             }
         });
     };
+
 
 
     //pass in consensus object with same fields and same types, make sure they are the same
@@ -179,7 +136,7 @@ var list = (function(listModel) {
               callback({ msg: 'No public lists!'})
           }
       });
-    }
+    };
 
     /**
      *  Returns a user's private consensuses.
