@@ -7,6 +7,7 @@ import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
 import userServices from '../../services/userServices.js';
+import rankingServices from '../../services/rankingServices.js';
 
 class ViewYourListsPage extends Component {
   constructor(props) {
@@ -15,9 +16,8 @@ class ViewYourListsPage extends Component {
   }
 
   componentWillMount() {
-    listServices.getInvitedLists(this.props.user.username).then((res) => {
-      var lists = res.content.lists;
-      this.setState({lists:lists});
+    rankingServices.getUserRankings(this.props.user._id).then((res) => {
+      console.log(res);
     });
   }
 

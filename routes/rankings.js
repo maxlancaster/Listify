@@ -103,6 +103,17 @@ router.get('/:consensus_id', function(req, res){
     });
 });
 
+router.get('/user/:user_id', function(req, res){
+    Rankings.getUserRankings(req.params.user_id, function(err, rankings){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else{
+            utils.sendSuccessResponse(res, { rankings : rankings});
+        }
+    });
+});
+
+
 /**
  * Locks the consensus.
  */
