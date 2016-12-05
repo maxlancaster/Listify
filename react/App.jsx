@@ -116,7 +116,7 @@ class App extends Component {
 					<Navbar
 							logout = {this.logout.bind(this)}
 							profile = {this.profile.bind(this)}
-							/>
+						/>
 				}
 				<div className="content">
 					{React.cloneElement(this.props.children, {

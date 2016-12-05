@@ -56,10 +56,13 @@ class ViewYourRankingsPage extends Component {
       <div>
   			<div className = "EditRankingsPage">
           <div className = "EditRankingRankingList" >
-            <SwitchableHeader leftTitle = "Your Rankings"
-                              rightTitle = "Rankings Invited To"
-                              didSwitchHeader = {this.didSwitchHeader.bind(this)}
-            />
+            <div className = "RankingTitleContainer">
+              <SwitchableHeader leftTitle = "Your Rankings"
+                                rightTitle = "Lists Invited To"
+                                didSwitchHeader = {this.didSwitchHeader.bind(this)}
+              />
+            <h2 className = "InviteNumber">{"("+3+")"}</h2>
+            </div>
           <ViewableRankingsList id={1} ranks = {ranks} showRankingNumber = {false} onClick = {this.didClickRanking.bind(this)}/>
           </div>
       </div>

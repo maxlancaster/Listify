@@ -457,6 +457,13 @@ textarea:focus, input:focus{
   display:inline-block;
 }
 
+.InviteNumber {
+  display:inline-block;
+  color:#E52F4F;
+  margin-left:5px;
+  weight:300;
+}
+
 .RankingTitleSecondRowContainer {
   margin-top:100px;
   display:inline-block;
@@ -505,12 +512,17 @@ textarea:focus, input:focus{
 }
 
 .SwitchableHeader {
+  display:inline-block;
   margin-top:40px;
 }
 
 .SwitchableHeader a{
   font-size:30px;
   font-weight:600;
+}
+
+.InviteNumber {
+  color:
 }
 
 .EditRankingRankingList .ItemCard {
