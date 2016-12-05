@@ -32,6 +32,7 @@ class ProfilePage extends Component {
     if (headerSide === "LEFT") {
       rankingServices.getUserRankings(this.props.user._id).then((res) => {
         var rankings = res.content.rankings;
+        console.log(rankings);
         this.setState({headerSide:"LEFT", rankings:rankings});
       });
     } else if (headerSide === "CENTER") {

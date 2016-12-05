@@ -20,9 +20,9 @@ class StaticRankCard extends Component {
           }
           <div className = "StaticListCardFirstLineContainer">
             {this.props.showRankingNumber && <p className = "StaticListCardRanking">{this.props.index+1 + "."}</p>}
-            <p className = "StaticListCardTitle">{rank.title}</p>
+            <p className = "StaticListCardTitle">{rank.listTitle}</p>
           </div>
-          <p className = "StaticListCardCreator">{"Created by "+rank.user}</p>
+          <p className = "StaticListCardCreator">{"Created by "+rank.listCreatorUsername}</p>
         </div>
       </a>
     );

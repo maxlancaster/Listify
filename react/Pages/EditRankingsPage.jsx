@@ -77,7 +77,9 @@ class EditRankingsPage extends Component {
         {
           order : order_object,
           list : listId,
-          comment : comment
+          comment : comment,
+          listTitle:this.state.title,
+          listCreatorUsername:this.state.creator
         }
       ).then((response) => {
         if (response.success) {
@@ -110,7 +112,6 @@ class EditRankingsPage extends Component {
               showModal = {this.state.showCreateRankingConfirm}
               onClose = {this.closeShareDialog.bind(this)}
               title = {"Share this ranking"}
-              link = {"https://listify.com/list/fdjp493q8jf9e8jffJ98905OJFDSFFfdsjkldsj409j34o34"}
             />
           }
           <div className = "EditRankingsPage">
