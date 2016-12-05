@@ -61,21 +61,21 @@ class EditRankingsPage extends Component {
       console.log("submit");
       console.log(this.state.submission);
 
-      var order_object = []
+      var order = []
       var listId = this.props.params.listId;
       // var user = req.session.user.username;
       // var user_id = req.session.user._id;
       var comment = this.state.comment;
       // description, id, photo, title
       this.state.submission.forEach(function(item, index) {
-        var element = {}
-        element[item.id] = index+1;
-        order_object.push(element); // start indexing at 1
+        var itemCopy = item;
+        itemCopy.rank = index+1;
+        order.push(itemCopy); // start indexing at 1
       });
 
       rankingServices.submitRanking(
         {
-          order : order_object,
+          order : order,
           list : listId,
           comment : comment,
           listTitle:this.state.title,

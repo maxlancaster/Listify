@@ -14,7 +14,7 @@ var ObjectId = require('mongoose').Types.ObjectId
 var rankingSchema = mongoose.Schema({
 
     //order in ranking is the order that it is preferred
-    order: [{}],
+    order: [],
 
     user: String,
     user_id: {
@@ -67,7 +67,7 @@ var Rankings = (function(rankingModel) {
 
         rankingModel.findByIdAndUpdate(
             rankingId,
-            {$push: {"order": {title: item.title, rank: item.rank}}},
+            {$push: {"order": item }},
             function (err, ranking) {
                 if (err) callback({ msg: err });
                 callback(null, ranking);
