@@ -7,6 +7,7 @@ import RankingNavigationOptions from '../Elements/RankingNavigationOptions.jsx';
 import { withRouter } from 'react-router';
 import Items from '../../models/Items.js'
 import rankingServices from '../../services/rankingServices.js';
+import listServices from '../../services/listServices.js';
 
 const uuid = require('uuid');
 
