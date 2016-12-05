@@ -129,7 +129,14 @@ router.post('/submit', function(req, res) {
                 if (err) {
                     utils.sendErrorResponse(res, 500, err);
                 } else {
-                    utils.sendSuccessResponse(res);
+                    var listId = rankingData.list;
+                    List.updateRankingsArray(listId, ranking._id, function(err) {
+                        if (err) {
+                            utils.sendErrorResponse(res, 500, err);
+                        } else {
+                            utils.sendSuccessResponse(res);
+                        }
+                    });
                 }
             });
         }

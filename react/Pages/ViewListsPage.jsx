@@ -70,6 +70,13 @@ class ViewListsPage extends Component {
     var is_creator_of_list = current_user.lists.indexOf(list._id) > -1;
 
     // find intersection of list.rankings and current_user.rankings
+
+    console.log("current user rankings");
+    console.log(current_user.rankings);
+
+    console.log("list rankings");
+    console.log(list.rankings);
+
     var ranking_ids = list.rankings.filter(function(ranking) {
       return current_user.rankings.indexOf(ranking) != -1;
     });
