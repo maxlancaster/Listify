@@ -10,7 +10,7 @@ import listServices from '../../services/listServices.js';
 import userServices from '../../services/userServices.js';
 import rankingServices from '../../services/rankingServices.js';
 
-class ViewYourListsPage extends Component {
+class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {lists:[],rankings:[], headerSide: "LEFT"};
@@ -111,4 +111,4 @@ class ViewYourListsPage extends Component {
 	}
 }
 
-export default withRouter(ViewYourListsPage);
+export default withRouter(ProfilePage);
