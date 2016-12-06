@@ -168,8 +168,35 @@ router.put('/lock/:listId', function(req, res) {
     });
 });
 
-// router.post('/upvote/:listId', function)
+router.post('/upvote/:listId', function(req, res){
+    List.addToUpvoters(req.params.listId, req.session.user._id, function(err){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else{
+            utils.sendSuccessResponse(res);
+        }
+    });
+});
 
+router.post('/downvote/:listId', function(req, res){
+    List.addToDownvoters(req.params.listId, req.session.user._id, function(err){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else{
+            utils.sendSuccessResponse(res);
+        }
+    });
+});
+
+router.get('/votes/:listId', function(req, res){
+    List.getNumberOfUpvotes(req.params.listId, function(err){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            utils.sendSuccessResponse(res);
+        }
+    })
+});
 
 
 
