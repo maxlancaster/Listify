@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import flow from 'lodash/flow';
-import List from '../../models/List.js'
-import cx from 'classnames';
+// import List from '../../models/List.js'
+// import cx from 'classnames';
+import { withRouter } from 'react-router';
 
 
 class Vote extends Component {
@@ -85,37 +86,33 @@ class Vote extends Component {
         } = this.state;
 
         let {
-            className,
-            upvoteContent,
-            downvoteContent,
             beforeContent,
             afterContent
         } = this.props;
 
-        let upvoteCx = cx(className, {
-            'upvoted': voteStatus === 1,
-            'downvoted': voteStatus === -1,
-            'updating': updating
-        });
+        // let upvoteCx = cx(className, {
+        //     'upvoted': voteStatus === 1,
+        //     'downvoted': voteStatus === -1,
+        //     'updating': updating
+        // });
 
-        let upvote = upvoteContent && (
-                <div className="upvote" onClick={ () => this.vote(1) }>
-                    { upvoteContent }
+        let upvote =  (
+                <div className="upvote" onClick={ () => this.props.handleUpvote() }>
                 </div>
             );
 
-        let downvote = downvoteContent && (
-                <div className="downvote" onClick={ () => this.vote(-1) }>
-                    { downvoteContent }
+        let downvote =  (
+                <div className="downvote" onClick={ () => this.props.handleDownvote() }>
+                  {}
                 </div>
             );
 
         return (
-            <div className={ upvoteCx }>
+            <div >
 
                 { beforeContent }
 
-                <div className={ `${className}-buttons` }>
+                <div className={ `VoteButtons` }>
                     { upvote }
                     { downvote }
                 </div>
@@ -159,4 +156,4 @@ Vote.defaultProps = {
     afterContent: null
 };
 
-export default Vote;
+export default withRouter(Vote);

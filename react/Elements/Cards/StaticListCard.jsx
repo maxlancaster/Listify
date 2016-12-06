@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
+import Vote from '../Vote.jsx'
 
 
 class StaticListCard extends Component {
@@ -12,6 +13,14 @@ class StaticListCard extends Component {
   handleClick(event) {
     this.props.didClickOnListCard(this.state.list);
     return true;
+  }
+
+  handleUpvote(event) {
+
+  }
+
+  handleDownvote(event) {
+
   }
 
   render() {
@@ -28,6 +37,9 @@ class StaticListCard extends Component {
           {list.locked &&
             <div className="CircleMarker"></div>
           }
+          <Vote
+              handleUpvote = {this.handleUpvote.bind(this)}
+              handleDownvote = {this.handleDownvote.bind(this)}/>
           <div className = "StaticListCardFirstLineContainer">
             {this.props.showRankingNumber && <p className = "StaticListCardRanking">{this.props.index+1 + "."}</p>}
             <p className = "StaticListCardTitle">{list.title}</p>
