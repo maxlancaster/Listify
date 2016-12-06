@@ -40,6 +40,19 @@ var Rankings = (function(rankingModel) {
 
     var that = {};
 
+    that.updateRanking = function (ranking_id, order, comment, callback) {
+        rankingModel.findOneAndUpdate({_id : new ObjectId(ranking_id)}, {$set : {order : order, comment: comment}}, {new : true})
+            .exec(function (err, ranking) {
+                if (err) {
+                    callback({ msg: err});
+                } else {
+                    console.log("being updated");
+                    callback(null, ranking);
+                }
+            })
+    };
+
+
     //Helps with the consensus updating, TODO make sure this works!
     that.getRankingObjectsFromListOfIds = function (listOfRankings, callback) {
         rankingModel.find({
@@ -59,7 +72,7 @@ var Rankings = (function(rankingModel) {
             callback(null, rankings);
         }
       });
-    }
+    };
 
 
     //add an item to a ranking, item parameter should be passed in as {title: string, ranking: number}

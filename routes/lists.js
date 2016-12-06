@@ -234,7 +234,7 @@ router.post('/downvote/:listId', function(req, res){
  * Removes the user's id from the List's upvoters or downvoters arrays.
  */
 router.post('removevote/:listId', function(req, res){
-    if(req.params.voteType === "downvote"){
+    if(req.body.voteType === "downvote"){
         List.removeFromDownvoters(req.params.listId, req.session.user._id, function(err){
             if(err){
                 utils.sendErrorResponse(res, 404, 'No such list.');
@@ -242,7 +242,7 @@ router.post('removevote/:listId', function(req, res){
                 utils.sendSuccessResponse(res);
             }
         });
-    } else if(req.params.voteType === "upvote"){
+    } else if(req.body.voteType === "upvote"){
         List.removeFromUpvoters(req.params.listId, req.session.user._id, function(err){
             if(err){
                 utils.sendErrorResponse(res, 404, 'No such list.');

@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Vote from '../Vote.jsx'
-
+import listServices from '../../../services/listServices.js';
 
 class StaticListCard extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {list : props.list};
+    this.state = {list : props.list,
+                  voteScore : 0};
   }
 
   handleClick(event) {
@@ -16,11 +17,56 @@ class StaticListCard extends Component {
   }
 
   handleUpvote(event) {
+      var listId = this.props.list._id;
+      var voteScore = this.state.voteScore;
 
+      if (this.state.voteScore ===  -1) {
+          this.setState({voteScore: voteScore + 2});
+        listServices.removeVote(listId, "downvote").then((res) => {
+          listServices.upvote(listId).then((response) => {
+              console.log(this.props.list.upvotes);
+          });
+        });
+      } else if (this.state.voteScore === 0) {
+          this.setState({voteScore: voteScore + 1});
+          listServices.upvote(listId).then((response) => {
+              console.log(this.props.list.upvotes);
+          });
+      } else if (this.state.voteScore === 1) {
+          //hitting upvote again returns voteScore to 0
+          this.setState({voteScore : 0});
+          listServices.removeVote(listId, "upvote").then((res) => {
+              listServices.upvote(listId).then((response) => {
+                  console.log(this.props.list.upvotes);
+              });
+          });
+      }
+      console.log(this.props.list.upvotes);
   }
 
   handleDownvote(event) {
+      var listId = this.props.params.listId;
+      var voteScore = this.state.voteScore;
 
+      if (this.state.voteScore ===  -1) {
+          //hitting downvote again returns voteScore to 0
+          this.setState({voteScore:0});
+          listServices.removeVote(listId, "downvote").then((res) => {
+              listServices.upvote(listId).then((response) => {
+              });
+          });
+      } else if (this.state.voteScore === 0) {
+          this.setState({voteScore: voteScore - 1});
+          listServices.upvote(listId).then((response) => {
+          });
+      } else if (this.state.voteScore === 1) {
+          //hitting upvote again returns voteScore to 0
+          this.setState({voteScore : voteScore - 2});
+          listServices.removeVote(listId, "upvote").then((res) => {
+              listServices.upvote(listId).then((response) => {
+              });
+          });
+      }
   }
 
   render() {

@@ -169,4 +169,12 @@ router.get('/edit/:listId', function(req, res){
     })
 });
 
+router.put('/update/:rankingId', function (req, res) {
+    var rankingData = req.body.content;
+    Rankings.updateRanking(req.params.rankingId, rankingData.order, rankingData.comment, function (err, ranking) {
+        utils.sendSuccessResponse(res, {ranking : ranking});
+    });
+
+});
+
 module.exports = router;

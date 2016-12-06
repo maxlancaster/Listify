@@ -30,76 +30,128 @@ class EditRankingsPage extends Component {
       showCreateRankingConfirm : false,
       submission: [],
       comment : '',
-      showComments : false,
+      showComments : false
     }
   }
 
     componentWillMount() {
-      // var request = this.props.rankingServices.loadEditPage(this.props.params.consensusID);
-      // this.props.updateEditPage(request);
+        // var request = this.props.rankingServices.loadEditPage(this.props.params.consensusID);
+        // this.props.updateEditPage(request);
 
-      listServices.getListDataFromId(this.props.params.listId).then((response) => {
-        console.log(response);
-        if (response.success) {
-          this.setState({
-            title : response.content.list.title,
-            creator: response.content.list.creator,
-            items: response.content.list.items,
-            rankings: response.content.list.rankings,
-            isPublic: response.content.list.isPublic,
-            upvotes : response.content.list.upvotes,
-            locked: response.content.list.locked,
-            maxLength : response.content.list.maxLength,
-            usersSharedWith : response.content.list.usersSharedWith,
-            description: ''
-          });
-        } else {
-          console.log("error");
+        listServices.getListDataFromId(this.props.params.listId).then((response) => {
+            console.log(response);
+            if (response.success) {
+                this.setState({
+                    title : response.content.list.title,
+                    creator: response.content.list.creator,
+                    items: response.content.list.items,
+                    rankings: response.content.list.rankings,
+                    isPublic: response.content.list.isPublic,
+                    upvotes : response.content.list.upvotes,
+                    locked: response.content.list.locked,
+                    maxLength : response.content.list.maxLength,
+                    usersSharedWith : response.content.list.usersSharedWith,
+                    description: ''
+                });
+            } else {
+                console.log("error");
+            }
+        })
+    }
+
+    hasUserSubmittedThisRanking() {
+        if (this.state.rankings.length === 0) {
+            return false;
         }
-      })
+        var current_user = this.props.user;
+
+        // find intersection of list.rankings and current_user.rankings
+        var ranking_ids = this.state.rankings.filter(function(ranking) {
+            return current_user.rankings.indexOf(ranking) != -1;
+        });
+
+        var user_has_submitted_this_ranking = ranking_ids.length >= 1 ? true : false;
+
+        return user_has_submitted_this_ranking;
     }
 
     submitRanking() {
-      console.log("submit");
-      console.log(this.state.submission);
+        console.log("submitting");
+        var order = [];
+        var listId = this.props.params.listId;
+        // var user = req.session.user.username;
+        // var user_id = req.session.user._id;
+        var comment = this.state.comment;
+        // description, id, photo, title
+        this.state.submission.forEach(function(item, index) {
+            var itemCopy = item;
+            itemCopy.rank = index+1;
+            order.push(itemCopy); // start indexing at 1
+        });
 
-      var order = []
-      var listId = this.props.params.listId;
-      // var user = req.session.user.username;
-      // var user_id = req.session.user._id;
-      var comment = this.state.comment;
-      // description, id, photo, title
-      this.state.submission.forEach(function(item, index) {
-        var itemCopy = item;
-        itemCopy.rank = index+1;
-        order.push(itemCopy); // start indexing at 1
-      });
+        rankingServices.submitRanking(
+            {
+                order : order,
+                list : listId,
+                comment : comment,
+                listTitle:this.state.title,
+                listCreatorUsername:this.state.creator
+            }
+        ).then((response) => {
+            if (response.success) {
+                this.props.router.push("/");
+            } else {
+                console.log("failed to submit ranking.");
+            }
+        });
 
-      rankingServices.submitRanking(
-        {
-          order : order,
-          list : listId,
-          comment : comment,
-          listTitle:this.state.title,
-          listCreatorUsername:this.state.creator
-        }
-      ).then((response) => {
-        if (response.success) {
-          this.props.router.push("/");
-        } else {
-          console.log("failed to submit ranking.");
-        }
-      });
-
-      //TODO : submit Ranking to the associated List
+        //TODO : submit Ranking to the associated List
     }
 
+    updateRanking() {
+        console.log("updating");
+
+        var order = [];
+        var listId = this.props.params.listId;
+        // var user = req.session.user.username;
+        // var user_id = req.session.user._id;
+        var comment = this.state.comment;
+        // description, id, photo, title
+        this.state.submission.forEach(function(item, index) {
+            var itemCopy = item;
+            itemCopy.rank = index+1;
+            order.push(itemCopy); // start indexing at 1
+        });
+
+        listServices.getListDataFromId(this.props.params.listId).then((response) => {
+            var listRankingIds = response.content.list.rankings;
+            var current_user_rankings = this.props.user.rankings;
+
+            var ranking_ids = listRankingIds.filter(function(ranking) {
+                return current_user_rankings.indexOf(ranking) != -1;
+            });
+
+            rankingServices.updateRanking({
+                ranking_id : ranking_ids[0],
+                order : order,
+                comment : comment
+            }).then((res) => {
+                if (res.success) {
+                    this.props.router.push("/");
+                } else {
+                    console.log("failed to update ranking");
+                }
+            });
+        });
+    }
+
+
     showShareDialog() {
-      this.setState({showCreateRankingConfirm: true})
+        this.setState({showCreateRankingConfirm: true})
     }
 
     closeShareDialog() {
-      this.setState({showCreateRankingConfirm: false})
+        this.setState({showCreateRankingConfirm: false})
     }
 
     commentClicked() {
@@ -126,6 +178,9 @@ class EditRankingsPage extends Component {
       }
       var hasCommented = this.state.comment && this.state.comment.text.length > 0;
       var commentButtonTitle = hasCommented > 0 ? "Commented Already" : "Comment";
+      var updateOrSubmitRankingButtonFunction = this.hasUserSubmittedThisRanking() ? this.updateRanking.bind(this) : this.submitRanking.bind(this);
+
+      var buttonTitle = this.hasUserSubmittedThisRanking() ? "Update" : "Submit";
       return (
         <div>
           {
@@ -172,14 +227,14 @@ class EditRankingsPage extends Component {
             </div>
 
           </div>
-          <BottomRightButton onClick = {this.submitRanking.bind(this)}/>
+          <BottomRightButton onClick = {updateOrSubmitRankingButtonFunction} title = {buttonTitle}/>
         </div>
       );
     }
 
     finishEdittingRanking() {
-      // console.log(this.state.order);
+        // console.log(this.state.order);
     }
-  }
+}
 
 export default withRouter(DragDropContext(HTML5Backend)(EditRankingsPage));
