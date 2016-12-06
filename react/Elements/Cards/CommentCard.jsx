@@ -10,9 +10,9 @@ class CommentCard extends Component {
 
 		return (
       <a href="#">
-        <div className = "ItemCard">
-          <p className = "ItemCardTitle">{comment.text}</p>
-          <p className = "ItemCardDescription">{"commented by "+comment.username}</p>
+        <div className = "CommentCard">
+          <p className = "CommentCardTitle">{comment.text}</p>
+          <p className = "CommentCardDescription">{"commented by "+comment.username}</p>
         </div>
       </a>
     );

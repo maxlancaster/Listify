@@ -14,7 +14,7 @@ class ViewConsensusRankingPage extends Component {
     constructor(props) {
         super(props);
         //TODO: TEMP, REMOVE LATER
-        this.state = {list:null, order:[]};
+        this.state = {list:null, order:[], showComments: false};
     }
 
     componentWillMount() {
@@ -106,6 +106,10 @@ class ViewConsensusRankingPage extends Component {
       this.props.router.push(path);
     }
 
+    showComments() {
+      this.setState({showComments:!this.state.showComments});
+    }
+
     render() {
         const list = this.state.list;
         const order = this.state.order;
@@ -125,6 +129,8 @@ class ViewConsensusRankingPage extends Component {
             background:buttonColor
         }
 
+        var showCommentButtonTitle = this.state.showComments ? "Hide Comments" : "Show Comments";
+
         console.log(this.hasUserSubmittedThisRanking());
         return (
             <div>
@@ -142,13 +148,6 @@ class ViewConsensusRankingPage extends Component {
                                     style = {buttonStyle}>{buttonTitle}</button>}
                         </div>
                         <ViewableItemsList id={1} items = {order} showRankingNumber = {true}/>
-                        {this.state.comments &&
-
-                          <div>
-                            <h3>Comments</h3>
-                             <CommentsList comments = {this.state.comments} author = {this.props.user.username}/>
-                          </div>
-                        }
                     </div>
                     }
                 </div>
@@ -158,17 +157,35 @@ class ViewConsensusRankingPage extends Component {
                 </div>
                 }
 
-                {list &&
-                <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
-                                             addNewItems = {this.addNewItems.bind(this)}
-                                             lock = {true}
-                                             title = {list.title}
-                                             votes = {list.rankings ? list.rankings.length : 0}
-                                             showAddItems = {this.currentUserIsCreatorOfConsensus()}
-                                             already_submitted = {this.hasUserSubmittedThisRanking()}
-                                             submitRanking = {this.submitRanking.bind(this)}
-                />
+
+                  {list &&
+                    <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
+                                                 addNewItems = {this.addNewItems.bind(this)}
+                                                 lock = {true}
+                                                 title = {list.title}
+                                                 votes = {list.rankings ? list.rankings.length : 0}
+                                                 showAddItems = {this.currentUserIsCreatorOfConsensus()}
+                                                 already_submitted = {this.hasUserSubmittedThisRanking()}
+                                                 submitRanking = {this.submitRanking.bind(this)}
+                    />
+                  }
+
+
+                {this.state.comments &&
+                  <div className = "CommentsContainer">
+                    <button className = "ShowCommentsButton" onClick = {this.showComments.bind(this)}>{showCommentButtonTitle}</button>
+                    {this.state.showComments &&
+                      <div>
+                        <div className = "Separator"></div>
+                        <h3>Comments</h3>
+                        <CommentsList comments = {this.state.comments} author = {this.props.user.username}/>
+                      </div>
+                    }
+                  </div>
                 }
+
+
+
 
             </div>
         );

@@ -150,7 +150,7 @@ class EditRankingsPage extends Component {
               </div>
               <div className = "TitleSecondRow">
                 <h2 className = "RankingAuthor">{"created by "+this.state.creator}</h2>
-                <button onClick = {this.commentClicked.bind(this)}>{commentButtonTitle}</button>
+                <button className = "EditRankingCommentButton" onClick = {this.commentClicked.bind(this)}>{commentButtonTitle}</button>
               </div>
               <RankingList id={1}
                            items = {this.state.submission}
@@ -159,6 +159,7 @@ class EditRankingsPage extends Component {
                            maxLength = {this.state.maxLength}/>
              {this.state.comment &&
                <div>
+                 <div className = "Separator"></div>
                  <h3>Comments</h3>
                  <CommentsList comments = {[this.state.comment]}/>
                </div>
@@ -169,6 +170,7 @@ class EditRankingsPage extends Component {
               <h1 className = "OptionsListTitle"> Options</h1>
               <OptionsList  id={2} items={this.state.items} canEdit = {false} defaultBackGroundColor = {"FAF9F9"} />
             </div>
+
           </div>
           <BottomRightButton onClick = {this.submitRanking.bind(this)}/>
         </div>
