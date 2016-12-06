@@ -46,7 +46,7 @@ Vote.propTypes = {
 Vote.defaultProps = {
     className: 'react-upvote',
 
-    voteStatus: 0
+    voteScore: 0
 };
 
 export default withRouter(Vote);
