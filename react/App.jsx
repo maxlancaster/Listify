@@ -23,7 +23,9 @@ class App extends Component {
                 completed: false,
                 public: false,
                 all_items: [],
-            }
+            },
+
+            errorMessage : ''
         };
         this.loginUser = this.loginUser.bind(this);
         this.logout = this.logout.bind(this);
@@ -66,6 +68,7 @@ class App extends Component {
                     this.props.router.push('/');
                 }
             }).catch((err) => {
+                this.setState({errorMessage: err.error.err});
                 console.log("Login err: ", err.error.err);
             });
     }
@@ -84,11 +87,11 @@ class App extends Component {
 
   registerUser(username, password){
       userServices.register(username, password).then((res) => {
-          if (res.success){
+          if (res.success) {
               this.loginUser(username, password);
-          } else {
-              console.log("Error on register user: ",res.err)
           }
+      }).catch((err) => {
+          this.setState({errorMessage : err.error.err});
       });
   }
 
@@ -124,6 +127,7 @@ class App extends Component {
                         rankingServices : rankingServices,
                         user : this.state.user,
                         loginUser : this.loginUser,
+                        errorMessage : this.state.errorMessage,
                         registerUser : this.registerUser,
                         loadEditPage : this.loadEditPage,
                         updateEditPage : this.updateEditPage,

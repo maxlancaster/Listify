@@ -11,7 +11,6 @@ class LoginPage extends Component {
             loginPass : '',
             registerUser : '',
             registerPass : '',
-            errorMessage: ''
         };
         this.updateFormVal = this.updateFormVal.bind(this);
         this.loginUser = this.loginUser.bind(this);
@@ -36,60 +35,64 @@ class LoginPage extends Component {
     }
 
     render(){
+        console.log(this.props);
         return (
-          <div className = "LoginPage">
-            <div className='UserAuthContainer'>
-                <div className='SignInForm'>
-                    <h1>Sign In</h1>
-                    <div className='form'>
-                        <div className='form-group'>
-                            <input className='username'
-                                   name='loginUser'
-                                   placeholder='Username'
-                                   value={this.state.loginUser}
-                                   onChange={this.updateFormVal}
+            <div className = "LoginPage">
+                <div className='UserAuthContainer'>
+                    <div className='SignInForm'>
+                        <h1>Sign In</h1>
+                        <div className='form'>
+                            <div className='form-group'>
+                                <input className='username'
+                                       name='loginUser'
+                                       placeholder='Username'
+                                       value={this.state.loginUser}
+                                       onChange={this.updateFormVal}
                                 />
-                        </div>
-                        <div className='form-group'>
-                            <input className='password'
-                                   type='password'
-                                   name='loginPass'
-                                   placeholder='Password'
-                                   value={this.state.loginPass}
-                                   onChange={this.updateFormVal}
+                            </div>
+                            <div className='form-group'>
+                                <input className='password'
+                                       type='password'
+                                       name='loginPass'
+                                       placeholder='Password'
+                                       value={this.state.loginPass}
+                                       onChange={this.updateFormVal}
                                 />
+                            </div>
+                            <button className='login-button' onClick={this.loginUser}>Sign In</button>
                         </div>
-                        <button className='login-button' onClick={this.loginUser}>Sign In</button>
+                    </div>
+                    <div className='RegisterForm'>
+                        <h1>Register</h1>
+                        <div className='form'>
+                            <div className='form-group'>
+                                <input className='username'
+                                       name='registerUser'
+                                       placeholder='Username'
+                                       value={this.state.registerUser}
+                                       onChange={this.updateFormVal}
+                                />
+                            </div>
+                            <div className='form-group'>
+                                <input className='password'
+                                       type='password'
+                                       name='registerPass'
+                                       placeholder='Password'
+                                       value={this.state.registerPass}
+                                       onChange={this.updateFormVal}
+                                />
+                            </div>
+                            <button className='signup-button' onClick={this.registerUser}>Register</button>
+                        </div>
                     </div>
                 </div>
-                <div className='RegisterForm'>
-                    <h1>Register</h1>
-                    <div className='form'>
-                        <div className='form-group'>
-                            <input className='username'
-                                   name='registerUser'
-                                   placeholder='Username'
-                                   value={this.state.registerUser}
-                                   onChange={this.updateFormVal}
-                                />
-                        </div>
-                        <div className='form-group'>
-                            <input className='password'
-                                   type='password'
-                                   name='registerPass'
-                                   placeholder='Password'
-                                   value={this.state.registerPass}
-                                   onChange={this.updateFormVal}
-                                />
-                        </div>
-                        <button className='signup-button' onClick={this.registerUser}>Register</button>
-                          {this.state.errorMessage &&
-                            <p style = {{color:"red"}}>{this.state.errorMessage}</p>
-                          }
-                    </div>
+                <div className="errorMessage">
+                    {this.props.errorMessage &&
+                    <p style = {{color:"red"}}>{this.props.errorMessage}</p>
+                    }
                 </div>
             </div>
-          </div>
+
         )
     }
 }
