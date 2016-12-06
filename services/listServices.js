@@ -74,5 +74,32 @@ export default {
             method: 'GET',
             json: true
         })
+    },
+
+    upvote : (list_id) => {
+        return request({
+            uri: BASE_URL + '/upvote/${list_id}',
+            method: 'POST',
+            json: true
+            body : { voteChange : +1 }
+        })
+    },
+
+    downvote : (list_id) => {
+        return request({
+            uri: BASE_URL + '/upvote/${list_id}',
+            method: 'POST',
+            json: true
+            body : { voteChange : -1 }
+        })
+    },
+
+    removeVote : (list_id) => {
+        return request({
+            uri: BASE_URL + '/upvote/${list_id}',
+            method: 'POST',
+            json: true
+            body : { votetype }
+        })
     }
 }
