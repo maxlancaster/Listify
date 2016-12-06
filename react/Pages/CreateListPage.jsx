@@ -40,7 +40,6 @@ class CreateListPage extends Component {
       return user.username;
     });
     const usersSharedWith = this.state.publicList ? [] : invitedUsers;
-    console.log(usersSharedWith);
     listServices.createList(
         {
           title : listTitle,

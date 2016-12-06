@@ -49,6 +49,7 @@ var invalidLogin = function(req, res) {
 router.post('/', function(req, res) {
   Users.createUser(req.body.username, req.body.password, function(err) {
     if (err) {
+      console.log(err);
       if (err.taken) {
         utils.sendErrorResponse(res, 400, 'That username is already taken!');
       } else if (err.msg) {
