@@ -47,10 +47,8 @@ app.use(function(req, res, next) {
   if (req.session.user) {
     Users.findUser(req.session.user.username, function(err, user) {
       if (user) {
-        console.log("current user: " + user.username)
         req.currentUser = user;
       } else {
-        console.log("no current user");
         req.session.destroy();
       }
       next();

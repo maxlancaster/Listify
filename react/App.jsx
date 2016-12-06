@@ -48,8 +48,6 @@ class App extends Component {
 
     updateEditPage(request){
         request.then((response) => {
-            console.log("response: " + response);
-            console.log(response.content.list);
             this.setState((prevState) => {
                 prevState.list = response.content.list;
                 return prevState
@@ -69,7 +67,6 @@ class App extends Component {
                 }
             }).catch((err) => {
                 this.setState({errorMessage: err.error.err});
-                console.log("Login err: ", err.error.err);
             });
     }
 

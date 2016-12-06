@@ -22,7 +22,6 @@ class ViewRankingPage extends Component {
     var rankingId = this.props.params.id;
 
     rankingServices.getRankingById(rankingId).then((response) => {
-      console.log(response);
       var ranking = response.content.ranking;
       if (response.success) {
         this.setState({ranking:ranking});
@@ -50,8 +49,6 @@ class ViewRankingPage extends Component {
     }
 
     var ranking = this.state.ranking;
-    console.log(ranking);
-
     return (
       <div>
         <div className = "EditRankingsPage">
