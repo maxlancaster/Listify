@@ -88,7 +88,6 @@ class App extends Component {
               this.loginUser(username, password);
           }
       }).catch((err) => {
-          console.log(err.error.err);
           this.setState({errorMessage : err.error.err});
       });
   }

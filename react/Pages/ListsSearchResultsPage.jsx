@@ -49,8 +49,6 @@ class ListsSearchResultsPage extends Component {
     }
 
     render() {
-        console.log(this.props);
-        console.log(this.props);
         const foundLists = this.state.foundLists;
         const headerTitle = 'Search Results for "' + this.state.searchString + '" | '+foundLists.length+' results';
         return (

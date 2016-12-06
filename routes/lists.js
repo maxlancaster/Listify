@@ -11,7 +11,6 @@ var Users = require('../models/Users');
 
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/create', function(req, res) {
-    console.log(req.body.content);
     var listObject = {
         title : req.body.content.title,
         creator : req.session.user.username,

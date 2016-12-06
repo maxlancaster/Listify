@@ -132,7 +132,6 @@
 	        }
 	        callback();
 	    }).catch(function (err) {
-	        console.log("Err on getCurrentUser() : ", err);
 	        callback();
 	    });
 	};
