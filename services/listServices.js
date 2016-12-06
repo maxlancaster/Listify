@@ -86,28 +86,34 @@ export default {
 
     upvote : (list_id) => {
         return request({
-            uri: BASE_URL + '/upvote/${list_id}',
+            uri: BASE_URL + `/upvote/${list_id}`,
             method: 'POST',
-            json: true,
-            body : { voteChange : +1 }
+            json: true
         })
     },
 
     downvote : (list_id) => {
         return request({
-            uri: BASE_URL + '/upvote/${list_id}',
+            uri: BASE_URL + `/downvote/${list_id}`,
             method: 'POST',
-            json: true,
-            body : { voteChange : -1 }
+            json: true
         })
     },
 
-    removeVote : (list_id) => {
+    removeVote : (list_id, voteType) => {
         return request({
-            uri: BASE_URL + '/upvote/${list_id}',
+            uri: BASE_URL + `/removevote/${list_id}`,
             method: 'POST',
             json: true,
-            body : { votetype }
+            body : {voteType: voteType}
         })
-    }
+    },
+
+    getNumUpvotes : (list_id) => {
+        return request({
+            uri: BASE_URL + `/votes/${list_id}`,
+            method: 'GET',
+            json: true
+        })
+    },
 }

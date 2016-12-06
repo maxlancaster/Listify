@@ -171,6 +171,7 @@ router.put('/lock/:listId', function(req, res) {
     });
 });
 
+
 router.put('/add_items/:listId', function(req,res) {
   List.addMoreItems(req.params.listId, req.body.newItems, function(error, list) {
     if(error){
@@ -181,6 +182,9 @@ router.put('/add_items/:listId', function(req,res) {
   });
 });
 
+/**
+ * Adds the user's id to the List's array of upvoters and updates net upvotes.
+ */
 router.post('/upvote/:listId', function(req, res){
     List.addToUpvoters(req.params.listId, req.session.user._id, function(err){
         if(err){
@@ -191,6 +195,9 @@ router.post('/upvote/:listId', function(req, res){
     });
 });
 
+/**
+ * Adds the user's id to the List's array of downvoters and updates net upvotes.
+ */
 router.post('/downvote/:listId', function(req, res){
     List.addToDownvoters(req.params.listId, req.session.user._id, function(err){
         if(err){
@@ -201,6 +208,32 @@ router.post('/downvote/:listId', function(req, res){
     });
 });
 
+/**
+ * Removes the user's id from the List's upvoters or downvoters arrays.
+ */
+router.post('removevote/:listId', function(req, res){
+    if(req.params.voteType === "downvote"){
+        List.removeFromDownvoters(req.params.listId, req.session.user._id, function(err){
+            if(err){
+                utils.sendErrorResponse(res, 404, 'No such list.');
+            } else{
+                utils.sendSuccessResponse(res);
+            }
+        });
+    } else if(req.params.voteType === "upvote"){
+        List.removeFromUpvoters(req.params.listId, req.session.user._id, function(err){
+            if(err){
+                utils.sendErrorResponse(res, 404, 'No such list.');
+            } else{
+                utils.sendSuccessResponse(res);
+            }
+        });
+    }
+});
+
+/**
+ * Reterns the net number of upvotes associated with the list.
+ */
 router.get('/votes/:listId', function(req, res){
     List.getNumberOfUpvotes(req.params.listId, function(err){
         if(err){
