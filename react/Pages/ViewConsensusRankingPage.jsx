@@ -44,7 +44,6 @@ class ViewConsensusRankingPage extends Component {
         }
         var creator = this.state.list.creator;
         var current_user = this.props.user.username;
-
         if (creator === current_user) {
             return true;
         } else {
@@ -76,7 +75,6 @@ class ViewConsensusRankingPage extends Component {
     }
 
     addNewItems() {
-      console.log("CLICKED");
       var path = "lists/"+this.state.list._id+"/add_items";
       this.props.router.push(path);
     }
@@ -130,7 +128,7 @@ class ViewConsensusRankingPage extends Component {
                                              lock = {true}
                                              title = {list.title}
                                              votes = {list.rankings ? list.rankings.length : 0}
-                                             showAddItems = {true}
+                                             showAddItems = {this.currentUserIsCreatorOfConsensus()}
 
                 />
                 }
