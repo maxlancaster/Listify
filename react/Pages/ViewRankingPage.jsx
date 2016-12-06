@@ -40,7 +40,8 @@ class ViewRankingPage extends Component {
   }
 
   editRanking() {
-    console.log("edit this ranking");
+    var path = "rankings/edit/"+this.state.ranking.list;
+    this.props.router.push(path);
   }
 
   render() {
