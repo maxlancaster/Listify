@@ -44,6 +44,14 @@ export default {
 		})
 	},
 
+	getComments : (list_id) => {
+		return request({
+			uri : BASE_URL + `/comments/${list_id}`,
+			method : 'GET',
+			json : true
+		})
+	},
+
 	getInvitedLists: (username) => {
 		return request({
 			uri : BASE_URL + `/invited/${username}`,

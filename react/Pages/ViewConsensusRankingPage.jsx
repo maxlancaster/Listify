@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import ViewableItemsList from '../Elements/ViewableItemsList.jsx';
+import CommentsList from '../Elements/CommentsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import ConsensusRankingDescription from '../Elements/ConsensusRankingDescription.jsx';
@@ -24,6 +25,12 @@ class ViewConsensusRankingPage extends Component {
                 var order = res.content.order;
                 this.setState({list:list, order:order});
             });
+
+            listServices.getComments(listId).then((res) => {
+              var comments = res.content.comments;
+              this.setState({comments:comments});
+            });
+
 
         });
     }
@@ -135,6 +142,13 @@ class ViewConsensusRankingPage extends Component {
                                     style = {buttonStyle}>{buttonTitle}</button>}
                         </div>
                         <ViewableItemsList id={1} items = {order} showRankingNumber = {true}/>
+                        {this.state.comments &&
+
+                          <div>
+                            <h3>Comments</h3>
+                             <CommentsList comments = {this.state.comments} author = {this.props.user.username}/>
+                          </div>
+                        }
                     </div>
                     }
                 </div>
@@ -155,6 +169,7 @@ class ViewConsensusRankingPage extends Component {
                                              submitRanking = {this.submitRanking.bind(this)}
                 />
                 }
+
             </div>
         );
     }

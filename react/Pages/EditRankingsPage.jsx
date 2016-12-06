@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
 import RankingList from '../Elements/RankingList.jsx';
 import OptionsList from '../Elements/OptionsList.jsx';
+import CommentsList from '../Elements/CommentsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import { DragDropContext } from 'react-dnd';
 import { withRouter } from 'react-router';
 import ConfirmAlertView from '../Elements/ConfirmAlertView.jsx';
+import CommentPopupView from '../Elements/PopupViews/CommentPopupView.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import listServices from '../../services/listServices.js';
 import rankingServices from '../../services/rankingServices.js';
-
-const uuid = require('uuid');
+import Comment from '../../models/Comment.js';
 
 class EditRankingsPage extends Component {
   constructor(props) {
@@ -28,7 +29,8 @@ class EditRankingsPage extends Component {
       description: '',
       showCreateRankingConfirm : false,
       submission: [],
-      comment : ''
+      comment : '',
+      showComments : false,
     }
   }
 
@@ -100,10 +102,30 @@ class EditRankingsPage extends Component {
       this.setState({showCreateRankingConfirm: false})
     }
 
+    commentClicked() {
+      if (!this.state.comment) {
+        this.setState({showComments:true});
+      }
+    }
+
+    closePopup() {
+      this.setState({showComments:false});
+    }
+
+    comment(text) {
+      this.closePopup();
+      console.log("CREATOR");
+      console.log(this.state.creator);
+      var comment = new Comment(text,this.state.creator);
+      this.setState({comment:comment});
+    }
+
     render() {
       if (this.state.items.length === 0) {
         return null;
       }
+      var hasCommented = this.state.comment && this.state.comment.text.length > 0;
+      var commentButtonTitle = hasCommented > 0 ? "Commented Already" : "Comment";
       return (
         <div>
           {
@@ -114,6 +136,12 @@ class EditRankingsPage extends Component {
               title = {"Share this ranking"}
             />
           }
+          {this.state.showComments &&
+              <CommentPopupView
+                onClose = {this.closePopup.bind(this)}
+                comment = {this.comment.bind(this)}
+              />
+          }
           <div className = "EditRankingsPage">
             <div className = "EditRankingRankingList" >
               <div className = "RankingTitleContainer">
@@ -122,12 +150,20 @@ class EditRankingsPage extends Component {
               </div>
               <div className = "TitleSecondRow">
                 <h2 className = "RankingAuthor">{"created by "+this.state.creator}</h2>
+                <button onClick = {this.commentClicked.bind(this)}>{commentButtonTitle}</button>
               </div>
               <RankingList id={1}
                            items = {this.state.submission}
                            canEdit = {false}
                            showStandbyCard = {true}
                            maxLength = {this.state.maxLength}/>
+             {this.state.comment &&
+               <div>
+                 <h3>Comments</h3>
+                 <CommentsList comments = {[this.state.comment]}/>
+               </div>
+             }
+
             </div>
             <div className = "EditRankingOptionsList" >
               <h1 className = "OptionsListTitle"> Options</h1>

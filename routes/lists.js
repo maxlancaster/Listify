@@ -88,6 +88,28 @@ router.get('/consensus/:listId', function (req, res) {
     })
 });
 
+router.get('/comments/:listId', function (req, res) {
+    List.getRankings(req.params.listId, function (err, listRankingIds) {
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            Rankings.getRankingObjectsFromListOfIds(listRankingIds, function (err, listRankings) {
+                if(err){
+                    utils.sendErrorResponse(res, 500, err);
+                } else {
+                  var comments = listRankings.map(function (ranking) {
+                    return ranking.comment;
+                  }).filter(function(object) {
+                    return object ? true : false;
+                  });
+                  console.log(comments);
+                  utils.sendSuccessResponse(res, {comments : comments});
+                }
+            })
+        }
+    })
+});
+
 /**
  * Gets the consensus to allow non-creator users to post responses to
  */

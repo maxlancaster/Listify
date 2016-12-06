@@ -30,7 +30,7 @@ var rankingSchema = mongoose.Schema({
     listTitle:String,
     listCreatorUsername:String,
 
-    comment: String
+    comment: {}
 }, { timestamps: true });
 
 
