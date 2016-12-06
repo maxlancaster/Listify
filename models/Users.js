@@ -190,8 +190,8 @@ var Users = (function(userModel) {
             if (err) callback({ msg: err});
             if (result !== null) {
                 callback({ taken: true});
-            } else if (username.length > 15) {
-                callback({ msg: 'Usernames should be at most 15 characters!' });
+            } else if (username.length > 15 || username.length < 3) {
+                callback({ msg: 'Usernames should be at most 15 characters and at least 3!' });
             } else {
                 var user = new userModel({ username: username,
                     password: password  });

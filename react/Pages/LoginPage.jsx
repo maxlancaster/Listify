@@ -35,7 +35,6 @@ class LoginPage extends Component {
     }
 
     render(){
-        console.log(this.props);
         return (
             <div className = "LoginPage">
                 <div className='UserAuthContainer'>

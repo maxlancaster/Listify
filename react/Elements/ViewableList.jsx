@@ -13,10 +13,6 @@ class ViewableList extends Component {
     this.setState({lists: props.lists});
   }
 
-  didClickOnListCard(list) {
-    this.props.didClickOnListCard(list);
-  }
-
 	render() {
 
 		const { lists } = this.state;

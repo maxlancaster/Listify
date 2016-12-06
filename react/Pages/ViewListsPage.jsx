@@ -48,24 +48,25 @@ class ViewListsPage extends Component {
     //TODO: ISSUE GET REQUEST TO UPDATE LIST
   }
 
+  //
+  // determineCorrectPathForUser(list) {
+  //   var current_user = this.props.user;
+  //   var is_creator_of_list = current_user.lists.indexOf(list._id) > -1;
+  //
+  //   // find intersection of list.rankings and current_user.rankings
+  //
+  //   var ranking_ids = list.rankings.filter(function(ranking) {
+  //     return current_user.rankings.indexOf(ranking) != -1;
+  //   });
+  //
+  //   var has_submitted_ranking_for_list = ranking_ids.length > 0;
+  //   if (has_submitted_ranking_for_list) {
+  //     return "lists/"+list._id+"/consensus";
+  //   } else {
+  //     return "rankings/edit/"+list._id;
+  //   }
+  // }
 
-  determineCorrectPathForUser(list) {
-    var current_user = this.props.user;
-    var is_creator_of_list = current_user.lists.indexOf(list._id) > -1;
-
-    // find intersection of list.rankings and current_user.rankings
-
-    var ranking_ids = list.rankings.filter(function(ranking) {
-      return current_user.rankings.indexOf(ranking) != -1;
-    });
-
-    var has_submitted_ranking_for_list = ranking_ids.length > 0;
-    if (has_submitted_ranking_for_list) {
-      return "lists/"+list._id+"/consensus";
-    } else {
-      return "rankings/edit/"+list._id;
-    }
-  }
 
   searchLists(searchString) {
     var path = "/lists/search/"+searchString;
@@ -73,7 +74,7 @@ class ViewListsPage extends Component {
   }
 
   didClickOnListCard(list) {
-    var path = this.determineCorrectPathForUser(list);
+    var path = "lists/"+list._id+"/consensus";
     this.props.router.push(path);
   }
 
