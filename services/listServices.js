@@ -80,7 +80,7 @@ export default {
         return request({
             uri: BASE_URL + '/upvote/${list_id}',
             method: 'POST',
-            json: true
+            json: true,
             body : { voteChange : +1 }
         })
     },
@@ -89,7 +89,7 @@ export default {
         return request({
             uri: BASE_URL + '/upvote/${list_id}',
             method: 'POST',
-            json: true
+            json: true,
             body : { voteChange : -1 }
         })
     },
@@ -98,7 +98,7 @@ export default {
         return request({
             uri: BASE_URL + '/upvote/${list_id}',
             method: 'POST',
-            json: true
+            json: true,
             body : { votetype }
         })
     }

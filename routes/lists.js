@@ -157,6 +157,7 @@ router.get('/trending', function(req, res) {
     });
 });
 
+
 router.put('/lock/:listId', function(req, res) {
     List.lockList(req.params.listId, function(err) {
         if(err){
@@ -166,6 +167,9 @@ router.put('/lock/:listId', function(req, res) {
         }
     });
 });
+
+// router.post('/upvote/:listId', function)
+
 
 
 
