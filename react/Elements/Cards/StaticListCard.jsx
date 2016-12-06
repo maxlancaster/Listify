@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Vote from '../Vote.jsx'
-import listServices from '../../services/listServices.js';
+import listServices from '../../../services/listServices.js';
 
 class StaticListCard extends Component {
 
