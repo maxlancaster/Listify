@@ -86,7 +86,12 @@ class ViewConsensusRankingPage extends Component {
     viewYourRanking() {
         var ranking_id = this.getSubmittedRankingId();
         var path = "rankings/"+ranking_id;
-        console.log(path);
+        this.props.router.push(path);
+    }
+
+    submitRanking() {
+        var list_id = this.state.list._id;
+        var path = "rankings/edit/"+list_id;
         this.props.router.push(path);
     }
 
@@ -137,6 +142,7 @@ class ViewConsensusRankingPage extends Component {
 
                 {list &&
                 <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
+                                             submitRanking = {this.submitRanking.bind(this)}
                                              lock = {true}
                                              title = {list.title}
                                              votes = {25}
