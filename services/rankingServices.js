@@ -34,7 +34,16 @@ export default {
 			method: 'GET',
 			json: true
 		})
-	}
+	},
+
+    updateRanking : (content) => {
+        return request({
+            uri : BASE_URL + '/update' + `/${content.ranking_id}`,
+            method: 'PUT',
+            json : true,
+            body : {content : content}
+        });
+    },
 	// ,
 	// getListById : (consensus_id) => {
 	//     return request({

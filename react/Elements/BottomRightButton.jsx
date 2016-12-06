@@ -16,7 +16,7 @@ class BottomRightButton extends Component {
                     height:"70px",
                     backgroundColor: "#66B110",
                     color:"white",
-                    border: "none"}
+                    border: "none"};
     return (
       <button className="BottomRightButton" onClick={this.props.onClick.bind(null)}>{title}</button>
     );

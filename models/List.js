@@ -345,6 +345,18 @@ var list = (function(listModel) {
         })
     };
 
+    that.getRankingByUserId = function (userId, listId, callback) {
+        listModel.findById(listId, function (err, list) {
+            if (err) callback({ msg: err }, null);
+            if (list != null) {
+                var rankings = list.rankings;
+
+            } else {
+                callback({ msg: 'The list does not exist!'});
+            }
+        })
+    }
+
 
     Object.freeze(that);
     return that;
