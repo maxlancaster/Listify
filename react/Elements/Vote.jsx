@@ -12,8 +12,7 @@ class Vote extends Component {
         super(props);
 
         this.state = {
-            updating: false,
-            voteStatus: props.voteStatus
+            voteScore: props.voteScore
         };
     }
 
@@ -32,53 +31,6 @@ class Vote extends Component {
         });
     }
 
-
-    vote(nextStatus) {
-        let {
-            updating,
-            voteStatus
-        } = this.state;
-
-        let {
-            onUpvote,
-            onDownvote,
-            onRemoveVote
-        } = this.props;
-
-        if (updating) {
-            return;
-        }
-
-        let prevStatus = voteStatus;
-
-        if (prevStatus === nextStatus) {
-            // undo current vote
-            onRemoveVote();
-            nextStatus = 0;
-        } else {
-            // add/change vote
-
-            if (prevStatus !== 0 && nextStatus !== 0) {
-                // undo previous vote first
-                onRemoveVote();
-            }
-
-            // add new vote
-            if (nextStatus === 1) {
-                onUpvote();
-            } else {
-                onDownvote();
-            }
-        }
-
-        this.setState({
-            // update voteStatus
-            voteStatus: nextStatus,
-            // wait for action to complete before allowing upvote
-            updating: true
-        });
-    }
-
     render() {
         let {
             voteStatus,
@@ -90,11 +42,6 @@ class Vote extends Component {
             afterContent
         } = this.props;
 
-        // let upvoteCx = cx(className, {
-        //     'upvoted': voteStatus === 1,
-        //     'downvoted': voteStatus === -1,
-        //     'updating': updating
-        // });
 
         let upvote =  (
                 <div className="upvote" onClick={ () => this.props.handleUpvote() }>

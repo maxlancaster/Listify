@@ -144,11 +144,11 @@ var list = (function(listModel) {
      */
     that.addToUpvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$push: { upvoters: userId}, $set: { upvotes: upvotes+1} }, function(err) {
+            {_id : listId}, {$push: { upvoters: userId}, $set: { upvotes: upvotes+1} }, {new : true}, function(err, result) {
                 if (err) callback({msg: err});
                 else {
 
-                    callback(null);
+                    callback(null, result);
                 }
             });
     };
@@ -161,10 +161,10 @@ var list = (function(listModel) {
      */
     that.addToDownvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$push: { downvoters: userId}, $set: { upvotes: upvotes-1} }, function(err) {
+            {_id : listId}, {$push: { downvoters: userId}, $set: { upvotes: upvotes-1} }, {new : true}, function(err, result) {
                 if (err) callback({msg: err});
                 else {
-                    callback(null);
+                    callback(null, result);
                 }
             });
     };
@@ -177,10 +177,10 @@ var list = (function(listModel) {
      */
     that.removeFromUpvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$pull: { upvoters: userId}, $set: { upvotes: upvotes-1} }, function(err) {
+            {_id : listId}, {$pull: { upvoters: userId}, $set: { upvotes: upvotes-1} }, {new : true}, function(err, result) {
                 if (err) callback({msg: err});
                 else {
-                    callback(null);
+                    callback(null, result);
                 }
             });
     };
@@ -193,10 +193,10 @@ var list = (function(listModel) {
      */
     that.removeFromDownvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$pull: { downvoters: userId}, $set: { upvotes: upvotes+1} }, function(err) {
+            {_id : listId}, {$pull: { downvoters: userId}, $set: { upvotes: upvotes+1} }, {new : true}, function(err, result) {
                 if (err) callback({msg: err});
                 else {
-                    callback(null);
+                    callback(null, result);
                 }
             });
     };
