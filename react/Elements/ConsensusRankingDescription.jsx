@@ -15,6 +15,7 @@ class ConsensusRankingDescription extends Component {
       <div className = "ConsensusRankingDescription">
         <p>{description}</p>
         <button onClick = {this.props.viewYourRanking}>View Your Ranking</button>
+        <button onClick = {this.props.addNewItems}>Add New Items</button>
       </div>
     );
   }

@@ -75,6 +75,12 @@ class ViewConsensusRankingPage extends Component {
         this.props.router.push(path);
     }
 
+    addNewItems() {
+      console.log("CLICKED");
+      var path = "lists/"+this.state.list._id+"/add_items";
+      this.props.router.push(path);
+    }
+
     render() {
         const list = this.state.list;
         const order = this.state.order;
@@ -120,9 +126,12 @@ class ViewConsensusRankingPage extends Component {
 
                 {list &&
                 <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
+                                             addNewItems = {this.addNewItems.bind(this)}
                                              lock = {true}
                                              title = {list.title}
-                                             votes = {25}
+                                             votes = {list.rankings ? list.rankings.length : 0}
+                                             showAddItems = {true}
+
                 />
                 }
             </div>

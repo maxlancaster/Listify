@@ -5,8 +5,9 @@ import CreateListPage from './Pages/CreateListPage.jsx';
 import ViewConsensusRankingPage from './Pages/ViewConsensusRankingPage.jsx';
 import ViewListsPage from './Pages/ViewListsPage.jsx';
 import NotFound from './Pages/NotFound.jsx';
-import ListsSearchResultsPage from './Pages/ListsSearchResultsPage.jsx'
-import ProfilePage from './Pages/ProfilePage.jsx'
+import ListsSearchResultsPage from './Pages/ListsSearchResultsPage.jsx';
+import ProfilePage from './Pages/ProfilePage.jsx';
+import AddMoreItemsPage from './Pages/AddMoreItemsPage.jsx';
 // import services from '../services';
 import LoginPage from './Pages/LoginPage.jsx';
 import userServices from '../services/userServices.js';
@@ -38,11 +39,13 @@ export default (
         <Route path="signin" component={LoginPage} />
         <Route path="dashboard" component={ListsSearchResultsPage} />
         <Route path="your" component={ProfilePage} />
+        <Route path = "lists/:listId/add_items" component = {AddMoreItemsPage} onEnter={authCheck} />
         <Route path="lists/search/:searchString" component={ListsSearchResultsPage} onEnter={authCheck}/>
         <Route path="lists/create" component={CreateListPage} onEnter={authCheck}/>
         <Route path="rankings/:id" component={ViewRankingPage} onEnter={authCheck}/>
         <Route path="rankings/edit/:listId" component={EditRankingsPage} />
         <Route path="lists/:listId/consensus" component={ViewConsensusRankingPage} onEnter={authCheck}/>
+
         <Route path="*" component={NotFound} />
       </Route>
     </Router>

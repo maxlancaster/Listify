@@ -167,6 +167,16 @@ router.put('/lock/:listId', function(req, res) {
     });
 });
 
+router.put('/add_items/:listId', function(req,res) {
+  List.addMoreItems(req.params.listId, req.body.newItems, function(error, list) {
+    if(error){
+        utils.sendErrorResponse(res, 500, error);
+    } else {
+        utils.sendSuccessResponse(res, {list : list});
+    }
+  });
+});
+
 
 
 module.exports = router;

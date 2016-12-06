@@ -17,8 +17,10 @@ class ViewListsPage extends Component {
 
   componentWillMount() {
     this.props.showNavbar(false);
+    console.log("REFRESH");
     listServices.getTrendingLists().then((res) => {
       var lists = res.content.lists;
+
       this.setState({lists:lists});
     });
   }

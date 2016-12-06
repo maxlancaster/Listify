@@ -199,6 +199,18 @@ var list = (function(listModel) {
         });
     };
 
+    that.addMoreItems = function(listId, newItems, callback) {
+      listModel.findOneAndUpdate(
+        {_id : listId}, {$pushAll: {items:newItems} },{upsert:false}, function(err,newList) {
+            if (err) callback({msg: err});
+            else {
+              console.log("Successfully updated");
+              console.log(newItems);
+              callback(null,newList);
+            }
+      });
+    };
+
     that.search = function(searchString, callback) {
       listModel.find({ "title": { "$regex": new RegExp(searchString, "i")} }).exec(function(err, result) {
         if (err) callback({ msg: err });
