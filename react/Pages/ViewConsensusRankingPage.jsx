@@ -51,6 +51,21 @@ class ViewConsensusRankingPage extends Component {
         }
     }
 
+    hasUserSubmittedThisRanking() {
+      if (this.state.list === null) {
+        return false;
+      }
+      var current_user = this.props.user;
+      // find intersection of list.rankings and current_user.rankings
+      var ranking_ids = this.state.list.rankings.filter(function(ranking) {
+        return current_user.rankings.indexOf(ranking) != -1;
+      });
+
+      var user_has_submitted_this_ranking = ranking_ids.length >= 1 ? true : false;
+
+      return user_has_submitted_this_ranking;
+    }
+
     //lock consensus
     lockList() {
         if (this.state.list && !this.state.list.locked) {
@@ -70,7 +85,12 @@ class ViewConsensusRankingPage extends Component {
     viewYourRanking() {
         var ranking_id = this.getSubmittedRankingId();
         var path = "rankings/"+ranking_id;
-        console.log(path);
+        this.props.router.push(path);
+    }
+
+    submitRanking() {
+        var list_id = this.state.list._id;
+        var path = "rankings/edit/"+list_id;
         this.props.router.push(path);
     }
 
@@ -97,6 +117,8 @@ class ViewConsensusRankingPage extends Component {
         var buttonStyle = {
             background:buttonColor
         }
+
+        console.log(this.hasUserSubmittedThisRanking());
         return (
             <div>
                 <div className = "EditRankingsPage">
@@ -129,7 +151,8 @@ class ViewConsensusRankingPage extends Component {
                                              title = {list.title}
                                              votes = {list.rankings ? list.rankings.length : 0}
                                              showAddItems = {this.currentUserIsCreatorOfConsensus()}
-
+                                             already_submitted = {this.hasUserSubmittedThisRanking()}
+                                             submitRanking = {this.submitRanking.bind(this)}
                 />
                 }
             </div>
