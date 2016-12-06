@@ -40,6 +40,7 @@ class CreateListPage extends Component {
       return user.username;
     });
     const usersSharedWith = this.state.publicList ? [] : invitedUsers;
+    console.log(usersSharedWith);
     listServices.createList(
         {
           title : listTitle,
@@ -52,6 +53,8 @@ class CreateListPage extends Component {
         }
       ).then((res) => {
         if (res.success){
+          console.log("CREATED LIST!");
+          console.log(res);
               this.closePopup();
               // navigate to edit page for creator to submit a Ranking
               // uncomment when /rankings/edit/:listId isn't broken!!

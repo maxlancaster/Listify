@@ -298,16 +298,18 @@ var list = (function(listModel) {
      *  Returns lists a user's been invited to.
      */
     that.getInvitedLists = function(username, callback) {
-        //WHY WON'T THIS WORK???
-        listModel.find({ usersSharedWith:  { $all: [ username] }}).exec(function(err, result) {
-            if (err) callback({ msg: err });
-            console.log(result);
-            if (result.length > 0) {
-                callback(null, result);
-            } else {
-                callback({ msg: 'No lists for this user'})
-            }
+      listModel.find().exec(function(err, result) {
+        if (err) callback({ msg: err });
+        //TODO: FIND PROPER WAY TO QUERY
+        var invitedLists = result.filter(function(list) {
+          return list.usersSharedWith.indexOf(username) > -1;
         });
+        if (invitedLists.length > 0) {
+            callback(null, invitedLists);
+        } else {
+            callback({ msg: 'No lists for this user'})
+        }
+       });
     };
 
     // add the id rankingId to the Consensus document with _id consensusId
