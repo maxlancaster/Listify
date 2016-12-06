@@ -23,7 +23,7 @@ router.post('/create', function(req, res) {
         description : req.body.content.description,
         // TO DO, hardcoded
         maxLength : req.body.content.maxLength,
-        usersSharedWith : []
+        usersSharedWith : req.body.content.usersSharedWith
     };
     List.createList(listObject, function(err, list) {
         if (err) {
@@ -115,11 +115,14 @@ router.get('/find/:listId', function(req, res){
  });
 
 router.get('/invited/:username', function(req, res){
+  console.log("yoo");
     List.getInvitedLists(req.params.username, function(err, lists){
         if(err){
-          console.log(err);
+            console.log(err);
             utils.sendErrorResponse(res, 500, err);
         } else {
+            console.log("invited lists!!");
+            console.log(lists);
             utils.sendSuccessResponse(res, {lists : lists});
         }
     })

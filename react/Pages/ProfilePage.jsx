@@ -13,14 +13,30 @@ import rankingServices from '../../services/rankingServices.js';
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {lists:[],rankings:[], headerSide: "LEFT"};
+    this.state = {lists:[],rankings:[], invitedLists:[],unseenInvites:0, headerSide: "LEFT"};
   }
 
   componentWillMount() {
+    this.getInvitedLists();
     rankingServices.getUserRankings(this.props.user._id).then((res) => {
       var rankings = res.content.rankings;
       this.setState({headerSide:"LEFT", rankings:rankings});
     });
+  }
+
+  getInvitedLists() {
+    listServices.getInvitedLists(this.props.user.username).then((res) => {
+      var invitedLists = res.content.lists;
+      var lastViewdInvitationsDate = this.props.user.last_viewed_invitations_date;
+      var unseenInvites = invitedLists.reduce(function(i,list) {
+        return i + (new Date(list.createdAt).getTime() > new Date(lastViewdInvitationsDate).getTime());
+      },0);
+      this.setState({invitedLists:res.content.lists, unseenInvites:unseenInvites});
+    });
+  }
+
+  invitedAfterLastView(list) {
+    return list.createdAt > this.props.user.last_viewed_invitations_date;
   }
 
   //navigate to create rankings page
@@ -44,8 +60,9 @@ class ProfilePage extends Component {
     else {
       this.setState({headerSide:"RIGHT"});
       userServices.updateLastViewedInvitationsDate().then((res) => {
-        console.log(res);
+        this.setState({unseenInvites:0});
       });
+
       console.log("fetch lists you're invited to");
     }
     //TODO: ISSUE GET REQUEST TO UPDATE LIST
@@ -81,6 +98,7 @@ class ProfilePage extends Component {
 
   render() {
     const lists = this.state.lists;
+    const invitedLists = this.state.invitedLists;
     const rankings = this.state.rankings;
     console.log(rankings);
 		return (
@@ -93,7 +111,9 @@ class ProfilePage extends Component {
                                 rightTitle = "Lists Invited To"
                                 didSwitchHeader = {this.didSwitchHeader.bind(this)}
               />
-            <h2 className = "InviteNumber">{"("+3+")"}</h2>
+            {this.state.unseenInvites > 0 &&
+              <h2 className = "InviteNumber">{"("+this.state.unseenInvites+")"}</h2>
+            }
             </div>
             {this.state.headerSide === "LEFT" && rankings &&
               <ViewableRankingsList id={1}
@@ -101,9 +121,9 @@ class ProfilePage extends Component {
                                     showRankingNumber = {false}
                                     didClickOnRankingCard = {this.didClickOnRankingCard.bind(this)}/>
             }
-            {this.state.headerSide !== "LEFT" && lists &&
+            {this.state.headerSide !== "LEFT" &&
               <ViewableList id={1}
-                            lists = {lists}
+                            lists = {this.state.headerSide === "CENTER" ? lists : invitedLists}
                             showRankingNumber = {false}
                             didClickOnListCard = {this.didClickOnListCard.bind(this)}
                             />
