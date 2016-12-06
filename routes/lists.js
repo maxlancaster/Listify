@@ -11,7 +11,6 @@ var Users = require('../models/Users');
 
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/create', function(req, res) {
-    console.log(req.body.content);
     var listObject = {
         title : req.body.content.title,
         creator : req.session.user.username,
@@ -158,6 +157,7 @@ router.get('/trending', function(req, res) {
     });
 });
 
+
 router.put('/lock/:listId', function(req, res) {
     List.lockList(req.params.listId, function(err) {
         if(err){
@@ -167,6 +167,9 @@ router.put('/lock/:listId', function(req, res) {
         }
     });
 });
+
+// router.post('/upvote/:listId', function)
+
 
 
 
