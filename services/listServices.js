@@ -68,6 +68,14 @@ export default {
 		})
 	},
 
+	addMoreItems : (list_id, newItems) => {
+		return request({
+			uri : BASE_URL + `/add_items/${list_id}`,
+			method: 'PUT',
+			json: true,
+			body : { newItems : newItems }
+		})
+	},
     calculateOrdering : (list_id) => {
         return request({
             uri : BASE_URL + `/consensus/${list_id}`,
