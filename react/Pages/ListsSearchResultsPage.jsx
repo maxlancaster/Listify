@@ -20,7 +20,6 @@ class ListsSearchResultsPage extends Component {
         this.searchLists(searchString);
     }
 
-
     componentWillUnmount() {
         this.props.showNavbar(true);
     }

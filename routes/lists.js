@@ -23,7 +23,7 @@ router.post('/create', function(req, res) {
         description : req.body.content.description,
         // TO DO, hardcoded
         maxLength : req.body.content.maxLength,
-        usersSharedWith : []
+        usersSharedWith : req.body.content.usersSharedWith
     };
     List.createList(listObject, function(err, list) {
         if (err) {
@@ -115,11 +115,14 @@ router.get('/find/:listId', function(req, res){
  });
 
 router.get('/invited/:username', function(req, res){
+  console.log("yoo");
     List.getInvitedLists(req.params.username, function(err, lists){
         if(err){
-          console.log(err);
+            console.log(err);
             utils.sendErrorResponse(res, 500, err);
         } else {
+            console.log("invited lists!!");
+            console.log(lists);
             utils.sendSuccessResponse(res, {lists : lists});
         }
     })
@@ -168,8 +171,78 @@ router.put('/lock/:listId', function(req, res) {
     });
 });
 
-// router.post('/upvote/:listId', function)
 
+router.put('/add_items/:listId', function(req,res) {
+  List.addMoreItems(req.params.listId, req.body.newItems, function(error, list) {
+    if(error){
+        utils.sendErrorResponse(res, 500, error);
+    } else {
+        utils.sendSuccessResponse(res, {list : list});
+    }
+  });
+});
+
+/**
+ * Adds the user's id to the List's array of upvoters and updates net upvotes.
+ */
+router.post('/upvote/:listId', function(req, res){
+    List.addToUpvoters(req.params.listId, req.session.user._id, function(err){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else{
+            utils.sendSuccessResponse(res);
+        }
+    });
+});
+
+/**
+ * Adds the user's id to the List's array of downvoters and updates net upvotes.
+ */
+router.post('/downvote/:listId', function(req, res){
+    List.addToDownvoters(req.params.listId, req.session.user._id, function(err){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else{
+            utils.sendSuccessResponse(res);
+        }
+    });
+});
+
+/**
+ * Removes the user's id from the List's upvoters or downvoters arrays.
+ */
+router.post('removevote/:listId', function(req, res){
+    if(req.params.voteType === "downvote"){
+        List.removeFromDownvoters(req.params.listId, req.session.user._id, function(err){
+            if(err){
+                utils.sendErrorResponse(res, 404, 'No such list.');
+            } else{
+                utils.sendSuccessResponse(res);
+            }
+        });
+    } else if(req.params.voteType === "upvote"){
+        List.removeFromUpvoters(req.params.listId, req.session.user._id, function(err){
+            if(err){
+                utils.sendErrorResponse(res, 404, 'No such list.');
+            } else{
+                utils.sendSuccessResponse(res);
+            }
+        });
+    }
+});
+
+/**
+ * Reterns the net number of upvotes associated with the list.
+ */
+router.get('/votes/:listId', function(req, res){
+    List.getNumberOfUpvotes(req.params.listId, function(err){
+        if(err){
+            utils.sendErrorResponse(res, 404, 'No such list.');
+        } else {
+            utils.sendSuccessResponse(res);
+        }
+    });
+});
 
 
 

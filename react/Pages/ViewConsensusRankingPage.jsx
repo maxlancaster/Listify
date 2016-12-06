@@ -44,7 +44,6 @@ class ViewConsensusRankingPage extends Component {
         }
         var creator = this.state.list.creator;
         var current_user = this.props.user.username;
-
         if (creator === current_user) {
             return true;
         } else {
@@ -95,6 +94,11 @@ class ViewConsensusRankingPage extends Component {
         this.props.router.push(path);
     }
 
+    addNewItems() {
+      var path = "lists/"+this.state.list._id+"/add_items";
+      this.props.router.push(path);
+    }
+
     render() {
         const list = this.state.list;
         const order = this.state.order;
@@ -142,11 +146,13 @@ class ViewConsensusRankingPage extends Component {
 
                 {list &&
                 <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
-                                             submitRanking = {this.submitRanking.bind(this)}
+                                             addNewItems = {this.addNewItems.bind(this)}
                                              lock = {true}
                                              title = {list.title}
-                                             votes = {25}
+                                             votes = {list.rankings ? list.rankings.length : 0}
+                                             showAddItems = {this.currentUserIsCreatorOfConsensus()}
                                              already_submitted = {this.hasUserSubmittedThisRanking()}
+                                             submitRanking = {this.submitRanking.bind(this)}
                 />
                 }
             </div>

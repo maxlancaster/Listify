@@ -144,9 +144,10 @@ var list = (function(listModel) {
      */
     that.addToUpvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$push: { upvoters: userId} }, function(err) {
+            {_id : listId}, {$push: { upvoters: userId}, $set: { upvotes: upvotes+1} }, function(err) {
                 if (err) callback({msg: err});
                 else {
+
                     callback(null);
                 }
             });
@@ -160,7 +161,7 @@ var list = (function(listModel) {
      */
     that.addToDownvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$push: { downvoters: userId} }, function(err) {
+            {_id : listId}, {$push: { downvoters: userId}, $set: { upvotes: upvotes-1} }, function(err) {
                 if (err) callback({msg: err});
                 else {
                     callback(null);
@@ -176,7 +177,7 @@ var list = (function(listModel) {
      */
     that.removeFromUpvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$pull: { upvoters: userId} }, function(err) {
+            {_id : listId}, {$pull: { upvoters: userId}, $set: { upvotes: upvotes-1} }, function(err) {
                 if (err) callback({msg: err});
                 else {
                     callback(null);
@@ -192,7 +193,7 @@ var list = (function(listModel) {
      */
     that.removeFromDownvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$pull: { downvoters: userId} }, function(err) {
+            {_id : listId}, {$pull: { downvoters: userId}, $set: { upvotes: upvotes+1} }, function(err) {
                 if (err) callback({msg: err});
                 else {
                     callback(null);
@@ -297,16 +298,18 @@ var list = (function(listModel) {
      *  Returns lists a user's been invited to.
      */
     that.getInvitedLists = function(username, callback) {
-        //WHY WON'T THIS WORK???
-        listModel.find({ usersSharedWith:  { $all: [ username] }}).exec(function(err, result) {
-            if (err) callback({ msg: err });
-            console.log(result);
-            if (result.length > 0) {
-                callback(null, result);
-            } else {
-                callback({ msg: 'No lists for this user'})
-            }
+      listModel.find().exec(function(err, result) {
+        if (err) callback({ msg: err });
+        //TODO: FIND PROPER WAY TO QUERY
+        var invitedLists = result.filter(function(list) {
+          return list.usersSharedWith.indexOf(username) > -1;
         });
+        if (invitedLists.length > 0) {
+            callback(null, invitedLists);
+        } else {
+            callback({ msg: 'No lists for this user'})
+        }
+       });
     };
 
     // add the id rankingId to the Consensus document with _id consensusId
@@ -318,6 +321,18 @@ var list = (function(listModel) {
                     callback(null);
                 }
         });
+    };
+
+    that.addMoreItems = function(listId, newItems, callback) {
+      listModel.findOneAndUpdate(
+        {_id : listId}, {$pushAll: {items:newItems} },{upsert:false}, function(err,newList) {
+            if (err) callback({msg: err});
+            else {
+              console.log("Successfully updated");
+              console.log(newItems);
+              callback(null,newList);
+            }
+      });
     };
 
     that.search = function(searchString, callback) {

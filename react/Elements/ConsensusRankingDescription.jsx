@@ -17,9 +17,12 @@ class ConsensusRankingDescription extends Component {
 		return (
       <div className = "ConsensusRankingDescription">
         <p>{description}</p>
-          {
-            <button onClick = {viewOrSubmitRankingFunction}>{buttonText}</button>
-          }
+        {
+          <button onClick = {viewOrSubmitRankingFunction}>{buttonText}</button>
+        }
+        {this.props.showAddItems &&
+          <button onClick = {this.props.addNewItems}>Add New Items</button>
+        }
       </div>
     );
   }
