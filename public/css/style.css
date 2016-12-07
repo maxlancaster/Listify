@@ -134,6 +134,7 @@ a, a:visited {
 .UserAuthContainer {
   background-color: white;
   width:60%;
+  max-width:700px;
   display:inline-block;
   margin-left:20%;
   margin-top: 80px;
