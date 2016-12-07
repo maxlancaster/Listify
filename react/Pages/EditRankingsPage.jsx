@@ -178,13 +178,9 @@ class EditRankingsPage extends Component {
     }
 
     render() {
-      if (this.state.items.length === 0) {
-        return null;
-      }
       var hasCommented = this.state.comment && this.state.comment.text.length > 0;
       var commentButtonTitle = hasCommented > 0 ? "Commented Already" : "Comment";
       var updateOrSubmitRankingButtonFunction = this.hasUserSubmittedThisRanking() ? this.updateRanking.bind(this) : this.submitRanking.bind(this);
-
       var buttonTitle = this.hasUserSubmittedThisRanking() ? "Update" : "Submit";
       return (
         <div>
@@ -228,7 +224,9 @@ class EditRankingsPage extends Component {
             </div>
             <div className = "EditRankingOptionsList" >
               <h1 className = "OptionsListTitle"> Options</h1>
-              <OptionsList  id={2} items={this.state.items} canEdit = {false} defaultBackGroundColor = {"FAF9F9"} />
+              {this.state.items && this.state.items.length > 0 &&
+                <OptionsList  id={2} items={this.state.items} canEdit = {false} defaultBackGroundColor = {"FAF9F9"} />
+              }
             </div>
 
           </div>
