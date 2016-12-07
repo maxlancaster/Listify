@@ -9,7 +9,14 @@ class ConsensusRankingDescription extends Component {
     var description = "This is the consensus ranking for "+ this.props.title +" according to "+this.props.votes+" votes.";
     var buttonText = this.props.already_submitted ? "View Your Ranking" : "Submit a Ranking";
 
-    var viewOrSubmitRankingFunction = this.props.already_submitted ? this.props.viewYourRanking : this.props.submitRanking;
+    var viewOrSubmitRankingFunction = null;
+    if (this.props.already_submitted) {
+      viewOrSubmitRankingFunction = this.props.viewYourRanking;
+    } else {
+      if (!isLocked) {
+        viewOrSubmitRankingFunction = this.props.submitRanking;
+      }
+    }
 
     if (isLocked) {
       description += " Voting has finished for this list."
@@ -17,7 +24,7 @@ class ConsensusRankingDescription extends Component {
 		return (
       <div className = "ConsensusRankingDescription">
         <p>{description}</p>
-        {
+        {viewOrSubmitRankingFunction &&
           <button onClick = {viewOrSubmitRankingFunction}>{buttonText}</button>
         }
         {this.props.showAddItems && !isLocked &&
