@@ -29,7 +29,7 @@ class ProfileDescription extends Component {
 		return (
       <div className = "ProfileDescription">
         <div style = {style}></div>
-        <img className = "ProfileImage" src ={ProfileImage} style = {profileImageStyle} />
+        <img src ={ProfileImage} style = {profileImageStyle} />
         <p className = "Username">{"@"+user.username}</p>
         <div className = "StatsContainer">
           <div>
