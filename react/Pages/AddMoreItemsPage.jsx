@@ -29,6 +29,15 @@ class AddMoreItemsPage extends Component {
     this.setState({newItems:newItems});
   }
 
+  deleteItem(item) {
+    var items = this.state.newItems;
+    var index = items.indexOf(item);
+    if (index > -1) {
+      items.splice(index,1);
+    }
+    this.setState({items:items});
+  }
+
   updateList() {
     listServices.addMoreItems(this.state.list._id, this.state.newItems).then((res) => {
       console.log(res);
@@ -50,9 +59,11 @@ class AddMoreItemsPage extends Component {
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
         </div>
         <div className = "CreateListOptionsList">
-          <OptionsList  id={1} items={items} canEdit = {true} />
+          <OptionsList  id={1} items={items} canEdit = {true} deleteItem = {this.deleteItem.bind(this)}/>
         </div>
-        <BottomRightButton onClick = {this.updateList.bind(this)}/>
+        {items && items.length > 0 &&
+          <BottomRightButton onClick = {this.updateList.bind(this)}/>
+        }
       </div>
 		);
 	}
