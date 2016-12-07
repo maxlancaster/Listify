@@ -141,8 +141,6 @@ router.put('/logout', function(req, res) {
 
 router.put('/update_last_viewed_invitations_date', function(req,res) {
   Users.updateLastViewedInvitationsDate(req.session.user._id, function(error, user) {
-    console.log(req.session.user);
-    console.log(error);
     if (!error) {
       req.session.user = user;
       utils.sendSuccessResponse(res, { user: user })

@@ -8,16 +8,18 @@ import ConsensusRankingDescription from '../Elements/ConsensusRankingDescription
 import { withRouter } from 'react-router';
 import Items from '../../models/Items.js'
 import listServices from '../../services/listServices.js';
+import userServices from '../../services/userServices.js';
 
 //This page allows you to View a consensus ranking
 class ViewConsensusRankingPage extends Component {
     constructor(props) {
         super(props);
         //TODO: TEMP, REMOVE LATER
-        this.state = {list:null, order:[], showComments: false};
+        this.state = {list:null, order:[], showComments: false, user : null};
     }
 
     componentWillMount() {
+
         var listId = this.props.params.listId;
         listServices.getListDataFromId(listId).then((res) => {
             var list = res.content.list;
@@ -33,11 +35,20 @@ class ViewConsensusRankingPage extends Component {
 
 
         });
+
+        userServices.getCurrentUser()
+            .then((res) => {
+                this.setState({user : res.content.user});
+            });
     }
 
     //returns null if there isn't one
     getSubmittedRankingId() {
-        var current_user = this.props.user;
+        if (this.state.list === null) {
+            return false;
+        }
+        var current_user = this.state.user;
+        // var current_user = this.props.user;
         // find intersection of list.rankings and current_user.rankings
         var ranking_ids = this.state.list.rankings.filter(function(ranking) {
             return current_user.rankings.indexOf(ranking) != -1;
@@ -59,18 +70,8 @@ class ViewConsensusRankingPage extends Component {
     }
 
     hasUserSubmittedThisRanking() {
-      if (this.state.list === null) {
-        return false;
-      }
-      var current_user = this.props.user;
-      // find intersection of list.rankings and current_user.rankings
-      var ranking_ids = this.state.list.rankings.filter(function(ranking) {
-        return current_user.rankings.indexOf(ranking) != -1;
-      });
-
-      var user_has_submitted_this_ranking = ranking_ids.length >= 1 ? true : false;
-
-      return user_has_submitted_this_ranking;
+      var already_submitted = this.getSubmittedRankingId() ? true : false;
+      return already_submitted;
     }
 
     //lock consensus
@@ -157,7 +158,8 @@ class ViewConsensusRankingPage extends Component {
                 </div>
                 }
 
-
+                  {console.log(this.props.user)}
+                  {console.log(this.state.list)}
                   {list &&
                     <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
                                                  addNewItems = {this.addNewItems.bind(this)}

@@ -39,7 +39,6 @@ class EditRankingsPage extends Component {
         // this.props.updateEditPage(request);
 
         listServices.getListDataFromId(this.props.params.listId).then((response) => {
-            console.log(response);
             if (response.success) {
                 this.setState({
                     title : response.content.list.title,
@@ -76,7 +75,6 @@ class EditRankingsPage extends Component {
     }
 
     submitRanking() {
-        console.log("submitting");
         var order = [];
         var listId = this.props.params.listId;
         // var user = req.session.user.username;
@@ -109,8 +107,6 @@ class EditRankingsPage extends Component {
     }
 
     updateRanking() {
-        console.log("updating");
-
         var order = [];
         var listId = this.props.params.listId;
         // var user = req.session.user.username;
