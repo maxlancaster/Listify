@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/api/users';
+const BASE_URL = process.env.NODE_ENV ? 'https://serene-sands-21633.herokuapp.com/api/users': 'http://localhost:3000/api/users';
 
   var request = require('request-promise-native');
 
