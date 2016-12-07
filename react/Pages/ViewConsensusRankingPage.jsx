@@ -14,7 +14,6 @@ import userServices from '../../services/userServices.js';
 class ViewConsensusRankingPage extends Component {
     constructor(props) {
         super(props);
-        //TODO: TEMP, REMOVE LATER
         this.state = {list:null, order:[], showComments: false, user : null};
     }
 
@@ -157,13 +156,10 @@ class ViewConsensusRankingPage extends Component {
                     {list.description}
                 </div>
                 }
-
-                  {console.log(this.props.user)}
-                  {console.log(this.state.list)}
                   {list &&
                     <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
                                                  addNewItems = {this.addNewItems.bind(this)}
-                                                 lock = {true}
+                                                 lock = {list.locked}
                                                  title = {list.title}
                                                  votes = {list.rankings ? list.rankings.length : 0}
                                                  showAddItems = {this.currentUserIsCreatorOfConsensus()}
