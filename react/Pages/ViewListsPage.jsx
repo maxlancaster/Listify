@@ -7,12 +7,13 @@ import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
 import SearchableNavbar from '../Elements/SearchableNavbar.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
+import userServices from '../../services/userServices.js';
 
 class ViewListsPage extends Component {
   constructor(props) {
     super(props);
     //LOAD COMPLETED CONSENSUSES ONTO COMPLETED RANKINGS
-    this.state = {lists:[]};
+    this.state = {lists:[], user:null};
   }
 
   componentWillMount() {
@@ -22,6 +23,12 @@ class ViewListsPage extends Component {
 
       this.setState({lists:lists});
     });
+
+    userServices.getCurrentUser()
+      .then((res) => {
+          this.setState({
+            user : res.content.user});
+      });
   }
 
   componentWillUnmount() {
@@ -98,7 +105,7 @@ class ViewListsPage extends Component {
                         lists = {this.state.lists}
                         showRankingNumber = {false}
                         didClickOnListCard = {this.didClickOnListCard.bind(this)}
-                        user = {this.props.user}
+                        user = {this.state.user}
                         />
           </div>
       </div>
