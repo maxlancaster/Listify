@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import RankingList from '../Elements/RankingList.jsx';
-import OptionsList from '../Elements/OptionsList.jsx';
-import CommentsList from '../Elements/CommentsList.jsx';
+import RankingList from '../Elements/Lists/RankingList.jsx';
+import OptionsList from '../Elements/Lists/OptionsList.jsx';
+import CommentsList from '../Elements/Lists/CommentsList.jsx';
 import AddItemForm from '../Elements/AddItemForm.jsx';
 import { DragDropContext } from 'react-dnd';
 import { withRouter } from 'react-router';

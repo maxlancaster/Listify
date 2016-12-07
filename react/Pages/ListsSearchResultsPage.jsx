@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ViewableList from '../Elements/ViewableList.jsx';
+import ViewableList from '../Elements/Lists/ViewableList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
-import StaticItemCard from './Cards/StaticItemCard.jsx';
+import StaticItemCard from '../Cards/StaticItemCard.jsx';
 import { withRouter } from 'react-router';
 
 class ViewableItemsList extends Component {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash/flow';
-import Items from '../../models/Items.js'
+import Items from '../../../models/Items.js'
 
 class ItemCard extends Component {
 

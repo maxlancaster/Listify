@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import update from 'react/lib/update';
-import Comment from '../../models/Comment.js'
-import CommentCard from './Cards/CommentCard.jsx';
+import Comment from '../../../models/Comment.js'
+import CommentCard from '../Cards/CommentCard.jsx';
 import { withRouter } from 'react-router';
 
 class CommentsList extends Component {
