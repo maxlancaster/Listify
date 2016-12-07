@@ -9,7 +9,8 @@ class OptionsList extends DraggableList {
                      items={this.props.items}
                      canEdit = {this.props.canEdit}
                      showRankingNumber = {false}
-                     canDrop = {this.props.canDrop}/>
+                     canDrop = {this.props.canDrop}
+                     deleteItem = {this.props.deleteItem}/>
     );
   }
 

@@ -30,6 +30,15 @@ class CreateListPage extends Component {
     });
   }
 
+  deleteItem(item) {
+    var items = this.state.items;
+    var index = items.indexOf(item);
+    if (index > -1) {
+      items.splice(index,1);
+    }
+    this.setState({items:items});
+  }
+
   didChangeRankingTitle(rankingTitle) {
     this.setState({rankingTitle:rankingTitle});
   }
@@ -103,6 +112,7 @@ class CreateListPage extends Component {
   render() {
     var has_error = this.state.errorMessage === '';
     const items = this.state.items;
+    console.log(items);
     const publicPrivateIndicator = (
         <div className = "PublicPrivateIndicator">
           <h3>|</h3>
@@ -133,9 +143,11 @@ class CreateListPage extends Component {
           <AddItemForm placeholder={"Enter a Suggestion"} addItem = {this.addItem.bind(this)} />
         </div>
         <div className = "CreateListOptionsList">
-          <OptionsList  id={1} items={items} canEdit = {true} />
+          <OptionsList  id={1} items={items} canEdit = {true}  deleteItem = {this.deleteItem.bind(this)}/>
         </div>
-        <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}/>
+        {items && items.length > 0 &&
+          <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}/>
+        }
         <div className="errorMessage">
           {this.state.errorMessage &&
             <p style = {{color:"red"}}>{this.state.errorMessage}</p>

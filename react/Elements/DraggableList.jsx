@@ -23,6 +23,7 @@ class DraggableList extends Component {
     if (index > -1) {
       items.splice(index,1);
     }
+    this.props.deleteItem(item);
     this.setState({items:items});
   }
 
