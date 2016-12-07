@@ -132,7 +132,6 @@ class ViewConsensusRankingPage extends Component {
 
         var showCommentButtonTitle = this.state.showComments ? "Hide Comments" : "Show Comments";
 
-        console.log(this.hasUserSubmittedThisRanking());
         return (
             <div>
                 <div className = "EditRankingsPage">
@@ -158,8 +157,6 @@ class ViewConsensusRankingPage extends Component {
                 </div>
                 }
 
-                  {console.log(this.props.user)}
-                  {console.log(this.state.list)}
                   {list &&
                     <ConsensusRankingDescription viewYourRanking = {this.viewYourRanking.bind(this)}
                                                  addNewItems = {this.addNewItems.bind(this)}
