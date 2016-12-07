@@ -88,7 +88,7 @@ var list = (function(listModel) {
             var downvoteIndex = downvoters.indexOf(userId);
 
             if (downvoteIndex > -1) {
-              downvoters.splice(downVoteIndex,1);
+              downvoters.splice(downvoteIndex,1);
             }
 
             var upvoters = list.upvoters ? list.upvoters : [];

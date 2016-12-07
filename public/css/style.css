@@ -341,6 +341,10 @@ textarea:focus, input:focus{
   width:90%;
 }
 
+.EditRankingsPage {
+  padding-left:80px;
+}
+
 /**StandbyItemCard **/
 .StandbyItemCard {
   border-style: dashed;
@@ -382,7 +386,7 @@ textarea:focus, input:focus{
   padding-left:0px;
   padding-top:5px;
   padding-bottom:5px;
-  width:300px;
+  width:500px;
 }
 
 .CommentCard {

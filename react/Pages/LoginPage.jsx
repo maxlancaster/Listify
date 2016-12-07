@@ -57,9 +57,9 @@ class LoginPage extends Component {
                     <img className = "WelcomeLogo" src = {logo} />
                     <h2>Welcome to Listify</h2>
                     <div>
-                      <p>Create a Poll</p>
-                      <p>Have people rank their preferences</p>
-                      <p>See what you've all agreed upon!</p>
+                      <p>1. Create a Poll</p>
+                      <p>2. Have people rank their preferences</p>
+                      <p>3. See what you've all agreed upon!</p>
                     </div>
 
                   </div>
