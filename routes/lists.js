@@ -210,7 +210,7 @@ router.put('/add_items/:listId', function(req,res) {
 router.post('/upvote/:listId', function(req, res){
     List.upvote(req.params.listId, req.session.user._id, function(err, newList){
         if(err){
-            utils.sendErrorResponse(res, 404, 'unable to update');
+            utils.sendErrorResponse(res, 404, 'unable to update with upvote');
         } else{
             utils.sendSuccessResponse(res);
         }
@@ -221,9 +221,9 @@ router.post('/upvote/:listId', function(req, res){
  * Adds the user's id to the List's array of downvoters and updates net upvotes.
  */
 router.post('/downvote/:listId', function(req, res){
-    List.addToDownvoters(req.params.listId, req.session.user._id, function(err){
+    List.downvote(req.params.listId, req.session.user._id, function(err){
         if(err){
-            utils.sendErrorResponse(res, 404, 'No such list.');
+            utils.sendErrorResponse(res, 404, 'unable to update with downvote');
         } else{
             utils.sendSuccessResponse(res);
         }

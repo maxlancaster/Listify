@@ -25,24 +25,11 @@ class StaticListCard extends Component {
 
       if (this.state.currentUserVoteScore ===  -1) {
           this.setState({currentUserVoteScore: currentUserVoteScore + 2, upvotes:upvotes+2 });
-        // listServices.removeVote(listId, "downvote").then((res) => {
-        //   listServices.upvote(listId).then((response) => {
-        //       console.log(this.props.list.upvotes);
-        //   });
-        // });
       } else if (this.state.currentUserVoteScore === 0) {
           this.setState({currentUserVoteScore: currentUserVoteScore + 1, upvotes:upvotes+1});
-          // listServices.upvote(listId).then((response) => {
-          //     console.log(this.props.list.upvotes);
-          // });
       } else if (this.state.currentUserVoteScore === 1) {
           //hitting upvote again returns currentUserVoteScore to 0
           this.setState({currentUserVoteScore : 0, upvotes:upvotes - 1});
-          // listServices.removeVote(listId, "upvote").then((res) => {
-          //     listServices.upvote(listId).then((response) => {
-          //         console.log(this.props.list.upvotes);
-          //     });
-          // });
       }
       listServices.upvote(listId).then((res) => {
         console.log(res);
@@ -52,30 +39,22 @@ class StaticListCard extends Component {
 
   handleDownvote(event) {
       var listId = this.props.list._id;
-      console.log("DOWNVOTED!!!");
-      console.log(listId);
       var currentUserVoteScore = this.state.currentUserVoteScore;
       var upvotes = this.state.upvotes;
 
       if (this.state.currentUserVoteScore ===  -1) {
           //hitting downvote again returns currentUserVoteScore to 0
           this.setState({currentUserVoteScore:0, upvotes:upvotes+1});
-          // listServices.removeVote(listId, "downvote").then((res) => {
-          //     listServices.upvote(listId).then((response) => {
-          //     });
-          // });
       } else if (this.state.currentUserVoteScore === 0) {
           this.setState({currentUserVoteScore: currentUserVoteScore - 1, upvotes:upvotes-1});
-          // listServices.upvote(listId).then((response) => {
-          // });
       } else if (this.state.currentUserVoteScore === 1) {
           //hitting upvote again returns currentUserVoteScore to 0
           this.setState({currentUserVoteScore : currentUserVoteScore - 2, upvotes:upvotes-2});
-          // listServices.removeVote(listId, "upvote").then((res) => {
-          //     listServices.upvote(listId).then((response) => {
-          //     });
-          // });
       }
+      listServices.downvote(listId).then((res) => {
+        console.log("DOWNVOTED!!");
+        console.log(res);
+      });
   }
 
   render() {

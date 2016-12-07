@@ -167,6 +167,43 @@ var list = (function(listModel) {
       });
     }
 
+    that.downvote = function(listId,userId, callback) {
+      listModel.findById(listId, function(err, list){
+          if(err) callback({msg:err});
+          if(list != null) {
+            var downvoters = list.downvoters ? list.downvoters : [];
+            var downvoteIndex = downvoters.indexOf(listId);
+
+            if (downvoteIndex === -1) {
+              downvoters.push(userId);
+            }
+
+            var upvoters = list.upvoters ? list.upvoters : [];
+            var upvoteIndex = upvoters.indexOf(listId);
+            if (upvoteIndex > -1) {
+              upvoters.splice(upvoteIndex,1);
+            }
+
+            var upvotes = upvoters.length - downvoters.length;
+
+            listModel.update({_id:list._id},
+                            {upvoters:upvoters,downvoters:downvoters, upvotes:upvotes},
+                            {upsert:true, new:true},
+                            function(error, newList) {
+                              if (!error) {
+                                callback(null, newList);
+                              } else {
+                                console.log(error);
+                                calback(error,null);
+                              }
+                            }
+                          );
+          } else{
+              callback({msg: 'The list does not exist!'});
+          }
+      });
+    }
+
     /**
      * Adds a user to the upvoters list of a List.
      * @param listId the id of the list.
