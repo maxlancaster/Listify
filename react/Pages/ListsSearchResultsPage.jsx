@@ -50,6 +50,7 @@ class ListsSearchResultsPage extends Component {
     render() {
         const foundLists = this.state.foundLists;
         const headerTitle = 'Search Results for "' + this.state.searchString + '" | '+foundLists.length+' results';
+        var user_id = this.props.user && this.props.user._id ? this.props.user._id : null;
         return (
             <div>
                 <SearchableNavbar
@@ -61,7 +62,11 @@ class ListsSearchResultsPage extends Component {
                     <div className = "EditRankingRankingList" >
                         <h2>{headerTitle}</h2>
                         {this.state.foundLists && this.state.foundLists.length > 0 &&
-                        <ViewableList id={1} didClickOnListCard = {this.didClickOnListCard.bind(this)} lists = {foundLists} showRankingNumber = {false}/>
+                        <ViewableList id={1}
+                                      didClickOnListCard = {this.didClickOnListCard.bind(this)}
+                                      lists = {foundLists}
+                                      showRankingNumber = {false}
+                                      user_id = {user_id}/>
                         }
                     </div>
                 </div>
