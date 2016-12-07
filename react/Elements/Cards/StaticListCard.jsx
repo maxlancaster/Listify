@@ -8,7 +8,8 @@ class StaticListCard extends Component {
   constructor(props) {
     super(props);
     this.state = {list : props.list,
-                  currentUserVoteScore : 0};
+                  currentUserVoteScore : 0,
+                  upvotes: props.list.upvotes};
   }
 
   handleClick(event) {
@@ -19,22 +20,23 @@ class StaticListCard extends Component {
   handleUpvote(event) {
       // var listId = this.props.list._id;
       var currentUserVoteScore = this.state.currentUserVoteScore;
+      var upvotes = this.state.upvotes;
 
       if (this.state.currentUserVoteScore ===  -1) {
-          this.setState({currentUserVoteScore: currentUserVoteScore + 2});
+          this.setState({currentUserVoteScore: currentUserVoteScore + 2, upvotes:upvotes+2 });
         // listServices.removeVote(listId, "downvote").then((res) => {
         //   listServices.upvote(listId).then((response) => {
         //       console.log(this.props.list.upvotes);
         //   });
         // });
       } else if (this.state.currentUserVoteScore === 0) {
-          this.setState({currentUserVoteScore: currentUserVoteScore + 1});
+          this.setState({currentUserVoteScore: currentUserVoteScore + 1, upvotes:upvotes+1});
           // listServices.upvote(listId).then((response) => {
           //     console.log(this.props.list.upvotes);
           // });
       } else if (this.state.currentUserVoteScore === 1) {
           //hitting upvote again returns currentUserVoteScore to 0
-          this.setState({currentUserVoteScore : 0});
+          this.setState({currentUserVoteScore : 0, upvotes:upvotes - 1});
           // listServices.removeVote(listId, "upvote").then((res) => {
           //     listServices.upvote(listId).then((response) => {
           //         console.log(this.props.list.upvotes);
@@ -47,21 +49,22 @@ class StaticListCard extends Component {
   handleDownvote(event) {
       // var listId = this.props.params.listId;
       var currentUserVoteScore = this.state.currentUserVoteScore;
+      var upvotes = this.state.upvotes;
 
       if (this.state.currentUserVoteScore ===  -1) {
           //hitting downvote again returns currentUserVoteScore to 0
-          this.setState({currentUserVoteScore:0});
+          this.setState({currentUserVoteScore:0, upvotes:upvotes+1});
           // listServices.removeVote(listId, "downvote").then((res) => {
           //     listServices.upvote(listId).then((response) => {
           //     });
           // });
       } else if (this.state.currentUserVoteScore === 0) {
-          this.setState({currentUserVoteScore: currentUserVoteScore - 1});
+          this.setState({currentUserVoteScore: currentUserVoteScore - 1, upvotes:upvotes-1});
           // listServices.upvote(listId).then((response) => {
           // });
       } else if (this.state.currentUserVoteScore === 1) {
           //hitting upvote again returns currentUserVoteScore to 0
-          this.setState({currentUserVoteScore : currentUserVoteScore - 2});
+          this.setState({currentUserVoteScore : currentUserVoteScore - 2, upvotes:upvotes-2});
           // listServices.removeVote(listId, "upvote").then((res) => {
           //     listServices.upvote(listId).then((response) => {
           //     });
@@ -73,23 +76,17 @@ class StaticListCard extends Component {
 		const { list } = this.props;
     //when user clicks on a list, you navigate him to EditRankingsPage if he hasn't voted yet
     // else you navigate him to ViewRankingPage
-    var upvoteColor = list.upvotes > 0 ? "#66B110" : "#E52F4F";
-    var upvoteStyle = {
-      color:upvoteColor
-    };
 		return (
       <a href = "#" onClick = {this.handleClick.bind(this)}>
         <div className = "StaticListCard" >
           <Vote
+              upvotes = {this.state.upvotes}
               currentUserVoteScore = {this.state.currentUserVoteScore}
               handleUpvote = {this.handleUpvote.bind(this)}
               handleDownvote = {this.handleDownvote.bind(this)}/>
           <div className = "StaticListCardFirstLineContainer">
             {this.props.showRankingNumber && <p className = "StaticListCardRanking">{this.props.index+1 + "."}</p>}
             <p className = "StaticListCardTitle">{list.title}</p>
-            {list.upvotes !== 0 &&
-              <p className = "StaticListCardUpvotes" style = {upvoteStyle}>{"+10"}</p>
-            }
           </div>
           <p className = "StaticListCardCreator">{"Created by "+list.creator}</p>
             {list.locked &&

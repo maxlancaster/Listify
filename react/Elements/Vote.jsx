@@ -9,13 +9,14 @@ class Vote extends Component {
         super(props);
 
         this.state = {
-            currentUserVoteScore: props.currentUserVoteScore
+            currentUserVoteScore: props.currentUserVoteScore,
+            upvotes:props.upvotes
         };
     }
 
-
     componentWillReceiveProps(props) {
-      this.setState({currentUserVoteScore: props.currentUserVoteScore});
+      console.log(props);
+      this.setState({currentUserVoteScore: props.currentUserVoteScore, upvotes:props.upvotes });
     }
 
     didUpvote(event) {
@@ -38,9 +39,10 @@ class Vote extends Component {
           height:"30px"
         }
 
-      const downvotetyle = {
-
-      }
+        var voteCountColor = this.state.upvotes > 0 ? "#66B110" : "#E52F4F";
+        var voteCountStyle = {
+          color:voteCountColor
+        };
         let upvote =  (
           <div>
           <img style = {votingButtonStyle}
@@ -65,7 +67,9 @@ class Vote extends Component {
         return (
                 <div className={ `VoteButtons` }>
                     { upvote }
-                    <p className = "VoteCount">{"0"}</p>
+                    {this.state.upvotes !==0 &&
+                      <p className = "VoteCount" style = {voteCountStyle}>{this.state.upvotes}</p>
+                    }
                     { downvote }
                 </div>
         );
