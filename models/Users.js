@@ -149,7 +149,7 @@ var Users = (function(userModel) {
 
     /**mutates the list property to keep track of which lists the user has created **/
     that.hasSubmittedRanking = function(user_id, ranking, callback) {
-      userModel.findOneAndUpdate({_id:user_id}, {$push: {rankings:ranking._id}}, function(error, user) {
+      userModel.findOneAndUpdate({_id:user_id}, {$push: {rankings:ranking._id}}, {new : true}).exec(function(error, user) {
         if (error) callback({msg:error});
         if (user !== null) {
           callback(null, user);
