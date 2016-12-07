@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import React from 'react';
 import { withRouter } from 'react-router';
+import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
 // import userServices from '../../services/userServices.js';
 
 class LoginPage extends Component {
@@ -11,10 +12,15 @@ class LoginPage extends Component {
             loginPass : '',
             registerUser : '',
             registerPass : '',
+            showSignup : false
         };
         this.updateFormVal = this.updateFormVal.bind(this);
         this.loginUser = this.loginUser.bind(this);
         this.registerUser = this.registerUser.bind(this);
+    }
+
+    componentWillMount() {
+      this.props.showNavbar(false);
     }
 
     updateFormVal(event){
@@ -34,12 +40,38 @@ class LoginPage extends Component {
         this.props.loginUser(this.state.loginUser, this.state.loginPass);
     }
 
+    didSwitchHeader() {
+      this.setState({showSignup: !this.state.showSignup})
+    }
+
     render(){
+      var logo = require('../../public/assets/List.svg');
+      var switchableHeaderStyle = {
+        marginLeft: "20px",
+        marginBottom:"40px"
+      }
         return (
             <div className = "LoginPage">
                 <div className='UserAuthContainer'>
+                  <div className = "WelcomeSection">
+                    <img className = "WelcomeLogo" src = {logo} />
+                    <h2>Welcome to Listify</h2>
+                    <div>
+                      <p>Create a Poll</p>
+                      <p>Have people rank their preferences</p>
+                      <p>See what you've all agreed upon!</p>
+                    </div>
+
+                  </div>
                     <div className='SignInForm'>
-                        <h1>Sign In</h1>
+                      <div className = "LoginHeader">
+                        <SwitchableHeader
+                                          leftTitle = "Login"
+                                          rightTitle = "Sign up"
+                                          didSwitchHeader = {this.didSwitchHeader.bind(this)}
+                                          />
+                      </div>
+                      {!this.state.showSignup &&
                         <div className='form'>
                             <div className='form-group'>
                                 <input className='username'
@@ -60,9 +92,12 @@ class LoginPage extends Component {
                             </div>
                             <button className='login-button' onClick={this.loginUser}>Sign In</button>
                         </div>
+                        }
                     </div>
+
+                    {this.state.showSignup &&
+
                     <div className='RegisterForm'>
-                        <h1>Register</h1>
                         <div className='form'>
                             <div className='form-group'>
                                 <input className='username'
@@ -84,6 +119,7 @@ class LoginPage extends Component {
                             <button className='signup-button' onClick={this.registerUser}>Register</button>
                         </div>
                     </div>
+                    }
                 </div>
                 <div className="errorMessage">
                     {this.props.errorMessage &&

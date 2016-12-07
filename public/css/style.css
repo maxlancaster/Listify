@@ -103,26 +103,82 @@ a, a:visited {
 }
 
 /** LoginPage**/
-
 .LoginPage {
+  background:#1C2C38;
+  height:800px;
+}
+
+.WelcomeSection {
   text-align:center;
+  background: #C74D4D;
+  float:left;
+  height:100%;
+  padding-left:20px;
+  padding-right:60px;
+}
+
+.WelcomeLogo {
+  width: 100px;
+  height:100px;
+  margin-top: 40px;
+}
+
+.WelcomeSection h2 {
+  color:white;
+}
+.WelcomeSection p  {
+  text-align:left;
+  color:white;
 }
 
 .UserAuthContainer {
+  background-color: white;
+  width:60%;
   display:inline-block;
+  margin-left:20%;
+  margin-top: 80px;
+  height:350px;
+  border-radius: 10px;
 }
 
-.SignInForm {
-  margin-bottom:50px;
+.LoginHeader {
+  float:left;
+  margin-left:20px;
+  margin-bottom:40px;
 }
 
 .SignInForm .username, .SignInForm .password, .RegisterForm .username, .RegisterForm .password {
   width: 300px;
   height:20px;
+  margin-left:20px;
 }
 
 .login-button, .signup-button {
   float:left;
+  margin-left:20px;
+  width:100px;
+  height:30px;
+  background-color: #C74D4D;
+}
+
+.SignInForm input, .RegisterForm input{
+  border: 0;
+  outline: 0;
+  border-bottom: 2px solid #C4BFBF;
+  padding-bottom: 5px;
+  margin-bottom:15px;
+  background: transparent;
+  width: 300px;
+  height: 10px;
+  color: #4A4A4A;
+  font-weight: 300;
+  font-size:20px;
+
+}
+
+.SignInForm textarea:focus, .SignInForm input:focus, .RegisterForm textarea:focus, .RegisterForm input:focus{
+    border: none;
+    border-bottom: 2px solid #C74D4D;
 }
 
 .errorMessage {
@@ -138,7 +194,6 @@ a, a:visited {
   display: block;
   margin-top:20px;
   float:left;
-  background-color:
 }
 
 .RankingTitleForm input {
