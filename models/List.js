@@ -290,7 +290,7 @@ var list = (function(listModel) {
     };
 
     that.search = function(searchString, callback) {
-      listModel.find({ "title": { "$regex": new RegExp(searchString, "i")} }).exec(function(err, result) {
+      listModel.find({ "title": { "$regex": new RegExp(searchString, "i")}, isPublic:true  }).exec(function(err, result) {
         if (err) callback({ msg: err });
         if (result !== null) {
             callback(null, result);
