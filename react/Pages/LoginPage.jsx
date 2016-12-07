@@ -12,7 +12,7 @@ class LoginPage extends Component {
             loginPass : '',
             registerUser : '',
             registerPass : '',
-            showSignup : false
+            headerSide : 'LEFT'
         };
         this.updateFormVal = this.updateFormVal.bind(this);
         this.loginUser = this.loginUser.bind(this);
@@ -40,8 +40,8 @@ class LoginPage extends Component {
         this.props.loginUser(this.state.loginUser, this.state.loginPass);
     }
 
-    didSwitchHeader() {
-      this.setState({showSignup: !this.state.showSignup})
+    didSwitchHeader(headerSide) {
+      this.setState({headerSide: headerSide})
     }
 
     render(){
@@ -71,7 +71,7 @@ class LoginPage extends Component {
                                           didSwitchHeader = {this.didSwitchHeader.bind(this)}
                                           />
                       </div>
-                      {!this.state.showSignup &&
+                      {this.state.headerSide === 'LEFT' &&
                         <div className='form'>
                             <div className='form-group'>
                                 <input className='username'
@@ -95,7 +95,7 @@ class LoginPage extends Component {
                         }
                     </div>
 
-                    {this.state.showSignup &&
+                    {this.state.headerSide === 'RIGHT' &&
 
                     <div className='RegisterForm'>
                         <div className='form'>

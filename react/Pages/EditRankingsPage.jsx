@@ -171,9 +171,7 @@ class EditRankingsPage extends Component {
 
     comment(text) {
       this.closePopup();
-      console.log("CREATOR");
-      console.log(this.state.creator);
-      var comment = new Comment(text,this.state.creator);
+      var comment = new Comment(text,this.props.user.username);
       this.setState({comment:comment});
     }
 
