@@ -8,11 +8,11 @@ class ProfileDescription extends Component {
 		return (
       <div className = "DescriptionKey">
         <div className = "Description">
-          <div className = "RedDot"></div>
+          <div className="LockedListMarker"></div>
           <p>Voting Closed</p>
         </div>
         <div className = "Description">
-          <div className = "GreenDot"></div>
+          <div className="ContributedMarker"></div>
           <p>Ranking Submitted</p>
         </div>
       </div>

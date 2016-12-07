@@ -777,10 +777,19 @@ textarea:focus, input:focus{
   padding-left:10px;
   padding-top:5px;
   padding-bottom:5px;
-  width:300px;
+  width:270px;
 
   border-style: solid;
   border-width: 1px;
-  border-color: black;
+  border-color: #C4BFBF;
   -webkit-border-radius: 5px;
+}
+.Description {
+  margin-bottom:0px;
+}
+.Description p{
+  display:inline-block;
+  margin-left:10px;
+  margin-top:0px;
+  margin-bottom:0px;
 }

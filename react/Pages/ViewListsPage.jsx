@@ -6,6 +6,7 @@ import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
 import SearchableNavbar from '../Elements/SearchableNavbar.jsx';
 import ProfileDescription from '../Elements/ProfileDescription.jsx';
+import DescriptionKey from '../Elements/DescriptionKey.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
 import userServices from '../../services/userServices.js';
@@ -113,6 +114,7 @@ class ViewListsPage extends Component {
       {this.state.user &&
         <ProfileDescription user = {this.state.user}/>
       }
+      <DescriptionKey />
       <BottomRightButton title = {"Create List"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
     </div>
 		);
