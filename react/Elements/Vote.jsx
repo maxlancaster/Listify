@@ -15,7 +15,6 @@ class Vote extends Component {
     }
 
     componentWillReceiveProps(props) {
-      console.log(props);
       this.setState({currentUserVoteScore: props.currentUserVoteScore, upvotes:props.upvotes });
     }
 

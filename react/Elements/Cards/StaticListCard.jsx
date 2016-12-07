@@ -7,19 +7,46 @@ class StaticListCard extends Component {
 
   constructor(props) {
     super(props);
-    var currentUserVoteScore = this.calculateCurrentUserVoteScore(props.list,props.user_id);
+    var currentUserVoteScore = this.calculateCurrentUserVoteScore(props.list,props.user);
+    var hasContributedToList = this.hasContributedToList(props.list,props.user);
     this.state = {list : props.list,
                   currentUserVoteScore : currentUserVoteScore,
-                  upvotes: props.list.upvotes};
+                  upvotes: props.list.upvotes,
+                  hasContributedToList:hasContributedToList};
   }
 
-  calculateCurrentUserVoteScore(list, user_id) {
-    if (list.upvoters.indexOf(user_id) > -1) {
+  componentWillReceiveProps(props) {
+    var currentUserVoteScore = this.calculateCurrentUserVoteScore(props.list,props.user);
+    var hasContributedToList = this.hasContributedToList(props.list,props.user);
+    this.state = {list : props.list,
+                  currentUserVoteScore : currentUserVoteScore,
+                  upvotes: props.list.upvotes,
+                  hasContributedToList:hasContributedToList};
+  }
+
+  calculateCurrentUserVoteScore(list, user) {
+    if (!user || !user._id) {
+      return 0;
+    }
+    if (list.upvoters.indexOf(user._id) > -1) {
       return 1;
-    } else if (list.downvoters.indexOf(user_id) > -1) {
+    } else if (list.downvoters.indexOf(user._id) > -1) {
       return -1;
     }
     return 0;
+  }
+
+  hasContributedToList(list, user) {
+    if (!user || !user.rankings) {
+      return false;
+    }
+    var ranking_ids = list.rankings.filter(function(ranking) {
+        return user.rankings.indexOf(ranking) != -1;
+    });
+
+    var user_has_submitted_this_ranking = ranking_ids.length >= 1 ? true : false;
+
+    return user_has_submitted_this_ranking;
   }
 
   handleClick(event) {
@@ -41,9 +68,7 @@ class StaticListCard extends Component {
           this.setState({currentUserVoteScore : 0, upvotes:upvotes - 1});
       }
       listServices.upvote(listId).then((res) => {
-        console.log(res);
       });
-      // console.log(this.props.list.upvotes);
   }
 
   handleDownvote(event) {
@@ -61,13 +86,11 @@ class StaticListCard extends Component {
           this.setState({currentUserVoteScore : currentUserVoteScore - 2, upvotes:upvotes-2});
       }
       listServices.downvote(listId).then((res) => {
-        console.log(res);
       });
   }
 
   render() {
 		const { list } = this.props;
-    console.log(this.state.currentUserVoteScore);
     //when user clicks on a list, you navigate him to EditRankingsPage if he hasn't voted yet
     // else you navigate him to ViewRankingPage
 		return (
@@ -86,6 +109,10 @@ class StaticListCard extends Component {
             {list.locked &&
               <div className="LockedListMarker"></div>
             }
+            {this.state.hasContributedToList &&
+              <div className="ContributedMarker"></div>
+            }
+
         </div>
       </a>
     );

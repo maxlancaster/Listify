@@ -81,7 +81,6 @@ class ViewListsPage extends Component {
 
   render() {
     const lists = this.state.lists;
-    var user_id = this.props.user && this.props.user._id ? this.props.user._id : null;
 		return (
       <div>
         <SearchableNavbar
@@ -99,7 +98,7 @@ class ViewListsPage extends Component {
                         lists = {this.state.lists}
                         showRankingNumber = {false}
                         didClickOnListCard = {this.didClickOnListCard.bind(this)}
-                        user_id = {user_id}
+                        user = {this.props.user}
                         />
           </div>
       </div>

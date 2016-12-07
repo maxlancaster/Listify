@@ -6,6 +6,8 @@ class ConsensusRankingDescription extends Component {
 
   render() {
     var isLocked = this.props.lock;
+    console.log("is locked!");
+    console.log(this.props);
     var description = "This is the consensus ranking for "+ this.props.title +" according to "+this.props.votes+" votes.";
     var buttonText = this.props.already_submitted ? "View Your Ranking" : "Submit a Ranking";
 

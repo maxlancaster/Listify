@@ -11,7 +11,7 @@
 var mongoose = require('mongoose');
 var Ranking = require('../models/Ranking');
 var Items = require('../models/Items');
-var ObjectId = require('mongoose').Types.ObjectId
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var listSchema = mongoose.Schema({
 
@@ -80,68 +80,19 @@ var list = (function(listModel) {
         });
     };
 
-
-    /**
-     * Gets the number of net upvotes the list has.
-     * @param listId the id of the list.
-     * @param callback
-     */
-    that.getNumberOfUpvotes = function(listId, callback){
-        listModel.findById(listId, function(err, list){
-            if(err) callback({msg:err});
-            if(list != null) {
-                callback(null, list.upvotes);
-            } else{
-                callback({msg: 'The list does not exist!'});
-            }
-        });
-    };
-
-    /**
-     * Gets the list of user_ids that upvoted the list.
-     * @param listId the id of the list.
-     * @param callback
-     */
-    that.getUpvoters = function(listId, callback){
-        listModel.findById(listId, function(err, list){
-            if(err) callback({msg:err});
-            if(list != null) {
-                callback(null, list.upvoters);
-            } else{
-                callback({msg: 'The list does not exist!'});
-            }
-        });
-    };
-
-    /**
-     * Gets the list of user_ids that downvoted the list.
-     * @param listId the id of the list.
-     * @param callback
-     */
-    that.getDownvoters = function(listId, callback){
-        listModel.findById(listId, function(err, list){
-            if(err) callback({msg:err});
-            if(list != null) {
-                callback(null, list.downvoters);
-            } else{
-                callback({msg: 'The list does not exist!'});
-            }
-        });
-    };
-
     that.upvote = function(listId,userId, callback) {
       listModel.findById(listId, function(err, list){
           if(err) callback({msg:err});
           if(list != null) {
             var downvoters = list.downvoters ? list.downvoters : [];
-            var downvoteIndex = downvoters.indexOf(listId);
+            var downvoteIndex = downvoters.indexOf(userId);
 
             if (downvoteIndex > -1) {
               downvoters.splice(downVoteIndex,1);
             }
 
             var upvoters = list.upvoters ? list.upvoters : [];
-            var upvoteIndex = upvoters.indexOf(listId);
+            var upvoteIndex = upvoters.indexOf(userId);
             if (upvoteIndex === -1) {
               upvoters.push(userId);
             }
@@ -172,14 +123,14 @@ var list = (function(listModel) {
           if(err) callback({msg:err});
           if(list != null) {
             var downvoters = list.downvoters ? list.downvoters : [];
-            var downvoteIndex = downvoters.indexOf(listId);
+            var downvoteIndex = downvoters.indexOf(userId);
 
             if (downvoteIndex === -1) {
               downvoters.push(userId);
             }
 
             var upvoters = list.upvoters ? list.upvoters : [];
-            var upvoteIndex = upvoters.indexOf(listId);
+            var upvoteIndex = upvoters.indexOf(userId);
             if (upvoteIndex > -1) {
               upvoters.splice(upvoteIndex,1);
             }
@@ -203,71 +154,6 @@ var list = (function(listModel) {
           }
       });
     }
-
-    /**
-     * Adds a user to the upvoters list of a List.
-     * @param listId the id of the list.
-     * @param userId the id of the user who has upvoted the List.
-     * @param callback
-     */
-    that.addToUpvoters = function (listId, userId, callback) {
-        listModel.findOneAndUpdate(
-            {_id : listId}, {$push: { upvoters: userId}, $inc: { fieldToIncrement: 1 }}, {new : true}, function(err, result) {
-                if (err) callback({msg: err});
-                else {
-
-                    callback(null, result);
-                }
-            });
-    };
-
-    /**
-     * Adds a user to the downvoters list of a List.
-     * @param listId the id of the list.
-     * @param userId the id of the user who has downvoted the List.
-     * @param callback
-     */
-    that.addToDownvoters = function (listId, userId, callback) {
-        listModel.findOneAndUpdate(
-            {_id : listId}, {$push: { downvoters: userId}, $set: { upvotes: upvotes-1} }, {new : true}, function(err, result) {
-                if (err) callback({msg: err});
-                else {
-                    callback(null, result);
-                }
-            });
-    };
-
-    /**
-     * Removes a user from the upvoters list of a List.
-     * @param listId the id of the list.
-     * @param userId the id of the user who has cancelled his upvote from the List.
-     * @param callback
-     */
-    that.removeFromUpvoters = function (listId, userId, callback) {
-        listModel.findOneAndUpdate(
-            {_id : listId}, {$pull: { upvoters: userId}, $set: { upvotes: upvotes-1} }, {new : true}, function(err, result) {
-                if (err) callback({msg: err});
-                else {
-                    callback(null, result);
-                }
-            });
-    };
-
-    /**
-     * Removes a user from the downvoters list of a List.
-     * @param listId the id of the list.
-     * @param userId the id of the user who has cancelled his downvote from the List.
-     * @param callback
-     */
-    that.removeFromDownvoters = function (listId, userId, callback) {
-        listModel.findOneAndUpdate(
-            {_id : listId}, {$pull: { downvoters: userId}, $set: { upvotes: upvotes+1} }, {new : true}, function(err, result) {
-                if (err) callback({msg: err});
-                else {
-                    callback(null, result);
-                }
-            });
-    };
 
     //pass in consensus object with same fields and same types, make sure they are the same
     //later I will add checks to make sure

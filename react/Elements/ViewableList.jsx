@@ -28,7 +28,7 @@ class ViewableList extends Component {
                 canEdit = {false}
                 showRankingNumber = {this.props.showRankingNumber}
                 didClickOnListCard = {this.props.didClickOnListCard}
-                user_id = {this.props.user_id}/>
+                user = {this.props.user}/>
             );
           })}
       </div>

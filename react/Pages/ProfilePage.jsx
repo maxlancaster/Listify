@@ -100,7 +100,6 @@ class ProfilePage extends Component {
     const lists = this.state.lists;
     const invitedLists = this.state.invitedLists;
     const rankings = this.state.rankings;
-    console.log(rankings);
 		return (
       <div>
   			<div className = "EditRankingsPage">
@@ -126,6 +125,7 @@ class ProfilePage extends Component {
                             lists = {this.state.headerSide === "CENTER" ? lists : invitedLists}
                             showRankingNumber = {false}
                             didClickOnListCard = {this.didClickOnListCard.bind(this)}
+                            user = {this.props.user}
                             />
             }
           </div>
