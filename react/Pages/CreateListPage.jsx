@@ -17,14 +17,17 @@ import userServices from '../../services/userServices.js';
 class CreateListPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {items: [], invitedUsers:[], i:0, rankingTitle:'', publicList: true, showPopup:false};
+    this.state = {items: [], invitedUsers:[], i:0, rankingTitle:'', publicList: true, showPopup:false, errorMessage: ''};
   }
 
   addItem(itemTitle) {
     var items = this.state.items;
     var item = Items(itemTitle,'','');
     items.push(item);
-    this.setState({items:items});
+    this.setState({
+      items:items,
+      errorMessage:''
+    });
   }
 
   didChangeRankingTitle(rankingTitle) {
@@ -72,7 +75,16 @@ class CreateListPage extends Component {
   }
 
   showCapacityPopup() {
-    this.setState({showPopup:true});
+    if (this.state.items.length === 0) {
+      this.setState({
+        errorMessage : 'You haven\'t added any items!'
+      });
+    } else {
+      this.setState({
+        showPopup:true,
+        errorMessage:''
+      });
+    }
   }
 
   closePopup() {
@@ -89,6 +101,7 @@ class CreateListPage extends Component {
   }
 
   render() {
+    var has_error = this.state.errorMessage === '';
     const items = this.state.items;
     const publicPrivateIndicator = (
         <div className = "PublicPrivateIndicator">
@@ -123,6 +136,11 @@ class CreateListPage extends Component {
           <OptionsList  id={1} items={items} canEdit = {true} />
         </div>
         <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}/>
+        <div className="errorMessage">
+          {this.state.errorMessage &&
+            <p style = {{color:"red"}}>{this.state.errorMessage}</p>
+          }
+        </div>
       </div>
 		);
 	}

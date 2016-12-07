@@ -15,7 +15,7 @@ const uuid = require('uuid');
 class ViewRankingPage extends Component {
   constructor(props) {
     super(props);
-    this.state = {ranking:null};
+    this.state = {ranking:null, is_locked : false};
   }
 
   componentWillMount() {
@@ -24,11 +24,17 @@ class ViewRankingPage extends Component {
     rankingServices.getRankingById(rankingId).then((response) => {
       var ranking = response.content.ranking;
       if (response.success) {
-        this.setState({ranking:ranking});
+        listServices.getListDataFromId(ranking.list).then((response2) => {
+          this.setState({
+            ranking : ranking,
+            is_locked : response2.content.list.locked
+          });
+        });
       } else {
         console.log(response.err);
       }
     });
+
   }
 
   viewConsensus() {
@@ -49,6 +55,9 @@ class ViewRankingPage extends Component {
     }
 
     var ranking = this.state.ranking;
+    var is_locked = this.state.is_locked;
+
+    var editRankingButton = is_locked ? null : this.editRanking.bind(this);
     return (
       <div>
         <div className = "EditRankingsPage">
@@ -67,7 +76,7 @@ class ViewRankingPage extends Component {
         }
       </div>
       <RankingNavigationOptions
-        editRanking = {this.editRanking.bind(this)}
+        editRanking = {editRankingButton}
         viewConsensus = {this.viewConsensus.bind(this)}/>
     </div>
     );

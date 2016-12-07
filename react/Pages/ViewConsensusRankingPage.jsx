@@ -131,7 +131,6 @@ class ViewConsensusRankingPage extends Component {
 
         var showCommentButtonTitle = this.state.showComments ? "Hide Comments" : "Show Comments";
 
-        console.log(this.hasUserSubmittedThisRanking());
         return (
             <div>
                 <div className = "EditRankingsPage">

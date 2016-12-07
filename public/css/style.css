@@ -186,6 +186,7 @@ a, a:visited {
   position: fixed;
   left: 0;
   right: 0;
+  text-align: center;
 }
 /**RankingTitleForm **/
 
