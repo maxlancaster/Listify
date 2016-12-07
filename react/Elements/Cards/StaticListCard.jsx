@@ -25,6 +25,9 @@ class StaticListCard extends Component {
   }
 
   calculateCurrentUserVoteScore(list, user) {
+    if (!user || !user._id) {
+      return 0;
+    }
     if (list.upvoters.indexOf(user._id) > -1) {
       return 1;
     } else if (list.downvoters.indexOf(user._id) > -1) {
@@ -34,6 +37,9 @@ class StaticListCard extends Component {
   }
 
   hasContributedToList(list, user) {
+    if (!user || !user.rankings) {
+      return false;
+    }
     var ranking_ids = list.rankings.filter(function(ranking) {
         return user.rankings.indexOf(ranking) != -1;
     });
