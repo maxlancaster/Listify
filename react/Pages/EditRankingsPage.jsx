@@ -228,7 +228,10 @@ class EditRankingsPage extends Component {
             </div>
 
           </div>
-          <BottomRightButton onClick = {updateOrSubmitRankingButtonFunction} title = {buttonTitle}/>
+          <BottomRightButton
+            onClick = {updateOrSubmitRankingButtonFunction}
+            buttonColor = {"GREEN"}
+            buttonIcon = {"Check.svg"}/>
         </div>
       );
     }

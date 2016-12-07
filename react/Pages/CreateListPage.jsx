@@ -146,7 +146,9 @@ class CreateListPage extends Component {
           <OptionsList  id={1} items={items} canEdit = {true}  deleteItem = {this.deleteItem.bind(this)}/>
         </div>
         {items && items.length > 0 &&
-          <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}/>
+          <BottomRightButton onClick = {this.showCapacityPopup.bind(this)}
+                             buttonColor = {"GREEN"}
+                             buttonIcon = {"Check.svg"}/>
         }
         <div className="errorMessage">
           {this.state.errorMessage &&
