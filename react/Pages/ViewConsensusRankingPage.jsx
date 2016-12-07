@@ -24,6 +24,7 @@ class ViewConsensusRankingPage extends Component {
             var list = res.content.list;
             listServices.calculateOrdering(list._id).then((res) => {
                 var order = res.content.order;
+                console.log(order);
                 this.setState({list:list, order:order});
             });
 
@@ -60,7 +61,7 @@ class ViewConsensusRankingPage extends Component {
             return false;
         }
         var creator = this.state.list.creator;
-        var current_user = this.props.user.username;
+        var current_user = this.state.user.username;
         if (creator === current_user) {
             return true;
         } else {
