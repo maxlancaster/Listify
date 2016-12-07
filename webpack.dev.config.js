@@ -36,7 +36,12 @@ module.exports = {
             },
             { test : /\.css$/, loader : 'css-loader' },
             { test: /\.(svg|ttf|woff|eot|woff2)(\?.*)?$/, loader: 'file' },
-            { test : /\.json$/, loader: 'json'}
+            { test : /\.json$/, loader: 'json'},
+            {
+              test: /\.(jpg|png)$/,
+              loader: 'url?limit=25000',
+              include: __dirname+'/public/assets'
+            }
         ]
     }, node: {
         console: true,

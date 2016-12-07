@@ -8,7 +8,7 @@ class StaticListCard extends Component {
   constructor(props) {
     super(props);
     this.state = {list : props.list,
-                  voteScore : 0};
+                  currentUserVoteScore : 0};
   }
 
   handleClick(event) {
@@ -17,55 +17,55 @@ class StaticListCard extends Component {
   }
 
   handleUpvote(event) {
-      var listId = this.props.list._id;
-      var voteScore = this.state.voteScore;
+      // var listId = this.props.list._id;
+      var currentUserVoteScore = this.state.currentUserVoteScore;
 
-      if (this.state.voteScore ===  -1) {
-          this.setState({voteScore: voteScore + 2});
-        listServices.removeVote(listId, "downvote").then((res) => {
-          listServices.upvote(listId).then((response) => {
-              console.log(this.props.list.upvotes);
-          });
-        });
-      } else if (this.state.voteScore === 0) {
-          this.setState({voteScore: voteScore + 1});
-          listServices.upvote(listId).then((response) => {
-              console.log(this.props.list.upvotes);
-          });
-      } else if (this.state.voteScore === 1) {
-          //hitting upvote again returns voteScore to 0
-          this.setState({voteScore : 0});
-          listServices.removeVote(listId, "upvote").then((res) => {
-              listServices.upvote(listId).then((response) => {
-                  console.log(this.props.list.upvotes);
-              });
-          });
+      if (this.state.currentUserVoteScore ===  -1) {
+          this.setState({currentUserVoteScore: currentUserVoteScore + 2});
+        // listServices.removeVote(listId, "downvote").then((res) => {
+        //   listServices.upvote(listId).then((response) => {
+        //       console.log(this.props.list.upvotes);
+        //   });
+        // });
+      } else if (this.state.currentUserVoteScore === 0) {
+          this.setState({currentUserVoteScore: currentUserVoteScore + 1});
+          // listServices.upvote(listId).then((response) => {
+          //     console.log(this.props.list.upvotes);
+          // });
+      } else if (this.state.currentUserVoteScore === 1) {
+          //hitting upvote again returns currentUserVoteScore to 0
+          this.setState({currentUserVoteScore : 0});
+          // listServices.removeVote(listId, "upvote").then((res) => {
+          //     listServices.upvote(listId).then((response) => {
+          //         console.log(this.props.list.upvotes);
+          //     });
+          // });
       }
-      console.log(this.props.list.upvotes);
+      // console.log(this.props.list.upvotes);
   }
 
   handleDownvote(event) {
-      var listId = this.props.params.listId;
-      var voteScore = this.state.voteScore;
+      // var listId = this.props.params.listId;
+      var currentUserVoteScore = this.state.currentUserVoteScore;
 
-      if (this.state.voteScore ===  -1) {
-          //hitting downvote again returns voteScore to 0
-          this.setState({voteScore:0});
-          listServices.removeVote(listId, "downvote").then((res) => {
-              listServices.upvote(listId).then((response) => {
-              });
-          });
-      } else if (this.state.voteScore === 0) {
-          this.setState({voteScore: voteScore - 1});
-          listServices.upvote(listId).then((response) => {
-          });
-      } else if (this.state.voteScore === 1) {
-          //hitting upvote again returns voteScore to 0
-          this.setState({voteScore : voteScore - 2});
-          listServices.removeVote(listId, "upvote").then((res) => {
-              listServices.upvote(listId).then((response) => {
-              });
-          });
+      if (this.state.currentUserVoteScore ===  -1) {
+          //hitting downvote again returns currentUserVoteScore to 0
+          this.setState({currentUserVoteScore:0});
+          // listServices.removeVote(listId, "downvote").then((res) => {
+          //     listServices.upvote(listId).then((response) => {
+          //     });
+          // });
+      } else if (this.state.currentUserVoteScore === 0) {
+          this.setState({currentUserVoteScore: currentUserVoteScore - 1});
+          // listServices.upvote(listId).then((response) => {
+          // });
+      } else if (this.state.currentUserVoteScore === 1) {
+          //hitting upvote again returns currentUserVoteScore to 0
+          this.setState({currentUserVoteScore : currentUserVoteScore - 2});
+          // listServices.removeVote(listId, "upvote").then((res) => {
+          //     listServices.upvote(listId).then((response) => {
+          //     });
+          // });
       }
   }
 
@@ -80,10 +80,8 @@ class StaticListCard extends Component {
 		return (
       <a href = "#" onClick = {this.handleClick.bind(this)}>
         <div className = "StaticListCard" >
-          {list.locked &&
-            <div className="CircleMarker"></div>
-          }
           <Vote
+              currentUserVoteScore = {this.state.currentUserVoteScore}
               handleUpvote = {this.handleUpvote.bind(this)}
               handleDownvote = {this.handleDownvote.bind(this)}/>
           <div className = "StaticListCardFirstLineContainer">
@@ -94,7 +92,9 @@ class StaticListCard extends Component {
             }
           </div>
           <p className = "StaticListCardCreator">{"Created by "+list.creator}</p>
-
+            {list.locked &&
+              <div className="LockedListMarker"></div>
+            }
         </div>
       </a>
     );

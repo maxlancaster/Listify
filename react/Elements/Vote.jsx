@@ -9,44 +9,77 @@ class Vote extends Component {
         super(props);
 
         this.state = {
-            voteScore: props.voteScore
+            currentUserVoteScore: props.currentUserVoteScore
         };
     }
 
-    render() {
 
+    componentWillReceiveProps(props) {
+      this.setState({currentUserVoteScore: props.currentUserVoteScore});
+    }
+
+    didUpvote(event) {
+      event.stopPropagation();
+      this.props.handleUpvote();
+    }
+
+    didDownVote(event) {
+      event.stopPropagation();
+      this.props.handleDownvote();
+    }
+    /**/
+    render() {
+      var upvoteImageType = this.state.currentUserVoteScore === 1 ? 'ActiveUpvote.svg'  : 'Upvote.svg'
+      var UpvoteImage = require('../../public/assets/'+upvoteImageType);
+      var downvoteImageType = this.state.currentUserVoteScore === -1 ? 'ActiveDownvote.svg'  : 'Downvote.svg'
+      var DownvoteImage = require('../../public/assets/'+ downvoteImageType);
+      const votingButtonStyle = {
+          width:"30px",
+          height:"30px"
+        }
+
+      const downvotetyle = {
+
+      }
         let upvote =  (
-                <div className="upvote" onClick={ () => this.props.handleUpvote() }>
-                    ^
-                </div>
-            );
+          <div>
+          <img style = {votingButtonStyle}
+               className="upvote"
+               src={UpvoteImage}
+               onClick={this.didUpvote.bind(this)}/>
+
+          </div>
+        );
 
 
         let downvote =  (
-                <div className="downvote" onClick={ () => this.props.handleDownvote() }>
-                  v
-                </div>
-            );
+          <div>
+          <img style = {votingButtonStyle}
+               className="downvote"
+               src={DownvoteImage}
+               onClick={this.didDownVote.bind(this)}/>
+
+          </div>
+          );
 
         return (
-            <div >
                 <div className={ `VoteButtons` }>
                     { upvote }
+                    <p className = "VoteCount">{"0"}</p>
                     { downvote }
                 </div>
-            </div>
         );
     }
 }
 
 Vote.propTypes = {
-    voteScore: React.PropTypes.number,
+    currentUserVoteScore: React.PropTypes.number,
 };
 
 Vote.defaultProps = {
     className: 'react-upvote',
 
-    voteScore: 0
+    currentUserVoteScore: 0
 };
 
 export default withRouter(Vote);
