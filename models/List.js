@@ -40,13 +40,6 @@ var listSchema = mongoose.Schema({
 
     items : [],
 
-    // giving me validation error. why?!
-
-    // items: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Items'
-    // }],
-
     rankings: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Ranking'
@@ -136,6 +129,44 @@ var list = (function(listModel) {
         });
     };
 
+    that.upvote = function(listId,userId, callback) {
+      listModel.findById(listId, function(err, list){
+          if(err) callback({msg:err});
+          if(list != null) {
+            var downvoters = list.downvoters ? list.downvoters : [];
+            var downvoteIndex = downvoters.indexOf(listId);
+
+            if (downvoteIndex > -1) {
+              downvoters.splice(downVoteIndex,1);
+            }
+
+            var upvoters = list.upvoters ? list.upvoters : [];
+            var upvoteIndex = upvoters.indexOf(listId);
+            if (upvoteIndex === -1) {
+              upvoters.push(userId);
+            }
+
+            var upvotes = upvoters.length - downvoters.length;
+
+            listModel.update({_id:list._id},
+                            {upvoters:upvoters,downvoters:downvoters, upvotes:upvotes},
+                            {upsert:true, new:true},
+                            function(error, newList) {
+                              if (!error) {
+                                console.log(newList);
+                                callback(null, newList);
+                              } else {
+                                console.log(error);
+                                calback(error,null);
+                              }
+                            }
+                          );
+          } else{
+              callback({msg: 'The list does not exist!'});
+          }
+      });
+    }
+
     /**
      * Adds a user to the upvoters list of a List.
      * @param listId the id of the list.
@@ -144,7 +175,7 @@ var list = (function(listModel) {
      */
     that.addToUpvoters = function (listId, userId, callback) {
         listModel.findOneAndUpdate(
-            {_id : listId}, {$push: { upvoters: userId}, $set: { upvotes: upvotes+1} }, {new : true}, function(err, result) {
+            {_id : listId}, {$push: { upvoters: userId}, $inc: { fieldToIncrement: 1 }}, {new : true}, function(err, result) {
                 if (err) callback({msg: err});
                 else {
 

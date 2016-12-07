@@ -208,9 +208,9 @@ router.put('/add_items/:listId', function(req,res) {
  * Adds the user's id to the List's array of upvoters and updates net upvotes.
  */
 router.post('/upvote/:listId', function(req, res){
-    List.addToUpvoters(req.params.listId, req.session.user._id, function(err){
+    List.upvote(req.params.listId, req.session.user._id, function(err, newList){
         if(err){
-            utils.sendErrorResponse(res, 404, 'No such list.');
+            utils.sendErrorResponse(res, 404, 'unable to update');
         } else{
             utils.sendSuccessResponse(res);
         }

@@ -7,6 +7,7 @@ class StaticListCard extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props.list);
     this.state = {list : props.list,
                   currentUserVoteScore : 0,
                   upvotes: props.list.upvotes};
@@ -18,7 +19,7 @@ class StaticListCard extends Component {
   }
 
   handleUpvote(event) {
-      // var listId = this.props.list._id;
+      var listId = this.props.list._id;
       var currentUserVoteScore = this.state.currentUserVoteScore;
       var upvotes = this.state.upvotes;
 
@@ -43,11 +44,16 @@ class StaticListCard extends Component {
           //     });
           // });
       }
+      listServices.upvote(listId).then((res) => {
+        console.log(res);
+      });
       // console.log(this.props.list.upvotes);
   }
 
   handleDownvote(event) {
-      // var listId = this.props.params.listId;
+      var listId = this.props.list._id;
+      console.log("DOWNVOTED!!!");
+      console.log(listId);
       var currentUserVoteScore = this.state.currentUserVoteScore;
       var upvotes = this.state.upvotes;
 
