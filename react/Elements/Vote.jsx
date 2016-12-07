@@ -19,11 +19,13 @@ class Vote extends Component {
     }
 
     didUpvote(event) {
+      event.preventDefault();
       event.stopPropagation();
       this.props.handleUpvote();
     }
 
     didDownVote(event) {
+      event.preventDefault();
       event.stopPropagation();
       this.props.handleDownvote();
     }
