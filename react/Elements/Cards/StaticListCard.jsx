@@ -41,9 +41,7 @@ class StaticListCard extends Component {
           this.setState({currentUserVoteScore : 0, upvotes:upvotes - 1});
       }
       listServices.upvote(listId).then((res) => {
-        console.log(res);
       });
-      // console.log(this.props.list.upvotes);
   }
 
   handleDownvote(event) {
@@ -61,13 +59,11 @@ class StaticListCard extends Component {
           this.setState({currentUserVoteScore : currentUserVoteScore - 2, upvotes:upvotes-2});
       }
       listServices.downvote(listId).then((res) => {
-        console.log(res);
       });
   }
 
   render() {
 		const { list } = this.props;
-    console.log(this.state.currentUserVoteScore);
     //when user clicks on a list, you navigate him to EditRankingsPage if he hasn't voted yet
     // else you navigate him to ViewRankingPage
 		return (
