@@ -15,7 +15,7 @@ var Users = require('./models/Users');
 var Ranking = require('./models/Ranking');
 /** Set up MongoDB **/
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/mymongodb');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/mymongodb');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 
