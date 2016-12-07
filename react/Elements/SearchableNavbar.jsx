@@ -27,11 +27,13 @@ class SearchableNavbar extends Component {
       padding:"10px",
       borderRadius:"15px"
     }
+    var style = {
+      background:'none'
+    }
     var ProfileImage = require('../../public/assets/ProfileIcon.svg');
     return (
       <div className = "SearchableNavbar">
-        <button className = "LogoutButton" onClick = {this.props.logout}>Logout</button>
-        <button className = "ProfileButton" onClick = {this.props.profile}>
+        <button className = "ProfileButton" onClick = {this.props.profile} style = {style}>
           <img src ={ProfileImage} style = {profileImageStyle} />
         </button>
         <a href ="/"><h1 id = "listify-title">Listify</h1></a>

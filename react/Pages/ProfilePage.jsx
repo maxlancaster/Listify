@@ -130,6 +130,7 @@ class ProfilePage extends Component {
           </div>
       </div>
       <ProfileDescription user = {this.props.user}/>
+      <button className = "Logout" onClick = {this.props.logout}>Logout</button>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
     </div>
 		);
