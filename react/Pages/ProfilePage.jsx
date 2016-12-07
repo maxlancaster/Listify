@@ -77,8 +77,6 @@ class ProfilePage extends Component {
       return current_user.rankings.indexOf(ranking) != -1;
     });
     var has_submitted_ranking_for_list = ranking_ids.length > 0;
-    //TODO:DELETE LATER;
-    ranking_ids = ["boom_bang"];
     if (has_submitted_ranking_for_list) {
       return "rankings/"+ranking_ids[0];
     } else {
