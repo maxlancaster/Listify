@@ -102,7 +102,7 @@ class ViewListsPage extends Component {
                         />
           </div>
       </div>
-      <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
+      <BottomRightButton title = {"Create List"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
     </div>
 		);
 	}
