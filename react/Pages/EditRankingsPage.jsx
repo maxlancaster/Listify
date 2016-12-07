@@ -12,6 +12,8 @@ import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import listServices from '../../services/listServices.js';
 import rankingServices from '../../services/rankingServices.js';
 import Comment from '../../models/Comment.js';
+import userServices from '../../services/userServices.js';
+
 
 class EditRankingsPage extends Component {
   constructor(props) {
@@ -30,7 +32,8 @@ class EditRankingsPage extends Component {
       showCreateRankingConfirm : false,
       submission: [],
       comment : '',
-      showComments : false
+      showComments : false,
+      user : null
     }
   }
 
@@ -55,15 +58,21 @@ class EditRankingsPage extends Component {
             } else {
                 console.log("error");
             }
-        })
+        });
+
+        userServices.getCurrentUser()
+            .then((res) => {
+                this.setState({user : res.content.user});
+            });
     }
 
     hasUserSubmittedThisRanking() {
-        if (this.state.rankings.length === 0) {
+        if (this.state.user === null) {
             return false;
         }
-        var current_user = this.props.user;
+        // var current_user = this.props.user;
 
+        var current_user = this.state.user;
         // find intersection of list.rankings and current_user.rankings
         var ranking_ids = this.state.rankings.filter(function(ranking) {
             return current_user.rankings.indexOf(ranking) != -1;
@@ -121,7 +130,7 @@ class EditRankingsPage extends Component {
 
         listServices.getListDataFromId(this.props.params.listId).then((response) => {
             var listRankingIds = response.content.list.rankings;
-            var current_user_rankings = this.props.user.rankings;
+            var current_user_rankings = this.state.user.rankings;
 
             var ranking_ids = listRankingIds.filter(function(ranking) {
                 return current_user_rankings.indexOf(ranking) != -1;
