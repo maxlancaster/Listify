@@ -1,6 +1,6 @@
 var dev = 'http://localhost:3000/api/users';
 var prod = 'https://listify-team-phil.herokuapp.com/api/users';
-const BASE_URL = prod;
+const BASE_URL = dev;
 
   var request = require('request-promise-native');
 
@@ -18,8 +18,8 @@ const BASE_URL = prod;
     },
 
     login : (username, password) => {
-      console.log("NODE ENV");
-      console.log(process.env.NODE_ENV);
+      console.log("NODE ENV!");
+      console.log(process);
       return request({
         uri : BASE_URL + '/login',
         method: 'POST',

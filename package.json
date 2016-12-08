@@ -7,7 +7,7 @@
     "test": "test"
   },
   "scripts": {
-    "start": "node app.js",
+    "start": "NODE_ENV='development' node app.js",
     "test": "npm run test-unit",
     "test-unit": "NODE_ENV=test mocha 'test/*.js'",
     "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"

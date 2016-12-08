@@ -1,6 +1,6 @@
 var dev = 'http://localhost:3000/api/rankings';
 var prod = 'https://listify-team-phil.herokuapp.com/api/rankings';
-const BASE_URL = prod;
+const BASE_URL = dev;
 
 var request = require('request-promise-native');
 

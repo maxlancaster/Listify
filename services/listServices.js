@@ -1,6 +1,6 @@
 var dev = 'http://localhost:3000/api/lists';
 var prod = 'https://listify-team-phil.herokuapp.com/api/lists';
-const BASE_URL = prod;
+const BASE_URL = dev;
 
 var request = require('request-promise-native');
 
