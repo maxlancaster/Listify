@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
 
-html, body {
+html, body, #app, .content {
   font-family: 'Lato', sans-serif;
   height: 100%;
   padding: 0;
@@ -110,7 +110,7 @@ a, a:visited {
 .LoginPage {
   background:#1C2C38;
   /*background:white;*/
-  height:800px;
+  height:100%;
 }
 
 .WelcomeSection {
