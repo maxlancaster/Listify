@@ -10,7 +10,7 @@
     "start": "node app.js",
     "test": "npm run test-unit",
     "test-unit": "NODE_ENV=test mocha 'test/*.js'",
-    "postinstall": "bower install && grunt build"
+    "postinstall": "webpack --config ./webpack.config.js --progress --colors"
   },
   "repository": {
     "type": "git"
