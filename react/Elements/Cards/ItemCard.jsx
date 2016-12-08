@@ -74,6 +74,10 @@ class ItemCard extends Component {
     const { item } = this.props;
     const descriptionPlaceholder = item.description.length > 0 ?  item.description : "Description (Optional)";
 
+    var editIcon = require('../../../public/assets/WhitePencil.svg');
+    var photoIcon = require('../../../public/assets/Picture.svg');
+    var trashIcon = require('../../../public/assets/TrashCan.svg');
+
     var iconStyle = {
       width:"15px",
       height:"15px",
@@ -81,9 +85,6 @@ class ItemCard extends Component {
       marginTop:"5px",
       marginLeft:"5px"
     }
-    var editIcon = require('../../../public/assets/WhitePencil.svg');
-    var photoIcon = require('../../../public/assets/Picture.svg');
-    var trashIcon = require('../../../public/assets/TrashCan.svg');
 
     var buttonStyle = {
       display:'flex',
@@ -101,6 +102,18 @@ class ItemCard extends Component {
       display:"inline-block",
       marginLeft:"5px",
       marginTop:"5px"
+    }
+
+    var saveButtonStyle = {
+      height:"30px",
+      width:"80px",
+      background:"#66B110",
+      marginRight:"5px"
+    }
+
+    var cancelButtonStyle = {
+      background:"none",
+      color:"#9B9B9B"
     }
 
     return (
@@ -149,8 +162,14 @@ class ItemCard extends Component {
           </button>
         </div>
         <div className = "ExitButtonContainer">
-          <button onClick = {this.savePressed.bind(this)}>Save</button>
-          <button onClick = {this.turnOffEditMode.bind(this)}>Cancel</button>
+          <button onClick = {this.savePressed.bind(this)}
+                  style = {saveButtonStyle}>
+                  Save
+          </button>
+          <button onClick = {this.turnOffEditMode.bind(this)}
+                  style = {cancelButtonStyle} >
+                  Cancel
+          </button>
         </div>
       </div>
     );

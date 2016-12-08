@@ -109,6 +109,7 @@ a, a:visited {
 /** LoginPage**/
 .LoginPage {
   background:#1C2C38;
+  /*background:white;*/
   height:800px;
 }
 
@@ -139,10 +140,12 @@ a, a:visited {
   background-color: white;
   width:60%;
   max-width:700px;
+  padding-right:150px;
   display:inline-block;
   margin-left:20%;
-  margin-top: 80px;
+  margin-top: 100px;
   height:350px;
+  /*border: 2px solid #4A4A4A;*/
   border-radius: 10px;
 }
 
@@ -529,7 +532,7 @@ textarea:focus, input:focus{
 
 .ExitButtonContainer {
   display:inline-block;
-  margin-top:25px;
+  margin-top:0px;
 }
 
 /**Static List Card **/

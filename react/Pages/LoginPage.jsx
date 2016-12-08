@@ -76,7 +76,7 @@ class LoginPage extends Component {
                             <div className='form-group'>
                                 <input className='username'
                                        name='loginUser'
-                                       placeholder='Username'
+                                       placeholder='username'
                                        value={this.state.loginUser}
                                        onChange={this.updateFormVal}
                                 />
@@ -85,7 +85,7 @@ class LoginPage extends Component {
                                 <input className='password'
                                        type='password'
                                        name='loginPass'
-                                       placeholder='Password'
+                                       placeholder='password'
                                        value={this.state.loginPass}
                                        onChange={this.updateFormVal}
                                 />
@@ -102,7 +102,7 @@ class LoginPage extends Component {
                             <div className='form-group'>
                                 <input className='username'
                                        name='registerUser'
-                                       placeholder='Username'
+                                       placeholder='username'
                                        value={this.state.registerUser}
                                        onChange={this.updateFormVal}
                                 />
@@ -111,7 +111,7 @@ class LoginPage extends Component {
                                 <input className='password'
                                        type='password'
                                        name='registerPass'
-                                       placeholder='Password'
+                                       placeholder='password'
                                        value={this.state.registerPass}
                                        onChange={this.updateFormVal}
                                 />
