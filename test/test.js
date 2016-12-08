@@ -3,19 +3,79 @@ var mongoose = require('mongoose');
 var app = require('../app');
 var Users = require('../models/Users');
 var Ranking = require('../models/Ranking');
+var List = require('../models/List');
 
-// describe('Models', function() {
-//
-//     describe('Users', function () {
-//
-//         it('Create a valid new user', function (done) {
-//
-//             Users.createUser(bob, function (err, user) {
-//                 if (err == null) {
-//
-//                 }
-//             })
-//
-//         });
-//     });
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////// User Model Tests /////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+describe('Users', function() {
+
+    describe('Users', function () {
+
+    	// drop Users table
+    	mongoose.model('Users').remove({}, function(err) {
+		   console.log('Users collection removed');
+		});
+
+        it('Create a valid new user', function (done) {
+
+            Users.createUser("my_username", "password", function (err, user) {
+            	assert.equal(user.username, "my_username");
+            	assert.equal(user.password, "password");
+            	assert.equal(user.rankings, []);
+            	assert.equal(user.lists, []);
+            });
+            done();
+
+        });
+
+        it('Create an invalid user with username too short', function (done) {
+
+            Users.createUser("hi", "password", function (err, user) {
+                assert.equal(err.msg, "Usernames should be at most 15 characters and at least 3!");
+            });
+            done();
+
+        });
+
+        it('Create an invalid user with username too long', function (done) {
+
+            Users.createUser("this_is_more_than_fifteen_characters", "password", function (err, user) {
+                assert.equal(err.msg, "Usernames should be at most 15 characters and at least 3!");
+            });
+            done();
+        });
+
+        it('Create an invalid user with already taken username', function (done) {
+
+            Users.createUser("my_username", "password", function (err, user) {
+                assert.equal(err.msg, "That username is already taken!");
+            });
+            done();
+        });
+    });
+});
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////// Ranking Model Tests ////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// mongoose.model('Ranking').remove({}, function(err) {
+//    console.log('Rankings collection removed')
+// });
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////// List Model Tests /////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// mongoose.model('List').remove({}, function(err) {
+//    console.log('List collection removed')
 // });
