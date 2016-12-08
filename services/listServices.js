@@ -1,4 +1,6 @@
-const BASE_URL = process.env.NODE_ENV !== 'production' ? 'http://localhost:3000/api/lists' : 'https://listify-team-phil.herokuapp.com/api/lists';
+var dev = 'http://localhost:3000/api/lists';
+var prod = 'https://listify-team-phil.herokuapp.com/api/lists';
+const BASE_URL = prod;
 
 var request = require('request-promise-native');
 
