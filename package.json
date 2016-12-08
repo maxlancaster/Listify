@@ -10,7 +10,8 @@
     "start": "node app.js",
     "test": "npm run test-unit",
     "test-unit": "NODE_ENV=test mocha 'test/*.js'",
-    "postinstall": "NODE_ENV=production webpack -p"
+    "prod": "NODE_ENV=production node app.js",
+    "postinstall": "webpack -p"
   },
   "repository": {
     "type": "git"
