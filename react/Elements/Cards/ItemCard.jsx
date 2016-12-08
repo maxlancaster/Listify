@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { findDOMNode } from 'react-dom';
 import { DragSource, DropTarget } from 'react-dnd';
 import flow from 'lodash/flow';
-import Items from '../../models/Items.js'
+import Items from '../../../models/Items.js'
 
 class ItemCard extends Component {
 
@@ -73,6 +73,49 @@ class ItemCard extends Component {
   editableItemCard() {
     const { item } = this.props;
     const descriptionPlaceholder = item.description.length > 0 ?  item.description : "Description (Optional)";
+
+    var editIcon = require('../../../public/assets/WhitePencil.svg');
+    var photoIcon = require('../../../public/assets/Picture.svg');
+    var trashIcon = require('../../../public/assets/TrashCan.svg');
+
+    var iconStyle = {
+      width:"15px",
+      height:"15px",
+      display:"inline-block",
+      marginTop:"5px",
+      marginLeft:"5px"
+    }
+
+    var buttonStyle = {
+      display:'flex',
+      paddingLeft:"5px",
+      width:"85px",
+      height:"25px",
+      padding:"0px",
+      marginBottom:"3px",
+      marginLeft: "5px",
+      background:"#9B9B9B"
+
+    }
+
+    var buttonTextStyle = {
+      display:"inline-block",
+      marginLeft:"5px",
+      marginTop:"5px"
+    }
+
+    var saveButtonStyle = {
+      height:"30px",
+      width:"80px",
+      background:"#66B110",
+      marginRight:"5px"
+    }
+
+    var cancelButtonStyle = {
+      background:"none",
+      color:"#9B9B9B"
+    }
+
     return (
       <div className = "EditableItemCard">
         <div className = "ItemContainer">
@@ -97,13 +140,36 @@ class ItemCard extends Component {
         }
         </div>
         <div className = "ButtonContainer">
-          <button className = "AddDescriptionButton" onClick={this.turnOnDescriptionMode.bind(this)} >Add Info</button>
-          <button className = "AddPhotoButton" onClick={this.turnOnPhotoMode.bind(this)}>Add Photo</button>
-          <button className = "DeleteButton" onClick={this.props.deleteItem.bind(null, item)}>Delete</button>
+          <button className = "AddDescriptionButton"
+                  onClick={this.turnOnDescriptionMode.bind(this)}
+                  style = {buttonStyle}>
+            <img src = {editIcon} style = {iconStyle}/>
+            <p style = {buttonTextStyle}>Add Info</p>
+          </button>
+
+          <button className = "AddPhotoButton"
+                  onClick={this.turnOnPhotoMode.bind(this)}
+                  style = {buttonStyle}>
+            <img src = {photoIcon} style = {iconStyle}/>
+            <p style = {buttonTextStyle}>Add Photo</p>
+          </button>
+
+          <button className = "DeleteButton"
+                  onClick={this.props.deleteItem.bind(null, item)}
+                  style = {buttonStyle}>
+            <img src = {trashIcon} style = {iconStyle}/>
+            <p style = {buttonTextStyle}>Delete</p>
+          </button>
         </div>
         <div className = "ExitButtonContainer">
-          <button onClick = {this.savePressed.bind(this)}>Save</button>
-          <button onClick = {this.turnOffEditMode.bind(this)}>Cancel</button>
+          <button onClick = {this.savePressed.bind(this)}
+                  style = {saveButtonStyle}>
+                  Save
+          </button>
+          <button onClick = {this.turnOffEditMode.bind(this)}
+                  style = {cancelButtonStyle} >
+                  Cancel
+          </button>
         </div>
       </div>
     );
@@ -116,10 +182,18 @@ class ItemCard extends Component {
 			opacity: opacity
 		};
 
+    const editIcon = require("../../../public/assets/GreyPencil.svg");
+    const editIconStyle = {
+        width:"15px",
+        height:"15px"
+      }
+
 		return connectDragSource(connectDropTarget(
         <div className = "ItemCard" style={style}>
           {this.props.canEdit &&
-            <button className = "ItemCardEditButton" onClick={this.turnOnEditMode.bind(this)}>edit</button>
+            <button className = "ItemCardEditButton" onClick={this.turnOnEditMode.bind(this)}>
+              <img src = {editIcon} style = {editIconStyle}/>
+            </button>
           }
           {this.props.showRankingNumber && <p className = "ItemCardRanking">{this.props.index+1 + "."}</p>}
           {item.photo &&

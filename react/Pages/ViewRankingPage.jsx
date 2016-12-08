@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ViewableItemsList from '../Elements/ViewableItemsList.jsx';
+import ViewableItemsList from '../Elements/Lists/ViewableItemsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import RankingNavigationOptions from '../Elements/RankingNavigationOptions.jsx';

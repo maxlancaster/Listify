@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ViewableList from '../Elements/ViewableList.jsx';
-import ViewableRankingsList from '../Elements/ViewableRankingsList.jsx';
+import ViewableList from '../Elements/Lists/ViewableList.jsx';
+import ViewableRankingsList from '../Elements/Lists/ViewableRankingsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import SwitchableHeader from '../Elements/SwitchableHeader.jsx';
+import ProfileDescription from '../Elements/ProfileDescription.jsx';
 import { withRouter } from 'react-router';
 import listServices from '../../services/listServices.js';
 import userServices from '../../services/userServices.js';
@@ -128,6 +129,8 @@ class ProfilePage extends Component {
             }
           </div>
       </div>
+      <ProfileDescription user = {this.props.user}/>
+      <button className = "Logout" onClick = {this.props.logout}>Logout</button>
       <BottomRightButton title = {"Create Ranking"} onClick = {this.navigateToCreateRankingsPage.bind(this)}/>
     </div>
 		);

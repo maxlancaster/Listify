@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import HTML5Backend from 'react-dnd-html5-backend';
-import ViewableItemsList from '../Elements/ViewableItemsList.jsx';
-import CommentsList from '../Elements/CommentsList.jsx';
+import ViewableItemsList from '../Elements/Lists/ViewableItemsList.jsx';
+import CommentsList from '../Elements/Lists/CommentsList.jsx';
 import Navbar from '../Elements/Navbar.jsx';
 import BottomRightButton from '../Elements/BottomRightButton.jsx';
 import ConsensusRankingDescription from '../Elements/ConsensusRankingDescription.jsx';
@@ -132,6 +132,13 @@ class ViewConsensusRankingPage extends Component {
 
         var showCommentButtonTitle = this.state.showComments ? "Hide Comments" : "Show Comments";
 
+        var badgeIcon = require("../../public/assets/Badge.svg");
+        var badgeStyle = {
+          float:"left",
+          marginTop:"30px",
+          marginLeft:"5px"
+        }
+
         return (
             <div>
                 <div className = "EditRankingsPage">
@@ -140,7 +147,9 @@ class ViewConsensusRankingPage extends Component {
                         <div className = "RankingTitleContainer">
                             <h1 className = "RankingTitle">{list.title}</h1>
                             <h1 className = "RankingLimit"> {" | Top "+list.maxLength}</h1>
+
                         </div>
+                        <img src = {badgeIcon} style= {badgeStyle}/>
                         <div className = "TitleSecondRow">
                             <h2 className = "RankingAuthor">{"created by "+list.creator}</h2>
                             {this.currentUserIsCreatorOfConsensus() && <button className = "CloseVotingButton"

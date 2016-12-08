@@ -20,10 +20,22 @@ class SearchableNavbar extends Component {
   }
 
   render() {
+    var profileImageStyle = {
+      background:"#E52F4F",
+      height:"20px",
+      width:"20px",
+      padding:"10px",
+      borderRadius:"15px"
+    }
+    var style = {
+      background:'none'
+    }
+    var ProfileImage = require('../../public/assets/ProfileIcon.svg');
     return (
       <div className = "SearchableNavbar">
-        <button className = "LogoutButton" onClick = {this.props.logout}>Logout</button>
-        <button className = "ProfileButton" onClick = {this.props.profile}>Profile</button>
+        <button className = "ProfileButton" onClick = {this.props.profile} style = {style}>
+          <img src ={ProfileImage} style = {profileImageStyle} />
+        </button>
         <a href ="/"><h1 id = "listify-title">Listify</h1></a>
           <form onSubmit={this.handleSubmit.bind(this)} className = "SearchTextInput">
             <input type="text"

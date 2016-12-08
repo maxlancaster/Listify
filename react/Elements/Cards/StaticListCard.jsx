@@ -112,7 +112,6 @@ class StaticListCard extends Component {
             {this.state.hasContributedToList &&
               <div className="ContributedMarker"></div>
             }
-
         </div>
       </a>
     );
