@@ -20,6 +20,9 @@ describe('Users', function() {
 		   console.log('Users collection removed');
 		});
 
+		var test_username;
+		var test_user_id;
+
         it('Create a valid new user', function (done) {
 
             Users.createUser("my_username", "password", function (err, user) {
@@ -27,6 +30,9 @@ describe('Users', function() {
             	assert.equal(user.password, "password");
             	assert.equal(user.rankings, []);
             	assert.equal(user.lists, []);
+
+            	test_username = user.username;
+            	test_user_id = user._id;
             });
             done();
 
@@ -55,6 +61,50 @@ describe('Users', function() {
                 assert.equal(err.msg, "That username is already taken!");
             });
             done();
+        });
+
+        it('Find a user by username', function (done) {
+
+            Users.createUser("maxlancaster", "password", function (err, original_user) {
+            	Users.findUser("maxlancaster", function(err, user){
+            		assert.equal(user.username, original_user.username);
+            		assert.equal(user._id, original_user._id);
+            	});
+            });
+            done();
+
+        });
+
+        it('Find a non-existing user by username', function (done) {
+
+        	Users.findUser("maxlancaster", function(err, user){
+        		assert.equal(err.msg, "This user does not exist!");
+        	});
+            done();
+
+        });
+
+        it('Get all rankings by username', function (done) {
+        	var rankingData = {
+        		order : [],
+                list : "fake_id",
+                comment : "comment",
+                listTitle : "title",
+                listCreatorUsername : "test_username",
+                user : "test_username",
+    			user_id : "test_user_id"
+        	}
+        	Ranking.addRanking(rankingData, function(err, ranking){
+	            Users.hasSubmittedRanking(test_user_id, ranking, function(err, user) {
+	            	console.log("here");
+	            });
+		    });
+
+        	Users.getAllRankings(test_username, function(err, rankings){
+        		assert.equal(rankings.length, 1);
+        	});
+            done();
+
         });
     });
 });
