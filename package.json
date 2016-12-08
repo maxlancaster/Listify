@@ -10,7 +10,7 @@
     "start": "node app.js",
     "test": "npm run test-unit",
     "test-unit": "NODE_ENV=test mocha 'test/*.js'",
-    "heroku-postbuild": "webpack -p --config ./webpack.prod.config.js --progress"
+    "heroku-postbuild": "webpack -p --config ./webpack.config.js --progress"
   },
   "repository": {
     "type": "git"
