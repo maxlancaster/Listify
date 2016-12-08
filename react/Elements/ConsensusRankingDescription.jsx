@@ -21,14 +21,29 @@ class ConsensusRankingDescription extends Component {
     if (isLocked) {
       description += " Voting has finished for this list."
     }
+
+    var GREEN = "#66B110";
+    var RED = "#E52F4F";
+    var greenButtonStyle = {
+      height:"20px",
+      background:GREEN,
+      marginRight:"5px"
+    }
+
+    var redButtonStyle = {
+      height:"20px",
+      background:RED,
+      marginRight:"5px"
+    }
+
 		return (
       <div className = "ConsensusRankingDescription">
         <p>{description}</p>
         {viewOrSubmitRankingFunction &&
-          <button onClick = {viewOrSubmitRankingFunction}>{buttonText}</button>
+          <button style = {greenButtonStyle} onClick = {viewOrSubmitRankingFunction}>{buttonText}</button>
         }
         {this.props.showAddItems && !isLocked &&
-          <button onClick = {this.props.addNewItems}>Add New Items</button>
+          <button style = {redButtonStyle} onClick = {this.props.addNewItems}>Add New Items</button>
         }
       </div>
     );
