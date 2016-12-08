@@ -472,6 +472,8 @@ textarea:focus, input:focus{
 }
 
 .ItemCardEditButton {
+  margin-top:-20px;
+  background:none;
   float:right;
 }
 

@@ -52,7 +52,6 @@ class CreateListPage extends Component {
       return user.username;
     });
     const usersSharedWith = this.state.publicList ? [] : invitedUsers;
-    console.log(usersSharedWith);
     listServices.createList(
         {
           title : listTitle,
@@ -65,8 +64,6 @@ class CreateListPage extends Component {
         }
       ).then((res) => {
         if (res.success){
-          console.log("CREATED LIST!");
-          console.log(res);
               this.closePopup();
               // navigate to edit page for creator to submit a Ranking
               // uncomment when /rankings/edit/:listId isn't broken!!
@@ -112,16 +109,23 @@ class CreateListPage extends Component {
   render() {
     var has_error = this.state.errorMessage === '';
     const items = this.state.items;
-    console.log(items);
+    var lockImage = this.state.publicList ? "Unlock.svg" : "Lock.svg";
+    var publicPrivateIcon = require('../../public/assets/'+ lockImage);
+    var publicPrivateIconStyle = {
+      width:"20px",
+      height:"20px"
+    }
     const publicPrivateIndicator = (
         <div className = "PublicPrivateIndicator">
           <h3>|</h3>
-          <button onClick = {this.changePrivacySetting.bind(this)}>
-              {this.state.publicList ? "UnlockImage" : "LockImage"}
+          <button onClick = {this.changePrivacySetting.bind(this)} style = {{background:"none"}}>
+              <img src = {publicPrivateIcon} style = {publicPrivateIconStyle}/>
           </button>
           <h3>{this.state.publicList ? "Public" : "Private"}</h3>
         </div>
     );
+
+
 
 		return (
       <div>

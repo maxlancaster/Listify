@@ -116,10 +116,18 @@ class ItemCard extends Component {
 			opacity: opacity
 		};
 
+    const editIcon = require("../../../public/assets/GreyPencil.svg");
+    const editIconStyle = {
+        width:"15px",
+        height:"15px"
+      }
+
 		return connectDragSource(connectDropTarget(
         <div className = "ItemCard" style={style}>
           {this.props.canEdit &&
-            <button className = "ItemCardEditButton" onClick={this.turnOnEditMode.bind(this)}>edit</button>
+            <button className = "ItemCardEditButton" onClick={this.turnOnEditMode.bind(this)}>
+              <img src = {editIcon} style = {editIconStyle}/>
+            </button>
           }
           {this.props.showRankingNumber && <p className = "ItemCardRanking">{this.props.index+1 + "."}</p>}
           {item.photo &&
