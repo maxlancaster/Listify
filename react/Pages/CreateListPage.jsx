@@ -125,8 +125,6 @@ class CreateListPage extends Component {
         </div>
     );
 
-
-
 		return (
       <div>
         {this.state.showPopup &&

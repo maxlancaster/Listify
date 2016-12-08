@@ -73,6 +73,36 @@ class ItemCard extends Component {
   editableItemCard() {
     const { item } = this.props;
     const descriptionPlaceholder = item.description.length > 0 ?  item.description : "Description (Optional)";
+
+    var iconStyle = {
+      width:"15px",
+      height:"15px",
+      display:"inline-block",
+      marginTop:"5px",
+      marginLeft:"5px"
+    }
+    var editIcon = require('../../../public/assets/WhitePencil.svg');
+    var photoIcon = require('../../../public/assets/Picture.svg');
+    var trashIcon = require('../../../public/assets/TrashCan.svg');
+
+    var buttonStyle = {
+      display:'flex',
+      paddingLeft:"5px",
+      width:"85px",
+      height:"25px",
+      padding:"0px",
+      marginBottom:"3px",
+      marginLeft: "5px",
+      background:"#9B9B9B"
+
+    }
+
+    var buttonTextStyle = {
+      display:"inline-block",
+      marginLeft:"5px",
+      marginTop:"5px"
+    }
+
     return (
       <div className = "EditableItemCard">
         <div className = "ItemContainer">
@@ -97,9 +127,26 @@ class ItemCard extends Component {
         }
         </div>
         <div className = "ButtonContainer">
-          <button className = "AddDescriptionButton" onClick={this.turnOnDescriptionMode.bind(this)} >Add Info</button>
-          <button className = "AddPhotoButton" onClick={this.turnOnPhotoMode.bind(this)}>Add Photo</button>
-          <button className = "DeleteButton" onClick={this.props.deleteItem.bind(null, item)}>Delete</button>
+          <button className = "AddDescriptionButton"
+                  onClick={this.turnOnDescriptionMode.bind(this)}
+                  style = {buttonStyle}>
+            <img src = {editIcon} style = {iconStyle}/>
+            <p style = {buttonTextStyle}>Add Info</p>
+          </button>
+
+          <button className = "AddPhotoButton"
+                  onClick={this.turnOnPhotoMode.bind(this)}
+                  style = {buttonStyle}>
+            <img src = {photoIcon} style = {iconStyle}/>
+            <p style = {buttonTextStyle}>Add Photo</p>
+          </button>
+
+          <button className = "DeleteButton"
+                  onClick={this.props.deleteItem.bind(null, item)}
+                  style = {buttonStyle}>
+            <img src = {trashIcon} style = {iconStyle}/>
+            <p style = {buttonTextStyle}>Delete</p>
+          </button>
         </div>
         <div className = "ExitButtonContainer">
           <button onClick = {this.savePressed.bind(this)}>Save</button>
