@@ -4,7 +4,7 @@ var moment = require("moment");
 
 var list = require("../models/List.js");
 
-mongoose.connect('mongodb://localhost/tests');
+// mongoose.connect('mongodb://localhost/tests');
 
 var noop = function(){};
 // list.remove({}, function() {});
