@@ -107,7 +107,9 @@ var Users = (function(userModel) {
      */
     that.search = function(searchString, callback) {
         userModel.find({ "username": { "$regex": new RegExp(searchString, "i")} }).exec(function(err, result) {
-            if (err) callback({ msg: err });
+            if (err) {
+              callback({ msg: err });
+            }
             if (result !== null) {
                 callback(null, result);
             } else {
@@ -137,7 +139,7 @@ var Users = (function(userModel) {
 
     /**mutates the list property to keep track of which lists the user has created **/
     that.hasCreatedList = function(user_id, list, callback) {
-      userModel.findOneAndUpdate({_id:user_id}, {$push: {lists:list._id}}, function(error, user) {
+      userModel.findOneAndUpdate({_id:user_id}, {$push: {lists:list._id}}, {new : true}).exec(function(error, user) {
         if (error) callback({msg:error});
         if (user !== null) {
           callback(null, user);
@@ -154,23 +156,23 @@ var Users = (function(userModel) {
         if (user !== null) {
           callback(null, user);
         } else {
-          userModel.find({_id : user_id}).exec(function(error, user) {
-              console.log("user created! : " + JSON.stringify(user, null, '\t'))
-          });
+          // userModel.find({_id : user_id}).exec(function(error, user) {
+          //     console.log("user created! : " + JSON.stringify(user, null, '\t'))
+          // });
           callback(null, false);
         }
       });
     }
 
     that.updateLastViewedInvitationsDate = function(user_id, callback) {
-      userModel.findOneAndUpdate({_id:user_id}, {last_viewed_invitations_date:Date.now()}, function(error ,user) {
+      userModel.findOneAndUpdate({_id:user_id}, {last_viewed_invitations_date:Date.now()}, {new : true}, function(error ,user) {
         if (error) callback({msg:error});
         if (user !== null) {
           callback(null, user);
         } else {
-          userModel.find({_id : user_id}).exec(function(error, user) {
-              console.log("user updated : " + JSON.stringify(user, null, '\t'))
-          });
+          // userModel.find({_id : user_id}).exec(function(error, user) {
+          //     console.log("user updated : " + JSON.stringify(user, null, '\t'))
+          // });
           callback(null, false);
         }
       });
@@ -187,7 +189,7 @@ var Users = (function(userModel) {
      */
     that.createUser = function(username, password, callback) {
         userModel.findOne({ username: username}, function(err, result) {
-            if (err) callback({ msg: err});
+            // if (err) callback({ msg: err});
             if (result !== null) {
                 callback({ taken: true});
             } else if (username.length > 15 || username.length < 3) {
@@ -195,12 +197,12 @@ var Users = (function(userModel) {
             } else {
                 var user = new userModel({ username: username,
                     password: password  });
-                user.save(function(err) {
+                user.save(function(err, user) {
                     if (err) callback({ msg: err });
-                    userModel.find({username : username}).exec(function(error, users) {
-                        console.log("user created! : " + JSON.stringify(users, null, '\t'))
-                    });
-                    callback(null);
+                    // userModel.find({username : username}).exec(function(error, users) {
+                    //     console.log("user created! : " + JSON.stringify(users, null, '\t'))
+                    // });
+                    callback(null, user);
                 });
             }
         });
