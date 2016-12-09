@@ -4,7 +4,7 @@ var moment = require("moment");
 
 var ranking = require("../models/Ranking.js");
 
-mongmongoose.connect('mongodb://localhost/tests');
+mongoose.connect('mongodb://localhost/tests');
 
 var noop = function(){};
 // ranking.remove({}, function() {});
