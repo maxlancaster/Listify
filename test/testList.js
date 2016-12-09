@@ -7,8 +7,8 @@ var list = require("../models/List.js");
 mongoose.connect('mongodb://localhost/tests');
 
 var noop = function(){};
-list.remove({}, function() {});
-list.createList({}, noop); // TODO: create actual test objects.
+// list.remove({}, function() {});
+// list.createList({}, noop); // TODO: create actual test objects.
 
 
 // Test List.

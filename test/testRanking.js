@@ -7,8 +7,8 @@ var ranking = require("../models/Ranking.js");
 mongoose.connect('mongodb://localhost/tests');
 
 var noop = function(){};
-ranking.remove({}, function() {});
-ranking.createList({}, noop); // TODO: create actual test objects.
+// ranking.remove({}, function() {});
+// ranking.createList({}, noop); // TODO: create actual test objects.
 
 
 // Test List.
