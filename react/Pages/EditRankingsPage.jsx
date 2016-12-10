@@ -19,16 +19,8 @@ class EditRankingsPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: '', // data.title,
-      creator: '', //data.creator,
-      items: [], //data.items || [],
-      rankings: [], //data.rankings,
-      isPublic: false, //data.isPublic,
-      upvotes : 0, //data.upvotes,
-      locked: false, //data.locked,
-      maxLength : 0, //data.maxLength,
-      usersSharedWith : [], //data.usersSharedWith,
-      description: '',
+      list: null,
+      items: [],
       showCreateRankingConfirm : false,
       submission: [],
       comment : '',
@@ -49,18 +41,7 @@ class EditRankingsPage extends Component {
                 listServices.getListDataFromId(this.props.params.listId).then((response) => {
                     if (response.success) {
                       var list = response.content.list;
-                        this.setState({
-                          title : response.content.list.title,
-                          creator: response.content.list.creator,
-                          items: response.content.list.items,
-                          rankings: response.content.list.rankings,
-                          isPublic: response.content.list.isPublic,
-                          upvotes : response.content.list.upvotes,
-                          locked: response.content.list.locked,
-                          maxLength : response.content.list.maxLength,
-                          usersSharedWith : response.content.list.usersSharedWith,
-                          description: ''
-                        });
+                        this.setState({list:list});
                         // find intersection of list.rankings and current_user.rankings
                         var ranking_ids = list.rankings.filter(function(ranking) {
                           return user.rankings.indexOf(ranking) != -1;
@@ -77,6 +58,7 @@ class EditRankingsPage extends Component {
                                 var availableItems = list.items.filter( function( item ) {
                                   return order_ids.indexOf( item.id ) < 0;
                                 });
+                                console.log(order);
                                 this.setState({submission:order, items:availableItems});
                               }
                             });
@@ -93,14 +75,14 @@ class EditRankingsPage extends Component {
     }
 
     hasUserSubmittedThisRanking() {
-        if (this.state.user === null) {
+        if (this.state.user === null || this.state.list === null) {
             return false;
         }
         // var current_user = this.props.user;
 
         var current_user = this.state.user;
         // find intersection of list.rankings and current_user.rankings
-        var ranking_ids = this.state.rankings.filter(function(ranking) {
+        var ranking_ids = this.state.list.rankings.filter(function(ranking) {
             return current_user.rankings.indexOf(ranking) != -1;
         });
 
@@ -127,8 +109,8 @@ class EditRankingsPage extends Component {
                 order : order,
                 list : listId,
                 comment : comment,
-                listTitle:this.state.title,
-                listCreatorUsername:this.state.creator
+                listTitle:this.state.list.title,
+                listCreatorUsername:this.state.list.creator
             }
         ).then((response) => {
             if (response.success) {
@@ -206,6 +188,7 @@ class EditRankingsPage extends Component {
       var commentButtonTitle = hasCommented > 0 ? "Commented Already" : "Comment";
       var updateOrSubmitRankingButtonFunction = this.hasUserSubmittedThisRanking() ? this.updateRanking.bind(this) : this.submitRanking.bind(this);
       var buttonTitle = this.hasUserSubmittedThisRanking() ? "Update" : "Submit";
+      var list = this.state.list;
       return (
         <div>
           {
@@ -223,29 +206,31 @@ class EditRankingsPage extends Component {
               />
           }
           <div className = "EditRankingsPage">
-            <div className = "EditRankingRankingList" >
-              <div className = "RankingTitleContainer">
-                <h1 className = "RankingTitle">{this.state.title}</h1>
-                <h1 className = "RankingLimit"> {" | Top "+this.state.maxLength}</h1>
-              </div>
-              <div className = "TitleSecondRow">
-                <h2 className = "RankingAuthor">{"created by "+this.state.creator}</h2>
-                <button className = "EditRankingCommentButton" onClick = {this.commentClicked.bind(this)}>{commentButtonTitle}</button>
-              </div>
-              <RankingList id={1}
-                           items = {this.state.submission}
-                           canEdit = {false}
-                           showStandbyCard = {true}
-                           maxLength = {this.state.maxLength}/>
-             {this.state.comment &&
-               <div>
-                 <div className = "Separator"></div>
-                 <h3>Comments</h3>
-                 <CommentsList comments = {[this.state.comment]}/>
-               </div>
-             }
+            {list &&
+              <div className = "EditRankingRankingList" >
+                <div className = "RankingTitleContainer">
+                  <h1 className = "RankingTitle">{list.title}</h1>
+                  <h1 className = "RankingLimit"> {" | Top "+list.maxLength}</h1>
+                </div>
+                <div className = "TitleSecondRow">
+                  <h2 className = "RankingAuthor">{"created by "+list.creator}</h2>
+                  <button className = "EditRankingCommentButton" onClick = {this.commentClicked.bind(this)}>{commentButtonTitle}</button>
+                </div>
+                <RankingList id={1}
+                             items = {this.state.submission}
+                             canEdit = {false}
+                             showStandbyCard = {true}
+                             maxLength = {list.maxLength}/>
+               {this.state.comment &&
+                 <div>
+                   <div className = "Separator"></div>
+                   <h3>Comments</h3>
+                   <CommentsList comments = {[this.state.comment]}/>
+                 </div>
+               }
 
-            </div>
+              </div>
+            }
             <div className = "EditRankingOptionsList" >
               <h1 className = "OptionsListTitle"> Options</h1>
               {this.state.items && this.state.items.length > 0 &&
