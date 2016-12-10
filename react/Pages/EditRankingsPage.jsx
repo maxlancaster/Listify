@@ -25,7 +25,8 @@ class EditRankingsPage extends Component {
       submission: [],
       comment : '',
       showComments : false,
-      user : null
+      user : null,
+      showStandbyCard : false
     }
   }
 
@@ -46,7 +47,9 @@ class EditRankingsPage extends Component {
                         var ranking_ids = list.rankings.filter(function(ranking) {
                           return user.rankings.indexOf(ranking) != -1;
                         });
+
                         if (ranking_ids && ranking_ids.length > 0) {
+
                             var ranking_id = ranking_ids[0];
                             rankingServices.getRankingById(ranking_id).then((res) => {
                               if (res.success) {
@@ -58,10 +61,17 @@ class EditRankingsPage extends Component {
                                 var availableItems = list.items.filter( function( item ) {
                                   return order_ids.indexOf( item.id ) < 0;
                                 });
-                                console.log(order);
-                                this.setState({submission:order, items:availableItems});
+
+                                //showStandbyCard is set to true by default but that isn't necessary
+                                //if the RankingsList is going to be populated
+                                this.setState({submission:order,
+                                               items:availableItems,
+                                               showStandbyCard: order.length === 0});
                               }
                             });
+                        } else {
+                          //There is nothing in the RankingsList so show StandbyCard
+                          this.setState({showStandbyCard:true});
                         }
                       } else {
                         console.log("error");
@@ -219,7 +229,7 @@ class EditRankingsPage extends Component {
                 <RankingList id={1}
                              items = {this.state.submission}
                              canEdit = {false}
-                             showStandbyCard = {true}
+                             showStandbyCard = {this.state.showStandbyCard}
                              maxLength = {list.maxLength}/>
                {this.state.comment &&
                  <div>
