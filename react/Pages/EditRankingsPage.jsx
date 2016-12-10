@@ -41,28 +41,54 @@ class EditRankingsPage extends Component {
         // var request = this.props.rankingServices.loadEditPage(this.props.params.consensusID);
         // this.props.updateEditPage(request);
 
-        listServices.getListDataFromId(this.props.params.listId).then((response) => {
-            if (response.success) {
-                this.setState({
-                    title : response.content.list.title,
-                    creator: response.content.list.creator,
-                    items: response.content.list.items,
-                    rankings: response.content.list.rankings,
-                    isPublic: response.content.list.isPublic,
-                    upvotes : response.content.list.upvotes,
-                    locked: response.content.list.locked,
-                    maxLength : response.content.list.maxLength,
-                    usersSharedWith : response.content.list.usersSharedWith,
-                    description: ''
-                });
-            } else {
-                console.log("error");
-            }
-        });
-
         userServices.getCurrentUser()
             .then((res) => {
-                this.setState({user : res.content.user});
+              if (res.success) {
+                var user = res.content.user;
+                this.setState({user : user});
+                listServices.getListDataFromId(this.props.params.listId).then((response) => {
+                    if (response.success) {
+                      var list = response.content.list;
+                        this.setState({
+                          title : response.content.list.title,
+                          creator: response.content.list.creator,
+                          items: response.content.list.items,
+                          rankings: response.content.list.rankings,
+                          isPublic: response.content.list.isPublic,
+                          upvotes : response.content.list.upvotes,
+                          locked: response.content.list.locked,
+                          maxLength : response.content.list.maxLength,
+                          usersSharedWith : response.content.list.usersSharedWith,
+                          description: ''
+                        });
+                        // find intersection of list.rankings and current_user.rankings
+                        var ranking_ids = list.rankings.filter(function(ranking) {
+                          return user.rankings.indexOf(ranking) != -1;
+                        });
+                        if (ranking_ids && ranking_ids.length > 0) {
+                            var ranking_id = ranking_ids[0];
+                            rankingServices.getRankingById(ranking_id).then((res) => {
+                              if (res.success) {
+                                var ranking = res.content.ranking;
+                                var order = ranking.order;
+                                var order_ids = order.map((item) => {
+                                  return item.id;
+                                });
+                                var availableItems = list.items.filter( function( item ) {
+                                  return order_ids.indexOf( item.id ) < 0;
+                                });
+                                this.setState({submission:order, items:availableItems});
+                              }
+                            });
+                        }
+                      } else {
+                        console.log("error");
+                      }
+
+
+                    });
+              }
+
             });
     }
 
@@ -223,7 +249,11 @@ class EditRankingsPage extends Component {
             <div className = "EditRankingOptionsList" >
               <h1 className = "OptionsListTitle"> Options</h1>
               {this.state.items && this.state.items.length > 0 &&
-                <OptionsList  id={2} items={this.state.items} canEdit = {false} defaultBackGroundColor = {"FAF9F9"} />
+                <OptionsList  id={2}
+                              items={this.state.items}
+                              canEdit = {false}
+                              defaultBackGroundColor = {"FAF9F9"}
+                              canDrop = {true} />
               }
             </div>
 
