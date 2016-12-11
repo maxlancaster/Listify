@@ -807,9 +807,11 @@ textarea:focus, input:focus{
 .Logout {
   float:right;
   margin-right:40px;
-  margin-top:40px;
+  margin-top:262px;
   margin-bottom:-20px;
   padding-top:5px;
   padding-bottom:5px;
   width:300px;
+  position: absolute;
+  right: 0px;
 }

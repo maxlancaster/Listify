@@ -11,6 +11,10 @@ class DraggableList extends Component {
 		this.state = { items: this.props.items };
 	}
 
+  componentWillReceiveProps(props) {
+    this.setState({items : props.items});
+  }
+
 	addItem(item) {
     var items = this.state.items;
     items.push(item);
@@ -49,6 +53,9 @@ class DraggableList extends Component {
 
 	render() {
 		var { items } = this.state;
+    if (!items) {
+      items = [];
+    };
 		const { canDrop, isOver, connectDropTarget} = this.props;
 		const isActive = canDrop && isOver;
     const defaultBackGroundColor = this.props.defaultBackGroundColor ? white : this.props.defaultBackGroundColor;

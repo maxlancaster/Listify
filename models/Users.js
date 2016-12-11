@@ -1,12 +1,6 @@
 
 /*
  * Model representing a user.
- * key: value pairs are key = username of the user and value =
- * the object representing the user.
- * EXAMPLE USER:
- *   { 'username': 'bruno'
- *     'password': 'pass1' }
- * Usernames and passwords are always strings.
  */
 
 var mongoose = require('mongoose');
@@ -42,6 +36,11 @@ var userModel = mongoose.model('Users', userSchema);
 var Users = (function(userModel) {
     var that = {};
 
+    /**
+     *  Returns an array of rankings submitted by user with username
+     * @param username {String} - the username to query
+     * @param callback
+     */
     that.getAllRankings = function (username, callback) {
         userModel.findOne({ username: username }, function(err, user) {
             if (err) callback({ msg: err });
@@ -54,6 +53,11 @@ var Users = (function(userModel) {
         });
     };
 
+    /**
+     * Returns an array of lists created by user with username
+     * @param username {String} - the username to query
+     * @param callback
+     */
     that.getAllLists = function (username, callback) {
         userModel.findOne({ username: username }, function(err, user) {
             if (err) callback({ msg: err });
@@ -107,7 +111,9 @@ var Users = (function(userModel) {
      */
     that.search = function(searchString, callback) {
         userModel.find({ "username": { "$regex": new RegExp(searchString, "i")} }).exec(function(err, result) {
-            if (err) callback({ msg: err });
+            if (err) {
+              callback({ msg: err });
+            }
             if (result !== null) {
                 callback(null, result);
             } else {
@@ -135,9 +141,14 @@ var Users = (function(userModel) {
         });
     };
 
-    /**mutates the list property to keep track of which lists the user has created **/
+    /**
+     * Mutates the list property of the user with user_id
+     * @param user_id {String} - the user to query
+     * @param list {Object} - the list object whose _id will be added to the user's list property
+     * @param callback
+     */
     that.hasCreatedList = function(user_id, list, callback) {
-      userModel.findOneAndUpdate({_id:user_id}, {$push: {lists:list._id}}, function(error, user) {
+      userModel.findOneAndUpdate({_id:user_id}, {$push: {lists:list._id}}, {new : true}).exec(function(error, user) {
         if (error) callback({msg:error});
         if (user !== null) {
           callback(null, user);
@@ -147,30 +158,42 @@ var Users = (function(userModel) {
       });
     }
 
-    /**mutates the list property to keep track of which lists the user has created **/
+    /**
+     * Mutates the rankings property of the user with user_id
+     * @param user_id {String} - the user to query
+     * @param ranking {Object} - the list object whose _id will be added to the user's ranking property
+     * @param callback
+     */
     that.hasSubmittedRanking = function(user_id, ranking, callback) {
       userModel.findOneAndUpdate({_id:user_id}, {$push: {rankings:ranking._id}}, {new : true}).exec(function(error, user) {
         if (error) callback({msg:error});
         if (user !== null) {
           callback(null, user);
         } else {
-          userModel.find({_id : user_id}).exec(function(error, user) {
-              console.log("user created! : " + JSON.stringify(user, null, '\t'))
-          });
+          // userModel.find({_id : user_id}).exec(function(error, user) {
+          //     console.log("user created! : " + JSON.stringify(user, null, '\t'))
+          // });
           callback(null, false);
         }
       });
     }
 
+
+    /**
+     * Mutates the last_viewed_invitations_date property of the user with user_id so the ProfilePage
+     * provide correct notifications about the user's private list invites
+     * @param user_id {String} - the user to query
+     * @param callback
+     */
     that.updateLastViewedInvitationsDate = function(user_id, callback) {
-      userModel.findOneAndUpdate({_id:user_id}, {last_viewed_invitations_date:Date.now()}, function(error ,user) {
+      userModel.findOneAndUpdate({_id:user_id}, {last_viewed_invitations_date:Date.now()}, {new : true}, function(error ,user) {
         if (error) callback({msg:error});
         if (user !== null) {
           callback(null, user);
         } else {
-          userModel.find({_id : user_id}).exec(function(error, user) {
-              console.log("user updated : " + JSON.stringify(user, null, '\t'))
-          });
+          // userModel.find({_id : user_id}).exec(function(error, user) {
+          //     console.log("user updated : " + JSON.stringify(user, null, '\t'))
+          // });
           callback(null, false);
         }
       });
@@ -187,7 +210,7 @@ var Users = (function(userModel) {
      */
     that.createUser = function(username, password, callback) {
         userModel.findOne({ username: username}, function(err, result) {
-            if (err) callback({ msg: err});
+            // if (err) callback({ msg: err});
             if (result !== null) {
                 callback({ taken: true});
             } else if (username.length > 15 || username.length < 3) {
@@ -195,12 +218,12 @@ var Users = (function(userModel) {
             } else {
                 var user = new userModel({ username: username,
                     password: password  });
-                user.save(function(err) {
+                user.save(function(err, user) {
                     if (err) callback({ msg: err });
-                    userModel.find({username : username}).exec(function(error, users) {
-                        console.log("user created! : " + JSON.stringify(users, null, '\t'))
-                    });
-                    callback(null);
+                    // userModel.find({username : username}).exec(function(error, users) {
+                    //     console.log("user created! : " + JSON.stringify(users, null, '\t'))
+                    // });
+                    callback(null, user);
                 });
             }
         });
