@@ -71,7 +71,7 @@ class EditRankingsPage extends Component {
                             });
                         } else {
                           //There is nothing in the RankingsList so show StandbyCard
-                          this.setState({showStandbyCard:true});
+                          this.setState({showStandbyCard:true, items: list.items});
                         }
                       } else {
                         console.log("error");
