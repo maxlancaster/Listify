@@ -150,44 +150,4 @@ router.put('/update_last_viewed_invitations_date', function(req,res) {
   });
 })
 
-/*
-  PUT /users/follow/:username
-  Request parameters:
-    - username: the unique username of the user you'd like to follow
-  Response:
-    - success: true if the server succeeded in following the user
-    - err: on failure, an error message
-*/
-// router.post('/follow/:username', function(req, res) {
-//   if (req.body.following) {
-//     Users.followUser(req.currentUser.username, req.params.username, function(err) {
-//       if (err) {
-//         utils.sendErrorResponse(res, 400, err.msg);
-//       } else {
-//         utils.sendSuccessResponse(res);
-//       }
-//     });
-//   } else {
-//     Users.unfollowUser(req.currentUser.username, req.params.username, function(err) {
-//       if (err) {
-//         utils.sendErrorResponse(res, 400, err.msg);
-//       } else {
-//         utils.sendSuccessResponse(res);
-//       }
-//     });
-//   }
-// });
-
-/*
-  GET /users/following
-  No request parameters
-  Response:
-    - success: true if the server succeeded along with request.body.content.following
-               which is the users that the current user is following
-    - err: on failure, an error message (handled by authentication middleware)
-*/
-// router.get('/following', function(req, res) {
-//   utils.sendSuccessResponse(res, { following: req.currentUser.following });
-// });
-
 module.exports = router;
