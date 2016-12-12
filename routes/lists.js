@@ -45,46 +45,65 @@ router.post('/create', function(req, res) {
  * Gets the ordering for the list based on the rankings submitted thus far
  */
 router.get('/consensus/:listId', function (req, res) {
-    List.getRankings(req.params.listId, function (err, listRankingIds) {
-        if(err){
-            utils.sendErrorResponse(res, 404, 'No such list.');
-        } else {
-            Rankings.getRankingObjectsFromListOfIds(listRankingIds, function (err, listRankings) {
-                if(err){
-                    utils.sendErrorResponse(res, 500, err);
-                } else {
+    List.getListById(req.params.listId, function(err, list) {
+        var items = list.items;      
+        List.getRankings(req.params.listId, function (err, listRankingIds) {
+            if(err){
+                utils.sendErrorResponse(res, 404, 'No such list.');
+            } else {
+                Rankings.getRankingObjectsFromListOfIds(listRankingIds, function (err, listRankings) {
+                    if(err){
+                        utils.sendErrorResponse(res, 500, err);
+                    } else {
 
-                    var sums = {}; //{itemId:Sum of ranks}
-                    var itemMap = {};
+                        var sums = {}; //{itemId:Sum of ranks}
+                        var itemMap = {}; // {item.id : item}
 
-                    listRankings.forEach(function (ranking) {
-                        var order = ranking.order;
+                        listRankings.forEach(function (ranking) {
+                            var order = ranking.order;
+                            var orderIds = order.map(function(item){
+                                return item.id;
+                            });
 
-                        order.forEach(function (item) {
-                          itemMap[item.id] = item;
-                           if (!(item.id in sums)) {
-                             sums[item.id] = item.rank;
-                           } else {
-                             sums[item.id] += item.rank;
-                           }
+                            order.forEach(function (item) {
+                              itemMap[item.id] = item;
+                               if (!(item.id in sums)) {
+                                 sums[item.id] = item.rank;
+                               } else {
+                                 sums[item.id] += item.rank;
+                               }
+                            });
+                            items.forEach(function(item) {
+                                itemMap[item.id] = item;
+                                if (orderIds.indexOf(item.id) < 0) {
+                                    console.log("index of");
+                                    if (item.id in sums) {
+                                        sums[item.id] += list.maxLength + 1;
+                                    } else {
+                                        sums[item.id] = list.maxLength + 1;
+                                    }
+                                }
+                            });
+                            console.log(sums);
                         });
-                    });
 
-                    var itemIds = Object.keys(sums);
-                    var sumObjects = itemIds.map(function(itemId) {
-                      var sumObject = {itemId:itemId, rank:sums[itemId]};
-                      return sumObject;
-                    });
+                        var itemIds = Object.keys(sums);
+                        var sumObjects = itemIds.map(function(itemId) {
+                          var sumObject = {itemId:itemId, rank:sums[itemId]};
+                          return sumObject;
+                        });
 
-                    sumObjects.sort(function(a,b) { return a.rank - b.rank; });
+                        sumObjects.sort(function(a,b) { return a.rank - b.rank; });
 
-                    var updated_order = sumObjects.map(function(sumObject) {
-                      return itemMap[sumObject.itemId];
-                    });
-                    utils.sendSuccessResponse(res, {order : updated_order});
-                }
-            })
-        }
+                        var updated_order = sumObjects.map(function(sumObject) {
+                          return itemMap[sumObject.itemId];
+                        });
+
+                        utils.sendSuccessResponse(res, {order : updated_order});
+                    }
+                })
+            }
+        })
     })
 });
 

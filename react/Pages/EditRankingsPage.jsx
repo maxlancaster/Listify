@@ -116,14 +116,6 @@ class EditRankingsPage extends Component {
             order.push(itemCopy); // start indexing at 1
         });
 
-        this.state.items.forEach(function(item, index) {
-          if (submission.indexOf(item) < 0) {
-            var itemCopy = item;
-            itemCopy.rank = maxLength + 1;
-            order.push(itemCopy);
-          }
-        });
-
         rankingServices.submitRanking(
             {
                 order : order,
@@ -155,14 +147,6 @@ class EditRankingsPage extends Component {
             var itemCopy = item;
             itemCopy.rank = index+1;
             order.push(itemCopy); // start indexing at 1
-        });
-
-        this.state.items.forEach(function(item, index) {
-          if (submission.indexOf(item) < 0) {
-            var itemCopy = item;
-            itemCopy.rank = maxLength + 1;
-            order.push(itemCopy);
-          }
         });
 
         listServices.getListDataFromId(this.props.params.listId).then((response) => {
