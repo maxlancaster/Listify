@@ -53,7 +53,6 @@ router.post('/', function(req, res) {
 
     Users.createUser(req.body.username, req.body.password, function(err) {
       if (err) {
-        console.log(err);
         if (err.taken) {
           utils.sendErrorResponse(res, 400, 'That username is already taken!');
         } else if (err.msg) {
@@ -84,7 +83,6 @@ router.post('/login', function(req, res) {
     Users.checkPassword(req.body.username, req.body.password, function(err, user) {
         if (user) {
             req.session.user = user;
-            console.log("login success by " + user.username);
             utils.sendSuccessResponse(res, { user: user});
         } else {
             utils.sendErrorResponse(res, 403, 'Invalid username or password.');

@@ -40,7 +40,7 @@ var rankingModel = mongoose.model('Ranking', rankingSchema);
  */
 var Rankings = (function(rankingModel) {
 
-    var that = Object.create(Rankings.prototype);
+    var that = {};
 
     /**
      * Update a ranking by sumbitting a new ordering of items

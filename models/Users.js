@@ -58,7 +58,7 @@ var userModel = mongoose.model('Users', userSchema);
  */
 var Users = (function(userModel) {
 
-    var that = Object.create(Users.prototype);
+    var that = {};
 
     /**
      *  Returns an array of rankings submitted by user with username
@@ -194,9 +194,7 @@ var Users = (function(userModel) {
         if (user !== null) {
           callback(null, user);
         } else {
-          // userModel.find({_id : user_id}).exec(function(error, user) {
-          //     console.log("user created! : " + JSON.stringify(user, null, '\t'))
-          // });
+
           callback(null, false);
         }
       });
@@ -215,9 +213,7 @@ var Users = (function(userModel) {
         if (user !== null) {
           callback(null, user);
         } else {
-          // userModel.find({_id : user_id}).exec(function(error, user) {
-          //     console.log("user updated : " + JSON.stringify(user, null, '\t'))
-          // });
+
           callback(null, false);
         }
       });
@@ -234,7 +230,6 @@ var Users = (function(userModel) {
      */
     that.createUser = function(username, password, callback) {
         userModel.findOne({ username: username}, function(err, result) {
-            // if (err) callback({ msg: err});
             if (result !== null) {
                 callback({ taken: true});
             } else if (username.length > 15 || username.length < 3) {
@@ -247,9 +242,6 @@ var Users = (function(userModel) {
 
                 user.save(function(err, user) {
                     if (err) callback({ msg: err });
-                    // userModel.find({username : username}).exec(function(error, users) {
-                    //     console.log("user created! : " + JSON.stringify(users, null, '\t'))
-                    // });
                     callback(null, user);
                 });
             }

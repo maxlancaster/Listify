@@ -58,11 +58,11 @@ var listSchema = mongoose.Schema({
 var listModel = mongoose.model('List', listSchema);
 
 /**
- * An object that encapsulates functions that work with the list database
+ * An object that encapsulates functions that work with the User database
  */
 var list = (function(listModel) {
 
-    var that = Object.create(list.prototype);
+    var that = {};
 
     /**
      * Gets all the rankings that point to a list
@@ -110,10 +110,8 @@ var list = (function(listModel) {
                             {upsert:true, new:true},
                             function(error, newList) {
                               if (!error) {
-                                console.log(newList);
                                 callback(null, newList);
                               } else {
-                                console.log(error);
                                 calback(error,null);
                               }
                             }
@@ -156,7 +154,6 @@ var list = (function(listModel) {
                               if (!error) {
                                 callback(null, newList);
                               } else {
-                                console.log(error);
                                 calback(error,null);
                               }
                             }
@@ -326,8 +323,6 @@ var list = (function(listModel) {
         {_id : listId}, {$pushAll: {items:newItems} },{upsert:false}, function(err,newList) {
             if (err) callback({msg: err});
             else {
-              console.log("Successfully updated");
-              console.log(newItems);
               callback(null,newList);
             }
       });

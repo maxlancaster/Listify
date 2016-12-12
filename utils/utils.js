@@ -6,7 +6,7 @@
 //
 var utils = (function() {
 
-  var that = Object.create(utils.prototype);
+  var _utils = {};
 
   /*
     Send a 200 OK with success:true in the request body to the
@@ -32,8 +32,8 @@ var utils = (function() {
     }).end();
   };
 
-  Object.freeze(that);
-  return that;
+  Object.freeze(_utils);
+  return _utils;
 
 })();
 
