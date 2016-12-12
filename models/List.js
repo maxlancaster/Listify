@@ -62,7 +62,7 @@ var listModel = mongoose.model('List', listSchema);
  */
 var list = (function(listModel) {
 
-    var that = {};
+    var that = Object.create(list.prototype);
 
     /**
      * Gets all the rankings that point to a list

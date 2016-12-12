@@ -57,7 +57,8 @@ var userModel = mongoose.model('Users', userSchema);
  * An object that encapsulates functions that work with the User database
  */
 var Users = (function(userModel) {
-    var that = {};
+
+    var that = Object.create(Users.prototype);
 
     /**
      *  Returns an array of rankings submitted by user with username
