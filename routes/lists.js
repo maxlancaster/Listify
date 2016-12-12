@@ -7,9 +7,10 @@ var Items = require('../models/Items');
 var List = require('../models/List');
 var User = require('../models/Users');
 var Users = User.Users;
-// var rankingServices = require('../services/rankingServices');
 
-// initial creation of the Consensus entry and the Ranking entry by the creator
+/**
+ * Creates a user
+ */
 router.post('/create', function(req, res) {
     var listObject = {
         title : req.body.content.title,
@@ -43,7 +44,6 @@ router.post('/create', function(req, res) {
 /**
  * Gets the ordering for the list based on the rankings submitted thus far
  */
-
 router.get('/consensus/:listId', function (req, res) {
     List.getRankings(req.params.listId, function (err, listRankingIds) {
         if(err){
@@ -88,6 +88,9 @@ router.get('/consensus/:listId', function (req, res) {
     })
 });
 
+/**
+ * Gets the comments to a particular list
+ */
 router.get('/comments/:listId', function (req, res) {
     List.getRankings(req.params.listId, function (err, listRankingIds) {
         if(err){
@@ -102,7 +105,6 @@ router.get('/comments/:listId', function (req, res) {
                   }).filter(function(object) {
                     return object ? true : false;
                   });
-                  console.log(comments);
                   utils.sendSuccessResponse(res, {comments : comments});
                 }
             })
@@ -124,7 +126,7 @@ router.get('/find/:listId', function(req, res){
 });
 
 /**
- * Gets the lists of creatde by a user given his user_id
+ * Gets the lists of created by a user given his user_id
  */
  router.get('/user/:userId', function(req, res){
      List.getUserLists(req.params.userId, function(err, lists){
@@ -136,20 +138,23 @@ router.get('/find/:listId', function(req, res){
      })
  });
 
+/**
+ * Gets the lists a user is invited to
+ */
 router.get('/invited/:username', function(req, res){
   console.log("yoo");
     List.getInvitedLists(req.params.username, function(err, lists){
         if(err){
-            console.log(err);
             utils.sendErrorResponse(res, 500, err);
         } else {
-            console.log("invited lists!!");
-            console.log(lists);
             utils.sendSuccessResponse(res, {lists : lists});
         }
     })
 });
 
+/**
+ *
+ */
 router.post('/search/:searchString', function(req, res){
     List.search(req.params.searchString, function(err, lists){
         if(err){

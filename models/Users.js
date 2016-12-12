@@ -32,10 +32,20 @@ var userSchema = mongoose.Schema({
 
 userSchema.index({username: 'text'});
 
+/**
+ * hashes a password
+ * @param password {string} - password
+ * @returns the hashed password
+ */
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
+/**
+ * Validate a hashed password
+ * @param password {string} - password
+ * @returns {*}
+ */
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
@@ -43,6 +53,9 @@ userSchema.methods.validPassword = function(password) {
 
 var userModel = mongoose.model('Users', userSchema);
 
+/**
+ * An object that encapsulates functions that work with the User database
+ */
 var Users = (function(userModel) {
     var that = {};
 

@@ -8,12 +8,11 @@
 var mongoose = require('mongoose');
 var Items = require('../models/Items');
 var List = require('../models/List');
-var ObjectId = require('mongoose').Types.ObjectId
+var ObjectId = require('mongoose').Types.ObjectId;
 
 
 var rankingSchema = mongoose.Schema({
 
-    //order in ranking is the order that it is preferred
     order: [],
 
     user: String,
@@ -36,10 +35,20 @@ var rankingSchema = mongoose.Schema({
 
 var rankingModel = mongoose.model('Ranking', rankingSchema);
 
+/**
+ * Am object that encapsulates functions that work with the rankings database
+ */
 var Rankings = (function(rankingModel) {
 
     var that = {};
 
+    /**
+     * Update a ranking by sumbitting a new ordering of items
+     * @param ranking_id {string} - the ranking id
+     * @param order {array} - an array of items
+     * @param comment {string} - a comment
+     * @param callback
+     */
     that.updateRanking = function (ranking_id, order, comment, callback) {
         rankingModel.findOneAndUpdate({_id : new ObjectId(ranking_id)}, {$set : {order : order, comment: comment}}, {new : true})
             .exec(function (err, ranking) {
@@ -53,7 +62,11 @@ var Rankings = (function(rankingModel) {
     };
 
 
-    //Helps with the consensus updating, TODO make sure this works!
+    /**
+     * Gets the Ranking Object from a list of corresponding ranking ids
+     * @param listOfRankings {array} - the ranking ids
+     * @param callback
+     */
     that.getRankingObjectsFromListOfIds = function (listOfRankings, callback) {
         rankingModel.find({
             '_id' : { $in:
@@ -64,6 +77,11 @@ var Rankings = (function(rankingModel) {
         });
     };
 
+    /**
+     * Get the rankings for a user
+     * @param user_id {string} - the user id
+     * @param callback
+     */
     that.getUserRankings = function(user_id, callback) {
       rankingModel.find({user_id : new ObjectId(user_id)}).sort({createdAt: -1}).exec(function(err, rankings) {
         if (err) {
@@ -75,7 +93,12 @@ var Rankings = (function(rankingModel) {
     };
 
 
-    //add an item to a ranking, item parameter should be passed in as {title: string, ranking: number}
+    /**
+     * Add an item to a ranking
+     * @param item {Item} - an item
+     * @param rankingId {string} - the ranking id
+     * @param callback
+     */
     that.addItemToRanking = function (item, rankingId, callback) {
 
         rankingModel.findByIdAndUpdate(
@@ -88,7 +111,11 @@ var Rankings = (function(rankingModel) {
         )
     };
 
-    //expect in the same form as schema above
+    /**
+     * Adds a ranking to the database
+     * @param ranking {Ranking} - a ranking object
+     * @param callback
+     */
     that.addRanking = function (ranking, callback) {
         console.log(ranking);
         var ranking = new rankingModel({
@@ -112,7 +139,11 @@ var Rankings = (function(rankingModel) {
         })
     };
 
-    //returns the id of the Consensus object that a given ranking refers to
+    /**
+     * Get a list that is referred to by a ranking
+     * @param rankingId {string} - the ranking id
+     * @param callback
+     */
     that.getListByRankingId = function (rankingId, callback) {
         rankingModel.findById(rankingId, function (err, ranking) {
             if (err) callback({ msg: err });
@@ -124,7 +155,11 @@ var Rankings = (function(rankingModel) {
         })
     };
 
-    //get a ranking object by its ID
+    /**
+     * Get a ranking by its id
+     * @param rankingId {string} - the ranking id
+     * @param callback
+     */
     that.getRankingByID = function (rankingId, callback) {
         rankingModel.findById(rankingId, function (err, ranking) {
             if (err) callback({ msg: err });

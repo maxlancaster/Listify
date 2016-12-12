@@ -57,18 +57,18 @@ var listSchema = mongoose.Schema({
 
 var listModel = mongoose.model('List', listSchema);
 
-
+/**
+ * An object that encapsulates functions that work with the list database
+ */
 var list = (function(listModel) {
 
     var that = {};
 
-    //Helps with the consensus updating, TODO make sure this works!
     /**
-     * Gets rankings owned by a list
-     * @param listId
+     * Gets all the rankings that point to a list
+     * @param listId {string} - the list object id
      * @param callback
      */
-
     that.getRankings = function (listId, callback) {
         listModel.findById(listId, function (err, list) {
             if (err) callback({ msg: err });
@@ -80,6 +80,12 @@ var list = (function(listModel) {
         });
     };
 
+    /**
+     * Upvote a list
+     * @param listId {string} - the list object id
+     * @param userId {string} - the user object id
+     * @param callback
+     */
     that.upvote = function(listId,userId, callback) {
       listModel.findById(listId, function(err, list){
           if(err) callback({msg:err});
@@ -116,8 +122,14 @@ var list = (function(listModel) {
               callback({msg: 'The list does not exist!'});
           }
       });
-    }
+    };
 
+    /**
+     * Downvote a list
+     * @param listId {string} - the list object id
+     * @param userId {string} - the user object id
+     * @param callback
+     */
     that.downvote = function(listId,userId, callback) {
       listModel.findById(listId, function(err, list){
           if(err) callback({msg:err});
@@ -153,10 +165,13 @@ var list = (function(listModel) {
               callback({msg: 'The list does not exist!'});
           }
       });
-    }
+    };
 
-    //pass in consensus object with same fields and same types, make sure they are the same
-    //later I will add checks to make sure
+    /**
+     * Create a list
+     * @param listObject {List} - a list
+     * @param callback
+     */
     that.createList = function (listObject, callback) {
         var newList = new listModel({
             title : listObject.title,
@@ -180,7 +195,11 @@ var list = (function(listModel) {
         });
     };
 
-    //lock a consensus by its ID
+    /**
+     * Locks a consensus to make sure that no more rankings can be submitted
+     * @param listId {string} - the list object id
+     * @param callback
+     */
     that.lockList = function (listId, callback) {
         listModel.findById(listId, function (err, list) {
             if (err) callback({ msg: err });
@@ -198,6 +217,10 @@ var list = (function(listModel) {
         });
     };
 
+    /**
+     * Gets an array of all public lists in the database
+     * @param callback
+     */
     that.getPublicLists = function(callback) {
         listModel.find({}).find({ isPublic: true }).sort({createdAt: -1}).exec(function(err, result) {
             if (err) callback({ msg: err });
@@ -209,6 +232,10 @@ var list = (function(listModel) {
         });
     };
 
+    /**
+     * Gets an array of all public lists ordered by number of upvotes
+     * @param callback
+     */
     that.getTrendingLists = function(callback) {
       listModel.find({}).find({ isPublic: true }).sort({upvotes: -1}).limit(25).exec(function(err, result) {
           if (err) callback({ msg: err });
@@ -221,7 +248,9 @@ var list = (function(listModel) {
     };
 
     /**
-     *  Returns a user's private consensuses.
+     * Get the private lists for a user
+     * @param username {string} - the username
+     * @param callback
      */
     that.getUserPrivateLists = function(username, callback) {
         listModel.find({ creator:username, isPublic: true }).exec(function(err, result) {
@@ -235,7 +264,9 @@ var list = (function(listModel) {
     };
 
     /**
-     *  Returns a user's lists.
+     * Gets the lists for a user
+     * @param user_id {string} - the user object id
+     * @param callback
      */
     that.getUserLists = function(user_id, callback) {
         listModel.find({ creator_id:new ObjectId(user_id)}).exec(function(err, result) {
@@ -249,7 +280,9 @@ var list = (function(listModel) {
     };
 
     /**
-     *  Returns lists a user's been invited to.
+     * Gets the private lists a user has been invited to
+     * @param username {string} - the username
+     * @param callback
      */
     that.getInvitedLists = function(username, callback) {
       listModel.find().exec(function(err, result) {
@@ -266,7 +299,12 @@ var list = (function(listModel) {
        });
     };
 
-    // add the id rankingId to the Consensus document with _id consensusId
+    /**
+     * Add a ranking to a list
+     * @param listId {string} - the list object id
+     * @param rankingId {string} - the ranking object id
+     * @param callback
+     */
     that.updateRankingsArray = function (listId, rankingId, callback) {
         listModel.findOneAndUpdate(
             {_id : listId}, {$push: { rankings: rankingId} }, function(err) {
@@ -277,6 +315,12 @@ var list = (function(listModel) {
         });
     };
 
+    /**
+     * Adds items to a list
+     * @param listId {string} - the list object id
+     * @param newItems {array} - the items to add
+     * @param callback
+     */
     that.addMoreItems = function(listId, newItems, callback) {
       listModel.findOneAndUpdate(
         {_id : listId}, {$pushAll: {items:newItems} },{upsert:false}, function(err,newList) {
@@ -289,6 +333,11 @@ var list = (function(listModel) {
       });
     };
 
+    /**
+     * Gets the lists in a search
+     * @param searchString {string} - the string searched for
+     * @param callback
+     */
     that.search = function(searchString, callback) {
       listModel.find({ "title": { "$regex": new RegExp(searchString, "i")}, isPublic:true  }).exec(function(err, result) {
         if (err) callback({ msg: err });
@@ -298,10 +347,12 @@ var list = (function(listModel) {
             callback(null, []);
         }
       });
-    }
+    };
 
     /**
-     * Returns a consensus from its id.
+     * Get a list
+     * @param listId {string} - the list object id
+     * @param callback
      */
     that.getListById = function (listId, callback) {
         listModel.findById(listId, function (err, list) {
@@ -314,6 +365,12 @@ var list = (function(listModel) {
         })
     };
 
+    /**
+     * Get a ranking by user id
+     * @param userId {string} - the user object id
+     * @param listId {string} - the list object id
+     * @param callback
+     */
     that.getRankingByUserId = function (userId, listId, callback) {
         listModel.findById(listId, function (err, list) {
             if (err) callback({ msg: err }, null);
@@ -324,7 +381,7 @@ var list = (function(listModel) {
                 callback({ msg: 'The list does not exist!'});
             }
         })
-    }
+    };
 
 
     Object.freeze(that);
