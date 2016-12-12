@@ -143,7 +143,7 @@ var Users = (function(userModel) {
     that.checkPassword = function(username, password, callback) {
         userModel.findOne({ username: username }, function(err, user) {
             if (err) callback({ msg: err });
-            if (user !== null && password === user.password) {
+            if (user !== null && user.validPassword(password)) {
                 callback(null, user);
             } else {
                 callback(null, false);
@@ -166,7 +166,7 @@ var Users = (function(userModel) {
           callback(null, false);
         }
       });
-    }
+    };
 
     /**
      * Mutates the rankings property of the user with user_id
@@ -226,8 +226,11 @@ var Users = (function(userModel) {
             } else if (username.length > 15 || username.length < 3) {
                 callback({ msg: 'Usernames should be at most 15 characters and at least 3!' });
             } else {
-                var user = new userModel({ username: username,
-                    password: password  });
+                var user = new userModel();
+
+                user.username = username;
+                user.password = user.generateHash(password);
+
                 user.save(function(err, user) {
                     if (err) callback({ msg: err });
                     // userModel.find({username : username}).exec(function(error, users) {
