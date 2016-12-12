@@ -5,9 +5,6 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var webpackDevHelper = require('./hotReload.js');
 
-var passport = require('passport');
-
-
 
 // Require routes.
 var users = require('./routes/users');
@@ -37,14 +34,13 @@ if (process.env.NODE_ENV !== 'production'){
   console.log("PRODUCTION: Serving static files from /public...");
   app.use(express.static(path.join(__dirname, 'public')));
 }
+
 // Set up some middleware to use.
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
 
-app.use(passport.initialize());
-app.use(passport.session());
 
 // Authentication middleware. This function
 // is called on _every_ request and populates

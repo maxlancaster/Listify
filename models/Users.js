@@ -154,7 +154,7 @@ var Users = (function(userModel) {
     /**
      * Mutates the list property of the user with user_id
      * @param user_id {String} - the user to query
-     * @param list {Object} - the list object whose _id will be added to the user's list property
+     * @param list {O bject} - the list object whose _id will be added to the user's list property
      * @param callback
      */
     that.hasCreatedList = function(user_id, list, callback) {

@@ -9,8 +9,6 @@ var User = require('../models/Users');
 var Users = User.Users;
 // var rankingServices = require('../services/rankingServices');
 
-var passport = require('../passport');
-
 // initial creation of the Consensus entry and the Ranking entry by the creator
 router.post('/create', function(req, res) {
     var listObject = {

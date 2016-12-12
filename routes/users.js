@@ -5,8 +5,6 @@ var _ = require('lodash');
 var User = require('../models/Users');
 var Users = User.Users;
 
-var passport = require('../passport');
-
 /*
  Require authentication on ALL access to /notes/*
  Clients which are not logged in will receive a 403 error code.
@@ -51,21 +49,6 @@ var invalidLogin = function(req, res) {
  - err: on error, an error message
  */
 router.post('/', function(req, res) {
-
-    // passport.authenticate('local-signup', function (err, user, info) {
-    //     console.log('here2');
-    //
-    //     if (err) {
-    //         console.log(err);
-    //         return next(err);
-    //     }
-    //     if (!user) {
-    //         console.log(err.err);
-    //         utils.sendErrorResponse(res, 400, err.err);
-    //     } else {
-    //         utils.sendSuccessResponse(res);
-    //     }
-    // });
 
     Users.createUser(req.body.username, req.body.password, function(err) {
       if (err) {
