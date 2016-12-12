@@ -38,12 +38,17 @@ class SwitchableHeader extends Component {
       <a href="#"
          onClick={this.didSwitchHeader.bind(this, HeaderSideEnum.LEFT)}
          style = {leftHeaderStyle}>{this.state.leftTitle}</a>
-       <a style = {{color:"#C4BFBF"}} href ="#"> | </a>
+       {this.props.centerTitle &&
+         <a style = {{color:"#C4BFBF"}}> | </a>
+        }
        {this.props.centerTitle &&
          <a href="#"
             onClick={this.didSwitchHeader.bind(this, HeaderSideEnum.CENTER)}
-            style = {centerHeaderStyle}>{this.state.centerTitle + " | "}</a>
+            style = {centerHeaderStyle}>{this.state.centerTitle}</a>
        }
+       {this.props.rightTitle && 
+          <a style = {{color:"#C4BFBF"}}> | </a>
+        }
       <a href="#"
          onClick={this.didSwitchHeader.bind(this, HeaderSideEnum.RIGHT)}
          style = {rightHeaderStyle}>{this.state.rightTitle}</a>
