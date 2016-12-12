@@ -66,21 +66,8 @@ router.post('/lock/:listId', requireAuthentication);
 router.post('*', requireContent);
 
 /**
- * Get all rankings created by the currently logged in user.
+ * Gets a ranking
  */
-
-// /rankings should just load the createRankingsPage via clientRoutes.jsx
-
-// router.get('/', function(req, res){
-    // Consensus.getUserPrivateLists(req.currentUser.username, function(err, consensuses){
-    //     if(err){
-    //         utils.sendSuccessResponse(res, { rankings : [] });
-    //     } else {
-    //         utils.sendSuccessResponse(res, { rankings : rankings});
-    //     }
-    // })
-// });
-
 router.get('/get/:rankingId', function(req, res){
     Rankings.getRankingByID(req.params.rankingId, function (err, ranking) {
         if(err){
@@ -92,9 +79,8 @@ router.get('/get/:rankingId', function(req, res){
 });
 
 /**
- * Returns
+ * Gets a list
  */
-
 router.get('/:consensus_id', function(req, res){
     List.getListById(req.params.listId, function(err, list){
         if(err){
@@ -105,6 +91,9 @@ router.get('/:consensus_id', function(req, res){
     });
 });
 
+/**
+ * Gets a user's rankings
+ */
 router.get('/user/:user_id', function(req, res){
     Rankings.getUserRankings(req.params.user_id, function(err, rankings){
         if(err){
@@ -129,7 +118,9 @@ router.post('/lock/:listId', function(req, res){
     })
 });
 
-// submit a ranking
+/**
+ * Submits a ranking
+ */
 router.post('/submit', function(req, res) {
     var rankingData = req.body.content;
     rankingData["user"] = req.session.user.username;
@@ -171,6 +162,9 @@ router.get('/edit/:listId', function(req, res){
     })
 });
 
+/**
+ * Updates a ranking
+ */
 router.put('/update/:rankingId', function (req, res) {
     var rankingData = req.body.content;
     Rankings.updateRanking(req.params.rankingId, rankingData.order, rankingData.comment, function (err, ranking) {

@@ -5,6 +5,9 @@ var Cookie = require('js-cookie');
 
 var request = require('request-promise-native');
 
+/**
+ * Services to link the front end to the ranking models
+ */
 export default {
 	submitRanking : (content) => {
 	    return request({

@@ -153,7 +153,7 @@ router.get('/invited/:username', function(req, res){
 });
 
 /**
- *
+ * Processes a search request
  */
 router.post('/search/:searchString', function(req, res){
     List.search(req.params.searchString, function(err, lists){
@@ -165,7 +165,9 @@ router.post('/search/:searchString', function(req, res){
     })
 });
 
-
+/**
+ * Gets all public lists sorted by most recent
+ */
 router.get('/most_recent', function(req, res) {
     List.getPublicLists(function(err, lists) {
         if(err){
@@ -176,7 +178,9 @@ router.get('/most_recent', function(req, res) {
     });
 });
 
-
+/**
+ * Get trending lists
+ */
 router.get('/trending', function(req, res) {
     List.getTrendingLists(function(err, lists) {
         if(err){
@@ -187,7 +191,9 @@ router.get('/trending', function(req, res) {
     });
 });
 
-
+/**
+ * Lock a list
+ */
 router.put('/lock/:listId', function(req, res) {
     List.lockList(req.params.listId, function(err) {
         if(err){
@@ -198,7 +204,9 @@ router.put('/lock/:listId', function(req, res) {
     });
 });
 
-
+/**
+ * Add items to a list
+ */
 router.put('/add_items/:listId', function(req,res) {
   List.addMoreItems(req.params.listId, req.body.newItems, function(error, list) {
     if(error){
