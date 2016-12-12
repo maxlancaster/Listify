@@ -5,7 +5,9 @@ var utils = require('../utils/utils');
 var Rankings = require('../models/Ranking');
 var Items = require('../models/Items');
 var List = require('../models/List');
-var Users = require('../models/Users');
+var User = require('../models/Users');
+var Users = User.Users;
+
 // var rankingServices = require('../services/rankingServices');
 
 

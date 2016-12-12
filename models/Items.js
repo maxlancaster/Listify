@@ -11,7 +11,7 @@ var Items = function(title, description, photo) {
 };
 
 Items.prototype.equal = function (item2) {
-    return this.id == item2.id && this.title == item2.title;
+     return this.id == item2.id && this.title == item2.title;
 }
 
 module.exports = Items;

@@ -1,7 +1,8 @@
 var assert = require('assert');
 var mongoose = require('mongoose');
 var app = require('../app');
-var Users = require('../models/Users');
+var User = require('../models/Users');
+var Users = User.Users;
 var Ranking = require('../models/Ranking');
 var List = require('../models/List');
 

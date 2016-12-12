@@ -5,13 +5,20 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var webpackDevHelper = require('./hotReload.js');
 
+var passport = require('passport');
+
+
+
 // Require routes.
 var users = require('./routes/users');
 var rankings = require('./routes/rankings');
 var lists = require('./routes/lists');
 
 // Require Users model for authentication.
-var Users = require('./models/Users');
+var User = require('./models/Users');
+var Users = User.Users;
+
+
 var Ranking = require('./models/Ranking');
 /** Set up MongoDB **/
 var mongoose = require('mongoose');
@@ -35,6 +42,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Authentication middleware. This function
 // is called on _every_ request and populates

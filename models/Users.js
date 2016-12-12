@@ -12,6 +12,7 @@
 var mongoose = require('mongoose');
 var Ranking = require('../models/Ranking');
 var List = require('../models/List');
+var bcrypt = require('bcrypt-nodejs');
 
 var userSchema = mongoose.Schema({
     username: {
@@ -36,6 +37,15 @@ var userSchema = mongoose.Schema({
 });
 
 userSchema.index({username: 'text'});
+
+userSchema.methods.generateHash = function(password) {
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+};
+
+userSchema.methods.validPassword = function(password) {
+    return bcrypt.compareSync(password, this.password);
+};
+
 
 var userModel = mongoose.model('Users', userSchema);
 
@@ -162,7 +172,7 @@ var Users = (function(userModel) {
           callback(null, false);
         }
       });
-    }
+    };
 
     that.updateLastViewedInvitationsDate = function(user_id, callback) {
       userModel.findOneAndUpdate({_id:user_id}, {last_viewed_invitations_date:Date.now()}, {new : true}, function(error ,user) {
@@ -177,7 +187,7 @@ var Users = (function(userModel) {
         }
       });
 
-    }
+    };
 
 
     /**
@@ -213,4 +223,7 @@ var Users = (function(userModel) {
 
 })(userModel);
 
-module.exports = Users;
+module.exports = {
+    Users: Users,
+    userModel: userModel
+};
