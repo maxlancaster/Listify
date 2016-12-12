@@ -74,6 +74,7 @@ class App extends Component {
                     prevState.user = 'Not Logged In';
                     return prevState;
                 });
+                this.setState({ errorMessage : '' });
                 this.props.router.push('/signin');
             }
         });
