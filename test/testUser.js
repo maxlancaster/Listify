@@ -39,8 +39,6 @@ describe('Users', function() {
 
             Users.createUser("my_username", "password", function (err, user) {
             	assert.	equal(user.username, "my_username");
-            	assert.equal(user.password, "password");
-
             	test_username = user.username;
             	test_user_id = user._id;
             	test_user_date = user.last_viewed_invitations_date.getTime();
@@ -206,7 +204,6 @@ describe('Users', function() {
         	Users.checkPassword(test_username, "password", function(err, user){
         		assert.equal(user.username, test_username);
         		assert.equal(String(user._id), String(test_user_id));
-        		assert.equal(user.password, "password");
         		done();
         	});
 
