@@ -234,6 +234,8 @@ var Users = (function(userModel) {
                 callback({ taken: true});
             } else if (username.length > 15 || username.length < 3) {
                 callback({ msg: 'Usernames should be at most 15 characters and at least 3!' });
+            } else if (password.length < 5) {
+                callback({ msg: 'Please select a longer password!' });
             } else if (username.indexOf(' ') >= 0) {
               callback({ msg: 'Usernames should not contain spaces!'});
             } else {
