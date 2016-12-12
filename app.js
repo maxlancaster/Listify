@@ -45,6 +45,9 @@ app.use(cookieParser());
 app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
 app.use(csrfProtection);
 
+/**
+ * CSURF Middleware
+ */
 app.use(function (err, req, res, next) {
   if (err.code !== 'EBADCSRFTOKEN') return next(err);
   // handle CSRF token errors here
@@ -52,6 +55,9 @@ app.use(function (err, req, res, next) {
   utils.sendErrorResponse(res, 403, "Bad CSRF Token");
 });
 
+/**
+ * CSURF Middleware
+ */
 app.use(function (req, res, next) {
   var token = req.csrfToken();
   res.cookie('XSRF-TOKEN', token);
@@ -93,21 +99,6 @@ app.get('*', function(req, res){
 app.listen((process.env.PORT || 3000), function() {
   console.log("Listening for port");
 });
-
-// // Uncomment to clear Users, Ranking and List tables
-//
-// mongoose.model('Users').remove({}, function(err) {
-//    console.log('Users collection removed')
-// });
-//
-// mongoose.model('Ranking').remove({}, function(err) {
-//    console.log('Rankings collection removed')
-// });
-//
-// mongoose.model('List').remove({}, function(err) {
-//    console.log('List collection removed')
-// });
-
 
 
 // Export our app (so that tests and bin can find it)

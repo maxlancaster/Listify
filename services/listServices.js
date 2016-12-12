@@ -5,6 +5,10 @@ var Cookie = require('js-cookie');
 
 var request = require('request-promise-native');
 
+
+/**
+ * Services to link the front-end to the list models
+ */
 export default {
 	createList : (content) => {
 	    return request({

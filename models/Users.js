@@ -32,10 +32,20 @@ var userSchema = mongoose.Schema({
 
 userSchema.index({username: 'text'});
 
+/**
+ * hashes a password
+ * @param password {string} - password
+ * @returns the hashed password
+ */
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
+/**
+ * Validate a hashed password
+ * @param password {string} - password
+ * @returns {*}
+ */
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.password);
 };
@@ -43,7 +53,11 @@ userSchema.methods.validPassword = function(password) {
 
 var userModel = mongoose.model('Users', userSchema);
 
+/**
+ * An object that encapsulates functions that work with the User database
+ */
 var Users = (function(userModel) {
+
     var that = {};
 
     /**
@@ -180,9 +194,7 @@ var Users = (function(userModel) {
         if (user !== null) {
           callback(null, user);
         } else {
-          // userModel.find({_id : user_id}).exec(function(error, user) {
-          //     console.log("user created! : " + JSON.stringify(user, null, '\t'))
-          // });
+
           callback(null, false);
         }
       });
@@ -201,9 +213,7 @@ var Users = (function(userModel) {
         if (user !== null) {
           callback(null, user);
         } else {
-          // userModel.find({_id : user_id}).exec(function(error, user) {
-          //     console.log("user updated : " + JSON.stringify(user, null, '\t'))
-          // });
+
           callback(null, false);
         }
       });
@@ -220,22 +230,21 @@ var Users = (function(userModel) {
      */
     that.createUser = function(username, password, callback) {
         userModel.findOne({ username: username}, function(err, result) {
-            // if (err) callback({ msg: err});
             if (result !== null) {
                 callback({ taken: true});
             } else if (username.length > 15 || username.length < 3) {
                 callback({ msg: 'Usernames should be at most 15 characters and at least 3!' });
+            } else if (password.length < 5) {
+                callback({ msg: 'Please select a longer password!' });
+            } else if (username.indexOf(' ') >= 0) {
+              callback({ msg: 'Usernames should not contain spaces!'});
             } else {
                 var user = new userModel();
-
                 user.username = username;
                 user.password = user.generateHash(password);
 
                 user.save(function(err, user) {
                     if (err) callback({ msg: err });
-                    // userModel.find({username : username}).exec(function(error, users) {
-                    //     console.log("user created! : " + JSON.stringify(users, null, '\t'))
-                    // });
                     callback(null, user);
                 });
             }
