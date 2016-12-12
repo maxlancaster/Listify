@@ -22,10 +22,11 @@ class ViewConsensusRankingPage extends Component {
         var listId = this.props.params.listId;
         listServices.getListDataFromId(listId).then((res) => {
             var list = res.content.list;
+            var capacity = list.maxLength;
             listServices.calculateOrdering(list._id).then((res) => {
                 var order = res.content.order;
-                console.log(order);
-                this.setState({list:list, order:order});
+                var capped_order = order.slice(0, capacity);
+                this.setState({list:list, order:capped_order});
             });
 
             listServices.getComments(listId).then((res) => {
