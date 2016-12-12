@@ -122,7 +122,7 @@ class EditRankingsPage extends Component {
             itemCopy.rank = maxLength + 1;
             order.push(itemCopy);
           }
-        })
+        });
 
         rankingServices.submitRanking(
             {
@@ -149,11 +149,20 @@ class EditRankingsPage extends Component {
         // var user = req.session.user.username;
         // var user_id = req.session.user._id;
         var comment = this.state.comment;
+        var submission = this.state.submission;
         // description, id, photo, title
         this.state.submission.forEach(function(item, index) {
             var itemCopy = item;
             itemCopy.rank = index+1;
             order.push(itemCopy); // start indexing at 1
+        });
+
+        this.state.items.forEach(function(item, index) {
+          if (submission.indexOf(item) < 0) {
+            var itemCopy = item;
+            itemCopy.rank = maxLength + 1;
+            order.push(itemCopy);
+          }
         });
 
         listServices.getListDataFromId(this.props.params.listId).then((response) => {
