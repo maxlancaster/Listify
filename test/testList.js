@@ -1,7 +1,7 @@
 var assert = require("assert");
 var mongoose = require("mongoose");
 var moment = require("moment");
-var ObjectId = require('mongoose').Types.ObjectId
+var ObjectId = require('mongoose').Types.ObjectId;
 
 var list = require("../models/List.js");
 
