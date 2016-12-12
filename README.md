@@ -1,5 +1,12 @@
 # Listify
 
+https://listify-team-phil.herokuapp.com/
+
+#Testing
+
+cd into /test directory
+- run mocha {testFileName}
+
 ## Deploy
 git clone https://github.mit.edu/6170-fa16/final-proj-philmeup.git
 
