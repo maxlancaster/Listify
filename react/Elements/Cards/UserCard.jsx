@@ -9,11 +9,16 @@ class UserCard extends Component {
 
   render() {
 		const { user, index } = this.props;
-
+    var trashIcon = require('../../../public/assets/TrashCan.svg');
+    var iconStyle = {
+      width:"15px",
+      height:"15px",
+    }
 		return(
         <div className = "UserCard">
-          <button className = "ItemCardEditButton"
-            onClick={this.deletePressed.bind(this)}>x</button>
+          <button className = "UserDeleteButton" onClick={this.deletePressed.bind(this)}>
+            <img src = {trashIcon} style = {iconStyle}/>
+          </button>
           <p className = "UserCardTitle">{"@"+user.username}</p>
         </div>
     );
