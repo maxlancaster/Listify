@@ -3,7 +3,10 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+var csrf = require('csurf');
+var csrfProtection = csrf({ cookie: true });
 var webpackDevHelper = require('./hotReload.js');
+var utils = require('./utils/utils');
 
 
 // Require routes.
@@ -40,7 +43,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({ secret : '6170', resave : true, saveUninitialized : true }));
+app.use(csrfProtection);
 
+app.use(function (err, req, res, next) {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err);
+  // handle CSRF token errors here
+  console.log(err);
+  utils.sendErrorResponse(res, 403, "Bad CSRF Token");
+});
+
+app.use(function (req, res, next) {
+  var token = req.csrfToken();
+  res.cookie('XSRF-TOKEN', token);
+  res.locals.csrfToken = token;
+  next();
+});
 
 // Authentication middleware. This function
 // is called on _every_ request and populates

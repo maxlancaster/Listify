@@ -1,6 +1,7 @@
 var dev = 'http://localhost:3000/api/rankings';
 var prod = 'https://listify-team-phil.herokuapp.com/api/rankings';
 const BASE_URL = dev;
+var Cookie = require('js-cookie'); 
 
 var request = require('request-promise-native');
 
@@ -10,7 +11,10 @@ export default {
 	        uri : BASE_URL + '/submit',
 	        method: 'POST',
 	        json : true,
-	        body : {content : content}
+	        body : {
+	        	content : content,
+	        	_csrf: Cookie.get('XSRF-TOKEN')
+	        }
 	    });
 	},
 
@@ -43,7 +47,10 @@ export default {
             uri : BASE_URL + '/update' + `/${content.ranking_id}`,
             method: 'PUT',
             json : true,
-            body : {content : content}
+            body : {
+            	content : content,
+            	_csrf: Cookie.get('XSRF-TOKEN')
+            }
         });
     },
 	// ,

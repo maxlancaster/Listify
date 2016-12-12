@@ -1,6 +1,7 @@
 var dev = 'http://localhost:3000/api/lists';
 var prod = 'https://listify-team-phil.herokuapp.com/api/lists';
 const BASE_URL = dev;
+var Cookie = require('js-cookie'); 
 
 var request = require('request-promise-native');
 
@@ -10,7 +11,10 @@ export default {
 	        uri : BASE_URL + '/create',
 	        method: 'POST',
 	        json : true,
-	        body : { content : content }
+	        body : {
+	        	content : content,
+	        	_csrf: Cookie.get('XSRF-TOKEN')
+	         }
 	    });
 	},
 
@@ -18,7 +22,10 @@ export default {
 		return request({
 			uri : BASE_URL + `/search/${searchString}`,
 			method : 'POST',
-			json : true
+			json : true,
+			body : {
+				_csrf: Cookie.get('XSRF-TOKEN')
+			}
 		})
 	},
 
@@ -74,7 +81,10 @@ export default {
 		return request({
 			uri : BASE_URL + `/lock/${list_id}`,
 			method: 'PUT',
-			json: true
+			json: true,
+			body : {
+				_csrf: Cookie.get('XSRF-TOKEN')
+			}
 		})
 	},
 
@@ -83,7 +93,10 @@ export default {
 			uri : BASE_URL + `/add_items/${list_id}`,
 			method: 'PUT',
 			json: true,
-			body : { newItems : newItems }
+			body : {
+				newItems : newItems,
+				_csrf: Cookie.get('XSRF-TOKEN')
+			}
 		})
 	},
     calculateOrdering : (list_id) => {
@@ -98,7 +111,10 @@ export default {
         return request({
             uri: BASE_URL + `/upvote/${list_id}`,
             method: 'POST',
-            json: true
+            json: true,
+            body : {
+            	_csrf: Cookie.get('XSRF-TOKEN')
+            }
         })
     },
 
@@ -106,7 +122,10 @@ export default {
         return request({
             uri: BASE_URL + `/downvote/${list_id}`,
             method: 'POST',
-            json: true
+            json: true,
+            body : {
+            	_csrf: Cookie.get('XSRF-TOKEN')
+            }
         })
     },
 
@@ -115,7 +134,10 @@ export default {
             uri: BASE_URL + `/removevote/${list_id}`,
             method: 'POST',
             json: true,
-            body : {voteType: voteType}
+            body : {
+            	voteType: voteType,
+            	_csrf: Cookie.get('XSRF-TOKEN')
+            }
         })
     },
 
